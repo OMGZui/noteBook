@@ -170,28 +170,36 @@ databases 16
 
 ### 3. 集合（set）无序 不可重复
 
-* sadd
+* sadd 增加
     * sadd set item1 -> (integer) 1
     * sadd set item2 -> (integer) 1
     * sadd set item3 -> (integer) 1
     * sadd set item1 -> (integer) 0  已存在
-* smembers
+* smembers 所有集合元素
     * smembers set
     ```sh
     1) "item3"
     2) "item2"
     3) "item1"
     ```
-* sismember
+* sismember 存不存在
     * sismember set item1 -> (integer) 1
     * sismember set item -> (integer) 0 不存在
-* srem
+* srem 移除元素
     * srem set item1 -> (integer) 1
     * smembers set
     ```sh
     1) "item3"
     2) "item2"
     ```
+* spop 随机删除一个元素
+* srandmember 随机获取一个元素 -> 抽奖
+* scard 多少个元素
+* smove 移动
+* sinter 交集
+* sinterstore 交集并赋值
+* suion 并集
+* sdiff 差集
 ---
 
 ### 4. 哈希（hash）键值对  key => value
@@ -226,13 +234,13 @@ databases 16
 
 ### 5. 有序集合（zset）键值对  成员 => 分值 成员必须唯一
 
-* zadd
+* zadd 增加
     * zadd zset 100 item1 -> (integer) 1
     * zadd zset 200 item2 -> (integer) 1
     * zadd zset 300 item3 -> (integer) 1
     * zadd zset 100 item1 -> (integer) 0 已存在
-* zrange
-    * zrange zset 0 -1 withscores  按分值排序
+* zrange 按分值排序
+    * zrange zset 0 -1 withscores
     ```sh
     1) "item1"
     2) "100"
@@ -241,15 +249,15 @@ databases 16
     5) "item3"
     6) "300"
     ```
-* zrangebyscore
-    * zrangebyscore zset 0 200 withscores 按分值的一部分排序
+* zrangebyscore 按分值的一部分排序
+    * zrangebyscore zset 0 200 withscores
     ```sh
     1) "item1"
     2) "100"
     3) "item2"
     4) "200"
     ```
-* zrem
+* zrem 删除
     * zrem zset item1 -> (integer) 1
     * zrange zset 0 -1 withscores
     ```sh
@@ -258,3 +266,7 @@ databases 16
     3) "item3"
     4) "300"
     ```
+* zrank 排名升序
+* zremrangebyscore 按分值删除一部分
+* zremrangebyrank 按排名删除一部分
+* zcard 个数
