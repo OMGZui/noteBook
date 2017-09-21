@@ -204,12 +204,12 @@ databases 16
 
 ### 4. 哈希（hash）键值对  key => value
 
-* hset
+* hset 设置一个
     * hset hash key1 value1 -> (integer) 1
     * hset hash key2 value2 -> (integer) 1
     * hset hash key3 value3 -> (integer) 1
     * hset hash key1 value1 -> (integer) 0 已存在
-* hgetall
+* hgetall 获取全部
     * hgetall hash
     ```sh
     1) "key1"
@@ -219,9 +219,9 @@ databases 16
     5) "key3"
     6) "value3"
     ```
-* hget
+* hget 获取一个
     * hget hash key1 -> "value1"
-* hdel
+* hdel 删除
     * hdel hash key1 -> (integer) 1
     * hgetall hash
     ```sh
@@ -230,6 +230,11 @@ databases 16
     3) "key3"
     4) "value3"
     ```
+* hmset 设置多个
+* hmget 获取多个
+* hlen 个数
+* hexists 是否存在增长
+* hinrby 
 ---
 
 ### 5. 有序集合（zset）键值对  成员 => 分值 成员必须唯一
