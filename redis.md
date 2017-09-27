@@ -289,8 +289,8 @@ databases 16
 
 ### mysql事务与redis事务比较：
 
-|   |mysql|redis|
-|---|---|---|---|
+|比较|mysql|redis|
+|---|---|---|
 |开启|start transaction|multi|
 |语句|普通sql语句|普通redis命令|
 |失败|rollback|discard|
@@ -401,4 +401,3 @@ auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写
 
     问: 恢复时rdb和aof哪个恢复的快
     答: rdb快,因为其是数据的内存映射,直 接载入到内存,而aof是命令,需要逐条执行
-    
