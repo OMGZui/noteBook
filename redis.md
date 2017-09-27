@@ -19,6 +19,8 @@
         - [悲观锁与乐观锁](#悲观锁与乐观锁)
     - [七、发布订阅](#七发布订阅)
     - [八、持久化](#八持久化)
+        - [redis 快照rdb](#redis-快照rdb)
+        - [redis 日志aof](#redis-日志aof)
 
 <!-- /TOC -->
 ## 一、redis与memcached比较：
@@ -349,3 +351,54 @@ unwatch
 发布端: publish 频道名称 发布内容
 
 ## 八、持久化
+
+### redis 快照rdb
+
+有限制，还是容易数据丢失，恢复快
+
+```sh
+
+save 900 1      # 900内,有1条写入,则产生快照 
+save 300 1000   # 如果300秒内有1000次写入,则产生快照
+save 60 10000  # 如果60秒内有10000次写入,则产生快照
+(这3个选项都屏蔽,则rdb禁用)
+
+stop-writes-on-bgsave-error yes  # 后台备份进程出错时,主进程停不停止写入?
+rdbcompression yes    # 导出的rdb文件是否压缩
+Rdbchecksum   yes   # 导入rbd恢复时数据时,要不要检验rdb的完整性
+dbfilename dump.rdb  # 导出来的rdb文件名
+dir ./  //rdb的放置路径
+
+```
+
+### redis 日志aof
+
+```sh
+
+appendonly no # 是否打开 aof日志功能
+
+appendfsync always   # 每1个命令,都立即同步到aof. 安全,速度慢
+appendfsync everysec # 折衷方案,每秒写1次
+appendfsync no      # 写入工作交给操作系统,由操作系统判断缓冲区大小,统一写入到aof. 同步频率低,速度快,
+
+
+no-appendfsync-on-rewrite  yes: # 正在导出rdb快照的过程中,要不要停止同步aof
+auto-aof-rewrite-percentage 100 #aof文件大小比起上次重写时的大小,增长率100%时,重写
+auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写
+```
+
+    注: 在dump rdb过程中,aof如果停止同步,会不会丢失?
+    答: 不会,所有的操作缓存在内存的队列里, dump完成后,统一操作.
+
+    注: aof重写是指什么?
+    答: aof重写是指把内存中的数据,逆化成命令,写入到.aof日志里.以解决 aof日志过大的问题.
+
+    问: 如果rdb文件,和aof文件都存在,优先用谁来恢复数据?
+    答: aof
+
+    问: 2种是否可以同时用?
+    答: 可以,而且推荐这么做
+
+    问: 恢复时rdb和aof哪个恢复的快
+    答: rdb快,因为其是数据的内存映射,直 接载入到内存,而aof是命令,需要逐条执行
+    
