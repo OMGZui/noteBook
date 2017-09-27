@@ -14,6 +14,11 @@
         - [3. 集合（set）无序 不可重复](#3-集合set无序-不可重复)
         - [4. 哈希（hash）键值对  key => value](#4-哈希hash键值对--key--value)
         - [5. 有序集合（zset）键值对  成员 => 分值 成员必须唯一](#5-有序集合zset键值对--成员--分值-成员必须唯一)
+    - [六、redis事务](#六redis事务)
+        - [mysql事务与redis事务比较：](#mysql事务与redis事务比较)
+        - [悲观锁与乐观锁](#悲观锁与乐观锁)
+    - [七、发布订阅](#七发布订阅)
+    - [八、持久化](#八持久化)
 
 <!-- /TOC -->
 ## 一、redis与memcached比较：
@@ -234,7 +239,9 @@ databases 16
 * hmget 获取多个
 * hlen 个数
 * hexists 是否存在增长
-* hinrby 
+* hinrby 增长
+* hkeys 所有的key
+* hvals 所有的值
 ---
 
 ### 5. 有序集合（zset）键值对  成员 => 分值 成员必须唯一
@@ -275,3 +282,70 @@ databases 16
 * zremrangebyscore 按分值删除一部分
 * zremrangebyrank 按排名删除一部分
 * zcard 个数
+
+## 六、redis事务
+
+### mysql事务与redis事务比较：
+
+|   |mysql|redis|
+|---|---|---|---|
+|开启|start transaction|multi|
+|语句|普通sql语句|普通redis命令|
+|失败|rollback|discard|
+|成功|commit|exec|
+
+如果已经成功执行了2条语句, 第3条语句出错.
+
+rollback后,前2条的语句影响消失.
+
+discard只是结束本次事务,前2条语句造成的影响仍然还在
+
+### 悲观锁与乐观锁
+
+我正在买票`ticket -1 , money -100`而票只有1张, 如果在我multi之后,和exec之前, 票被别人买了,即ticket变成0了.我该如何观察这种情景,并不再提交
+
+悲观的想法:
+
+    世界充满危险,肯定有人和我抢, 给 ticket上锁, 只有我能操作. [悲观锁]
+
+乐观的想法:
+
+    没有那么人和我抢,因此,我只需要注意,
+    --有没有人更改ticket的值就可以了 [乐观锁]
+
+Redis的事务中,启用的是乐观锁,只负责监测key没有被改动
+
+```sh
+
+具体的命令----  watch命令
+
+redis 127.0.0.1:6379> watch ticket
+OK
+redis 127.0.0.1:6379> multi
+OK
+redis 127.0.0.1:6379> decr ticket
+QUEUED
+redis 127.0.0.1:6379> decrby money 100
+QUEUED
+redis 127.0.0.1:6379> exec
+(nil)   // 返回nil,说明监视的ticket已经改变了,事务就取消了.
+redis 127.0.0.1:6379> get ticket
+"0"
+redis 127.0.0.1:6379> get money
+"200"
+
+watch key1 key2  ... keyN
+作用:监听key1 key2..keyN有没有变化,如果有变, 则事务取消
+
+unwatch
+作用: 取消所有watch监听
+
+```
+
+## 七、发布订阅
+
+订阅端: subscribe 频道名称
+
+发布端: publish 频道名称 发布内容
+
+## 八、持久化
