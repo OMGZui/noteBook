@@ -21,6 +21,7 @@
     - [八、持久化](#八持久化)
         - [redis 快照rdb](#redis-快照rdb)
         - [redis 日志aof](#redis-日志aof)
+        - [redis主从复制](#redis主从复制)
 
 <!-- /TOC -->
 ## 一、redis与memcached比较：
@@ -352,7 +353,7 @@ unwatch
 
 ## 八、持久化
 
-### redis 快照rdb
+### redis 快照rdb 
 
 有限制，还是容易数据丢失，恢复快
 
@@ -401,3 +402,19 @@ auto-aof-rewrite-min-size 64mb #aof文件,至少超过64M时,重写
 
     问: 恢复时rdb和aof哪个恢复的快
     答: rdb快,因为其是数据的内存映射,直 接载入到内存,而aof是命令,需要逐条执行
+
+### redis主从复制
+
+```sh
+Master配置:
+1:关闭rdb快照(备份工作交给slave)
+2:可以开启aof
+
+slave配置:
+1: 声明slave-of
+2: 配置密码[如果master有密码]
+3: [某1个]slave打开 rdb快照功能
+4: 配置是否只读[slave-read-only]
+
+
+```
