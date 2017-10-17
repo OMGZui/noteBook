@@ -53,7 +53,8 @@ DNS服务提供域名到IP地址之间的解析服务  发送端发送http://t66
 
 ### 4、URI和URL
 
-http://t66y.com/index.php  => URI
+http://t66y.com/index.php  => URI  定位资源
+
 http://t66y.com/ => URL
 
 ## 二、简单的HTTP协议
@@ -67,3 +68,119 @@ http://t66y.com/ => URL
 
 响应报文是由协议版本、状态码、状态码的原因短语、可选的响应首部字段和主体构成
 
+### 2、HTTP是一种无状态协议
+
+使用HTTP协议，每当有新的请求发送，就会有新的响应产生
+
+cookie可以保存状态
+
+### 3、HTTP方法
+
+```sh
+
+GET：获取资源
+POST：传输实体主体
+PUT：传输文件
+HEAD：获得报文首部
+DELETE：删除文件
+OPTIONS：询问支持的方法
+
+```
+
+### 4、持久连接 keep-alive
+
+HTTP/1.1默认持久连接
+
+特点：只要任意一端没有明确提出断开连接，则保持TCP连接状态
+
+好处：减少重复连接和断开的开销，减轻服务器的负载，减少响应时间，提高速度
+
+### 5、cookie
+
+Cookie技术通过在请求和响应报文中写入Cookie信息来控制客户端的状态   Set-Cookie
+
+## 三、HTTP报文
+
+用于HTTP协议交互的信息称为HTTP报文
+
+可以通过压缩来提升传输效率
+
+```sh
+请求报文
+GET /index.php HTTP/1.1   #请求行
+Host: t66y.com
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+```
+
+```sh
+响应报文
+HTTP/1.1 200 OK  #状态行
+Date: Tue, 17 Oct 2017 12:01:57 GMT
+Content-Type: text/html
+Content-Length: 4122
+Connection: keep-alive
+X-Powered-By: PHP/5.3.3
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Server: cloudflare-nginx
+CF-RAY: 3af31b2d8039228e-LAX
+
+```
+
+## 四、HTTP状态码
+
+|状态码|英文描述|类别|原因短语|
+|--|--|--|--|
+|1XX|Informational|信息性|接收的请求正在处理|
+|2XX|Success|成功|请求正常处理完毕|
+|3XX|Redirection|重定向|需要进行附加操作已完成请求|
+|4XX|Client Error|客户端错误|服务器无法处理请求|
+|5XX|Server Error|服务器错误|服务器处理请求出错|
+
+常见的状态码：
+
+```sh
+200 ok 请求正常，响应信息会随方法不同而不同
+204 No Content 响应报文不含实体的主体部分
+206 partial Content 范围请求
+
+301 Moved Permanently 永久性重定向
+302 Found 临时性重定向
+303 See Other GET方法临时重定向
+304 Not Modified 服务端资源未改变
+307 Temporary Redirect 临时性重定向
+
+400 Bad Request 请求语法错误
+401 Unauthorized 认证失败
+403 Forbidden 服务器拒绝
+404 Not Found 服务器没有请求的资源
+
+500 Internal Server Error 服务器端执行请求错误
+503 Server Unavailable 服务器超负载
+```
+
+## 五、HTTP协作的Web服务器
+
+虚拟主机：一台服务器为多位客户服务
+
+### 1、通信数据转发：代理、网关、隧道
+
+代理：扮演“中间人”角色，每层代理加上Via首部信息
+
+网关：提供非HTTP协议服务，使得网络通信更加安全
+
+隧道：使用SSL通信，保证安全性
+
+### 2、缓存
+
+服务器端缓存和客户端缓存，目的都是加快请求，具有有效期限
+
+## 六、HTTP首部
+
+### HTTP首部字段
