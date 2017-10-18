@@ -22,6 +22,7 @@
         - [redis 快照rdb](#redis-快照rdb)
         - [redis 日志aof](#redis-日志aof)
     - [九、redis主从复制](#九redis主从复制)
+    - [十、redis表设计](#十redis表设计)
 
 <!-- /TOC -->
 ## 一、redis与memcached比较：
@@ -418,3 +419,49 @@ slave配置:
 
 
 ```
+
+## 十、redis表设计
+
+主键表
+|列名|操作|备注|
+|--|--|--|
+|global:user_id|incr|全局user_id|
+|global:post_id|incr|全局post_id|
+
+---
+
+mysql用户表
+|列名|操作|备注||
+|--|--|--|--|
+|user_id|user_name|password|authsecret|
+|1|shengj|123456|,./!@#|
+
+redis用户表
+|列名|操作|备注||
+|--|--|--|--|
+|user:user_id|user:user_id:*:user_name|user:user_id:*:password|user:user_id:*:authsecret|
+|1|shengj|123456|,./!@#|
+
+---
+
+mysql发送表
+|列名|操作|备注|||
+|--|--|--|--|--|
+|post_id|user_id|user_name|time|content|
+|1|1|shengj|1370987654|测试内容|
+
+redis发送表
+|列名|操作|备注|||
+|--|--|--|--|--|
+|post:post_id|post:post_id:*:user_id|post:post_id:*:user_name|post:post_id:*:time|post:post_id:*:content|
+|1|1|shengj|1370987654|测试内容|
+
+---
+
+关注表：following  -> set user_id
+
+粉丝表：follower -> set user_id
+
+推送表：receivepost -> list user_ids
+
+拉取表：pullpost -> zset user_ids
