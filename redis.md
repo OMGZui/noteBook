@@ -423,6 +423,7 @@ slave配置:
 ## 十、redis表设计
 
 主键表
+
 |列名|操作|备注|
 |--|--|--|
 |global:user_id|incr|全局user_id|
@@ -431,12 +432,14 @@ slave配置:
 ---
 
 mysql用户表
+
 |列名|操作|备注||
 |--|--|--|--|
 |user_id|user_name|password|authsecret|
 |1|shengj|123456|,./!@#|
 
 redis用户表
+
 |列名|操作|备注||
 |--|--|--|--|
 |user:user_id|user:user_id:*:user_name|user:user_id:*:password|user:user_id:*:authsecret|
@@ -445,12 +448,14 @@ redis用户表
 ---
 
 mysql发送表
+
 |列名|操作|备注|||
 |--|--|--|--|--|
 |post_id|user_id|user_name|time|content|
 |1|1|shengj|1370987654|测试内容|
 
 redis发送表
+
 |列名|操作|备注|||
 |--|--|--|--|--|
 |post:post_id|post:post_id:*:user_id|post:post_id:*:user_name|post:post_id:*:time|post:post_id:*:content|
