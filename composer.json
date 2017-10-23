@@ -1,0 +1,15 @@
+{
+  "name": "omgzui/noteBook",
+  "description": "linux nginx mysql php http redis",
+  "keywords": ["php", "skill"],
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "symfony/var-dumper": "*"
+  },
+  "autoload": {
+    "classmap": ["php/"]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
