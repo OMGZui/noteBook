@@ -177,26 +177,118 @@ echo "----------------------------------------- 13 -----------------------------
 function change_str($str)
 {
     //先切割，转为首字母大写后，再聚合
-    $str = explode('_',$str);
+    $str = explode('_', $str);
     foreach ($str as $k => $item) {
         $str[$k] = ucfirst($item);
     }
-    return implode('',$str);
+    return implode('', $str);
 }
+
 dump(change_str('make_by_id'));
 
 echo "----------------------------------------- 14 -----------------------------------------\n";
-function myrev($str){
-    $arr = explode(' ',$str);
+// This is PHP -> PHP is This
+function my_rev($str)
+{
+    $arr = explode(' ', $str);
     $num = count($arr);
-    for($i = 0; $i < $num/2; $i++){
+    for ($i = 0; $i < $num / 2; $i++) {
         $temp = $arr[$i];
-        $arr[$i] = $arr[$num-$i-1];
-        $arr[$num-$i-1] = $temp;
+        $arr[$i] = $arr[$num - $i - 1];
+        $arr[$num - $i - 1] = $temp;
     }
-    return implode(' ',$arr);
+    return implode(' ', $arr);
 }
 
-dump(myrev('This is PHP'));
+dump(my_rev('This is PHP'));
 
 echo "----------------------------------------- 15 -----------------------------------------\n";
+
+dump('mysql');
+// 用一个 sql 语句查询出发表留言数量大于 10 条的用户名及其留言数量，查询结果按文章数量降序排列
+
+// select u.name count(*) as total
+// from user as u
+// inner join message as m
+// on u.user_id = m.user_id
+// group by u.name
+// having total > 10
+// order by total desc;
+
+
+// 查询两门及两门以上不及格同学的平均分
+
+// select name,avg(score),sum(score < 60) as gk
+// from grade
+// group by name
+// having gk >= 2;
+
+
+//简述在 MySQL 数据库中 MyISAM 和 InnoDB 的区别 （亿邮）
+
+//区别主要有以下几个：
+//1. 构成上，MyISAM 的表在磁盘中有三个文件组成，分别是表定义文件（ .frm）、数据文件（.MYD）、索引文件（.MYI）,而 InnoDB 的表由表定义文件(.frm)、表空间数据和日志文件组成。
+//1. 安全方面，MyISAM 强调的是性能，其查询效率较高，但不支持事务和外键等安全性方面的功能，而 InnoDB 支持事务和外键等高级功能，查询效率稍低。
+//1. 对锁的支持，MyISAM 支持表锁，而 InnoDB 支持行锁。
+
+echo "----------------------------------------- 16 -----------------------------------------\n";
+// 写出一个能创建多级目录的PHP函数（新浪网技术部）
+function create_dir($path, $mode = 0777)
+{
+    if (is_dir($path)) {
+        return '该目录已经存在';
+    }
+
+    if (mkdir($path, $mode, true)) {
+        return '创建目录成功';
+    } else {
+        return '创建目录失败';
+    }
+
+}
+
+dump('mkdir($path,$mode,true)');
+
+echo "----------------------------------------- 17 -----------------------------------------\n";
+//请写一段PHP代码，确保多个进程同时写入同一个文件成功（腾讯）
+function file_lock($path)
+{
+    $fp = fopen($path, 'w+');
+
+    if (flock($fp, LOCK_EX)) {
+        //获得写锁，写数据
+        fwrite($fp, "todo");
+
+        //解除锁定
+        flock($fp, LOCK_UN);
+    } else {
+        return 'file is locking......';
+    }
+}
+
+dump('核心思路：加锁');
+
+echo "----------------------------------------- 18 -----------------------------------------\n";
+// 写一个函数，能够遍历一个文件夹下的所有文件和子文件夹。（新浪）
+
+function my_scandir($dir)
+{
+    $files = array();
+    if (is_dir($dir)) {
+        if ($handle = opendir($dir)) {
+            while (($file = readdir($handle)) !== false) {
+                if ($file != "." && $file != "..") {
+                    if (is_dir($dir . "/" . $file)) {
+                        $files[$file] = my_scandir($dir . "/" . $file);
+                    } else {
+                        $files[] = $dir . "/" . $file;
+                    }
+                }
+            }
+            closedir($handle);
+            return $files;
+        }
+    }
+}
+
+dump(my_scandir('/Users/shengj/mac/php/noteBook'));
