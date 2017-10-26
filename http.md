@@ -191,25 +191,23 @@ CF-RAY: 3af31b2d8039228e-LAX
 
 常见的状态码：
 
-```sh
-200 ok 请求正常，响应信息会随方法不同而不同
-204 No Content 响应报文不含实体的主体部分
-206 partial Content 范围请求
+|状态码|英文描述|描述|
+|--|--|--|
+|200| ok| 请求正常，响应信息会随方法不同而不同|
+|204| No Content| 响应报文不含实体的主体部分|
+|206| partial Content| 范围请求|
+|301| Moved Permanently| 永久性重定向|
+|302| Found| 临时性重定向|
+|303| See Other| GET方法临时重定向|
+|304| Not Modified|服务端资源未改变|
+|307| Temporary Redirect| 临时性重定向|
+|400| Bad Request| 请求语法错误|
+|401| Unauthorized |认证失败|
+|403| Forbidden |服务器拒绝|
+|404| Not Found |服务器没有请求的资源|
+|500|Internal Server Error| 服务器端执行请求错误|
+|503|Server Unavailable| 服务器超负载|
 
-301 Moved Permanently 永久性重定向
-302 Found 临时性重定向
-303 See Other GET方法临时重定向
-304 Not Modified 服务端资源未改变
-307 Temporary Redirect 临时性重定向
-
-400 Bad Request 请求语法错误
-401 Unauthorized 认证失败
-403 Forbidden 服务器拒绝
-404 Not Found 服务器没有请求的资源
-
-500 Internal Server Error 服务器端执行请求错误
-503 Server Unavailable 服务器超负载
-```
 
 ## 五、HTTP协作的Web服务器
 
