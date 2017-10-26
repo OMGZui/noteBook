@@ -25,6 +25,24 @@
         - [2、缓存](#2缓存)
     - [六、HTTP首部](#六http首部)
         - [HTTP首部字段](#http首部字段)
+    - [七、HTTPS](#七https)
+        - [1、HTTP的缺点](#1http的缺点)
+        - [2、HTTP+加密+认证+完整性保护 = HTTPS](#2http加密认证完整性保护--https)
+    - [八、确认访问用户身份的认证](#八确认访问用户身份的认证)
+        - [1、HTTP认证](#1http认证)
+        - [2、Session管理和Cookie应用](#2session管理和cookie应用)
+    - [九、基于HTTP的功能追加协议](#九基于http的功能追加协议)
+        - [1、HTTP瓶颈](#1http瓶颈)
+        - [2、Ajax](#2ajax)
+        - [3、使用浏览器进行全双工通信的WebSocket](#3使用浏览器进行全双工通信的websocket)
+    - [十、构建Web内容的技术](#十构建web内容的技术)
+        - [1、HTML+CSS+JavaScript](#1htmlcssjavascript)
+        - [2、Web应用](#2web应用)
+        - [3、数据格式](#3数据格式)
+    - [十一、Web攻击技术](#十一web攻击技术)
+        - [1、针对Web的攻击技术](#1针对web的攻击技术)
+        - [2、针对Web的攻击模式](#2针对web的攻击模式)
+        - [3、密码破解](#3密码破解)
 
 <!-- /TOC -->
 
@@ -213,17 +231,128 @@ CF-RAY: 3af31b2d8039228e-LAX
 
 ### HTTP首部字段
 
-4种：
+4种：列举常见的
 
 1.通用首部字段
-名字|说明
+|名字|说明|
 |--|--|
 |Cache-Control|控制缓存行为|
 |Connection|逐跳首部、连接的管理|
 |Date|创建报文的日期时间|
+|Transfer_Encoding|指定报文主体的传输编码方式|
+|Via|代理服务器的相关信息|
 
 2.请求首部字段
+|名字|说明|
+|--|--|
+|Accept|用户代理可处理的媒体类型|
+|Authorization|Web认证信息|
+|Host|请求域名|
+|Referer|原始请求方|
+|User-Agent|HTTP客户端程序的信息|
 
 3.响应首部字段
+|名字|说明|
+|--|--|
+|Etag|资源的匹配信息|
+|Location|重定向至指定URI|
+|Server|服务器信息|
 
 4.实体首部字段
+|名字|说明|
+|--|--|
+|Allow|资源可支持的HTTP方法|
+|Content-Encoding|实体的编码方式|
+|Content-Type|实体主体的媒体类型|
+|Expires|过期日期|
+
+## 七、HTTPS
+
+### 1、HTTP的缺点
+
+通信使用明文，内容可能被窃听
+
+不验证通信方的身份，因此可能遭遇伪装
+
+无法证明报文的完整性，有可能已遭篡改
+
+### 2、HTTP+加密+认证+完整性保护 = HTTPS
+
+HTPPS 是身披SSL（Secure Socket Layer）的HTTP
+
+## 八、确认访问用户身份的认证
+
+### 1、HTTP认证
+
+认证多半是基于表单认证
+
+    BASIC认证（基本认证）
+    DIGSET认证（摘要认证）
+    SSL客户端认证
+    FormBase认证（基于表单认证）
+
+### 2、Session管理和Cookie应用
+
+HTTP是无状态协议，无法实现状态管理，因此我们用Cookie来管理Session
+
+## 九、基于HTTP的功能追加协议
+
+### 1、HTTP瓶颈
+
+一条连接上只可发送一个请求
+
+请求只能从客户端开始
+
+请求、响应首部未经压缩就发生
+
+发送冗余的首部
+
+可任意选择数据压缩格式
+
+### 2、Ajax
+
+Ajax（异步JavaScript和XML技术）操作DOM，以达到局部Web页面替换的异步通信手段
+
+### 3、使用浏览器进行全双工通信的WebSocket
+
+WebSocket是建立在HTTP基础上的协议，因此连接的发起方仍是客户端，服务器和客户端都可以直接向对方发送报文
+
+WebSocket是长连接，一直会保持状态，减少了连接开销
+
+## 十、构建Web内容的技术
+
+### 1、HTML+CSS+JavaScript
+
+### 2、Web应用
+
+CGI（通用网关接口）是指Web服务器在接收到客户端发过来的请求后转发给程序的一道机制，在CGI的作用下，程序会对请求内容作出相应的动作
+
+CGI程序比如有Perl、PHP、Ruby、C
+
+Servlet是一种能在服务器上创建动态内容的程序，是Java的一个接口，属于JavaEE
+
+CGI每次接到请求，程序都要跟着重启一次，而Servlet运行在与Web服务器相同的进程中，因此受到负载较小
+
+### 3、数据格式
+
+XML（可扩展标记语言）
+
+RSS（简易信息聚合）
+
+JSON（JavaScript Object Notion）包含false、null、true、对象、数组、数字、字符串7种类型
+
+## 十一、Web攻击技术
+
+### 1、针对Web的攻击技术
+
+一份调查：SQL注入（39%）、XSS（15%）、phpMyAdmin（9%）、ZanCart（5%）、其他（32%）
+
+### 2、针对Web的攻击模式
+
+主动攻击：攻击者直接访问Web应用进行攻击，代表SQL注入
+
+被动攻击：利用圈套策略执行攻击代码，代表XSS（Cross-Site Script，跨站脚本攻击）、CSRF（Cross-Site Request Forgeries，跨站点请求伪造）
+
+### 3、密码破解
+
+穷举法、字典攻击、彩虹表
