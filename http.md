@@ -43,6 +43,7 @@
         - [1、针对Web的攻击技术](#1针对web的攻击技术)
         - [2、针对Web的攻击模式](#2针对web的攻击模式)
         - [3、密码破解](#3密码破解)
+    - [十二、参考资料](#十二参考资料)
 
 <!-- /TOC -->
 
@@ -357,3 +358,7 @@ JSON（JavaScript Object Notion）包含false、null、true、对象、数组、
 ### 3、密码破解
 
 穷举法、字典攻击、彩虹表
+
+## 十二、参考资料
+
+[《图解HTTP》](https://book.douban.com/subject/25863515/)
