@@ -24,4 +24,4 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 ## PHP 面试
 
-### 1、strlen( )与 mb_strlen( )的作用分别是什么(新浪网技术部)
+[PHP面试](php/php7.php)
