@@ -33,6 +33,6 @@
 - [ ] php
 - [ ] redis
 - [x] http
-- [ ] git
+- [x] git
 - [x] 设计模式
 - [x] bash
