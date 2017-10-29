@@ -1,10 +1,12 @@
 # redis笔记
 
-前言：redis是什么，是一种非关系型数据库，统称nosql。
+前言：本文可能又臭又长，请各位慢慢享用
+
 <!-- TOC -->
 
 - [redis笔记](#redis笔记)
-    - [一、redis与memcached比较：](#一redis与memcached比较)
+    - [零、redis是什么](#零redis是什么)
+    - [一、redis与memcached比较](#一redis与memcached比较)
     - [二、安装](#二安装)
     - [三、配置](#三配置)
     - [四、通用key操作](#四通用key操作)
@@ -23,12 +25,18 @@
         - [redis 日志aof](#redis-日志aof)
     - [九、redis主从复制](#九redis主从复制)
     - [十、redis表设计](#十redis表设计)
+    - [十一、参考资料](#十一参考资料)
 
 <!-- /TOC -->
-## 一、redis与memcached比较：
 
-1. redis受益于“持久化”可以做存储(storge)，memcached只能做缓存(cache)
-2. redis有多种数据结构，memcached只有一种类型“字符串(string)”
+## 零、redis是什么
+
+redis是什么，是一种非关系型数据库，统称nosql。
+
+## 一、redis与memcached比较
+
+- 1、redis受益于“持久化”可以做存储(storge)，memcached只能做缓存(cache)
+- 2、redis有多种数据结构，memcached只有一种类型“字符串(string)”
 
 ## 二、安装
 
@@ -470,3 +478,5 @@ redis发送表
 推送表：receivepost -> list user_ids
 
 拉取表：pullpost -> zset user_ids
+
+## 十一、参考资料
