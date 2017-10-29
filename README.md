@@ -28,10 +28,11 @@
 
 - [ ] html+css
 - [ ] javascript
-- [ ] linux
-- [ ] nginx
-- [ ] php
-- [ ] redis
+- [x] linux
+- [x] nginx
+- [ ] mysql
+- [x] php
+- [x] redis
 - [x] http
 - [x] git
 - [x] 设计模式
