@@ -29,31 +29,43 @@ MySQL（官方发音为/maɪ ˌɛskjuːˈɛl/“My S-Q-L”[1]，但也经常读
 
 # 检测已安装的mysql
 yum list installed | grep mysql
+
 # 移除已安装的mysql
 yum -y remove mysql-libs.x86_64
+
 # 下载mysql5.7的rpm包
 wget https://dev.mysql.com/get/mysql57-community-release-el6-11.noarch.rpm
+
 # yum本地安装源
 yum localinstall mysql57-community-release-el6-11.noarch.rpm
+
 # 检测允许安装的mysql插件
 yum repolist enabled | grep mysql
 yum search mysql-community
+
 # 安装mysql
 yum -y install mysql-community-server.x86_64
+
 # 启动mysql
 service mysqld start
+
 # 自启动
 chkconfig mysqld on
+
 # 初始密码
 -> 2lNu<K?kk;6%
 grep 'temporary password' /var/log/mysqld.log
+
 # 进入数据库
 mysql -u root -p 2lNu<K?kk;6%
+
 # 修改密码
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'Root666,.';
+
 # 远程登录密码
 GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'Root666,.';
 GRANT ALL ON *.* to shengj@'%' IDENTIFIED BY 'Root666,.';
+
 # 远程登录
 mysql -h 104.223.3.138  -u root  -p Root666,.
 ```
@@ -66,7 +78,7 @@ mysql -h 104.223.3.138  -u root  -p Root666,.
 
 数据表：user
 
-字段：id int(11) /account varchar(255) /password varchar(255)
+字段：id int(11) | account varchar(255) | password varchar(255)
 
 ### 1、数据库
 
