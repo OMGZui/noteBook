@@ -144,6 +144,14 @@ drop table `user`;
 
 ### 3、数据库CURD操作
 
+```sh
+
+# 添加数据
+insert into `user` (account,password) values ('shengj','123456');
+
+
+```
+
 ## 四、mysql事务
 
 ## 五、mysql优化
