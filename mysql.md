@@ -149,6 +149,8 @@ drop table `user`;
 # 添加数据
 insert into `user` (account,password) values ('shengj','123456');
 
+# 更新数据
+update `user` set password='123456789' where account='shengj';
 
 ```
 
