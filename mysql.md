@@ -6,7 +6,7 @@
     - [一、mysql是什么](#一mysql是什么)
     - [二、mysql安装](#二mysql安装)
         - [1、yum安装](#1yum安装)
-    - [2、源码安装](#2源码安装)
+        - [2、源码安装](#2源码安装)
     - [三、mysql使用](#三mysql使用)
         - [1、数据库](#1数据库)
         - [2、数据表](#2数据表)
@@ -76,7 +76,7 @@ GRANT ALL ON *.* to shengj@'%' IDENTIFIED BY 'Root666,.';
 mysql -h 104.223.3.138  -u root  -p Root666,.
 ```
 
-## 2、源码安装
+### 2、源码安装
 
 ## 三、mysql使用
 
