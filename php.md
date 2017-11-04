@@ -98,7 +98,7 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 ## 六、PHP 面试
 
-[PHP面试](php/php7.php)
+[PHP面试](php)
 
 ## 七、PHP优化
 
