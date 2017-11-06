@@ -24,7 +24,7 @@ dump(mb_substr($str1, 4, mb_strlen($str1, 'utf-8') - 4, 'utf-8'));
 function substr_utf8($str, $start, $length = null)
 {
     $arr = array_slice(
-        preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY),
+        preg_split("//u", $str, -1, 1),
         $start,
         $length
     );
@@ -43,7 +43,13 @@ dump(substr_utf8($str1, 4, strlen_utf8($str1) - 4));
 echo "----------------------------------------- 2 -----------------------------------------\n";
 //超全局数组
 //dump($_SERVER);
+dump($_SERVER['DOCUMENT_ROOT']);
+dump(__DIR__);
+dump($_SERVER['REMOTE_ADDR']);
+dump($_SERVER['REMOTE_PORT']);
 dump($_SERVER['SERVER_NAME']);
+dump($_SERVER['SERVER_PORT']);
+
 
 echo "----------------------------------------- 3 -----------------------------------------\n";
 // 3个数的最大值
@@ -83,10 +89,10 @@ $number = 1234567890;
 dump(number_format($number));
 function number_thousands($number)
 {
-    $number = strrev($number);
-    $number = chunk_split($number, 3, ',');
-    $number = strrev($number);
-    return ltrim($number, ',');
+    $number = (string)strrev($number); //倒置
+    $number = chunk_split($number, 3, ','); //按","分块
+    $number = strrev($number); //再次倒置
+    return ltrim($number, ','); //剔除左边的","
 }
 
 dump(number_thousands($number));
@@ -104,7 +110,7 @@ dump(strrev(substr('www.baidu.com', 4, 9)));
 dump(strrev(str_replace('www.', '', 'www.baidu.com')));
 
 echo "----------------------------------------- 8 -----------------------------------------\n";
-// sort asort ksort
+// sort（正常排序，键值重新组装） asort（按值排序，键值保留） ksort（按键值排序）rsort（倒序，键值重新组装） arsort（按值排序后倒置，键值保留）krsort（按键值排序后倒置）
 $fruits = array("d" => "lemon", "a" => "orange", "b" => "banana", "c" => "apple");
 sort($fruits);
 dump($fruits);
@@ -187,7 +193,7 @@ function change_str($str)
 dump(change_str('make_by_id'));
 
 echo "----------------------------------------- 14 -----------------------------------------\n";
-// This is PHP -> PHP is This
+// This is a PHP -> PHP a is This
 function my_rev($str)
 {
     $arr = explode(' ', $str);
@@ -200,7 +206,7 @@ function my_rev($str)
     return implode(' ', $arr);
 }
 
-dump(my_rev('This is PHP'));
+dump(my_rev('This is a PHP'));
 
 echo "----------------------------------------- 15 -----------------------------------------\n";
 
@@ -291,4 +297,204 @@ function my_scandir($dir)
     }
 }
 
-dump(my_scandir('/Users/shengj/mac/php/noteBook'));
+//dump(my_scandir('/Users/shengj/mac/php/noteBook'));
+
+
+echo "----------------------------------------- 19 -----------------------------------------\n";
+//写一个函数，算出两个文件的相对路径，如a=′/a/b/c/d/e.php′;b='/a/b/12/34/c.php';计算出b相对于a的相对路径应该是../../c/d（新浪）
+function relative_path($path1, $path2)
+{
+    $arr1 = explode("/", dirname($path1));
+    $arr2 = explode("/", dirname($path2));
+
+    for ($i = 0, $len = count($arr2); $i < $len; $i++) {
+        if ($arr1[$i] != $arr2[$i]) {
+            break;
+        }
+    }
+
+    $return_path = [];
+    // 不在同一个根目录下
+    if ($i == 1) {
+        $return_path = array();
+    }
+
+    // 在同一个根目录下
+    if ($i != 1 && $i < $len) {
+        $return_path = array_fill(0, $len - $i, "..");
+    }
+
+    // 在同一个目录下
+    if ($i == $len) {
+        $return_path = array('./');
+    }
+
+    $return_path = array_merge($return_path, array_slice($arr1, $i));
+
+    return implode('/', $return_path);
+}
+
+$a = '/a/b/c/d/e.php';
+$b = '/a/b/12/34/c.php';
+$c = '/e/b/c/d/f.php';
+$d = '/a/b/c/d/g.php';
+
+dump(relative_path($a, $b));//结果是../../c/d
+dump(relative_path($a, $c));//结果是a/b/c/d
+dump(relative_path($a, $d));//结果是./
+
+echo "----------------------------------------- 20 -----------------------------------------\n";
+// 请写一个函数验证电子邮件的格式是否正确（要求使用正则）（新浪）
+
+$email = "862275679@qq.com";
+$int = preg_match('/^[\w\-\.]+@[\w\-]+(\.\w+)+$/', $email);
+
+dump($int);
+dump($email);
+
+echo "----------------------------------------- 21 -----------------------------------------\n";
+
+//使对象可以像数组一样进行foreach循环，要求属性必须是私有。(Iterator模式的PHP5实现，写一类实现Iterator接口)（腾讯）
+
+class ObjToArray implements \Iterator
+{
+    private $arr = [
+        'id' => 1,
+        'name' => 'php'
+    ];
+
+    public function current()
+    {
+        return current($this->arr);
+    }
+
+    public function key()
+    {
+        return key($this->arr);
+    }
+
+    public function next()
+    {
+        return next($this->arr);
+    }
+
+    public function rewind()
+    {
+        reset($this->arr);
+    }
+
+    public function valid()
+    {
+        return ($this->current() !== false);
+    }
+
+}
+
+$t = new ObjToArray();
+foreach ($t as $k => $v) {
+    dump($k . '->' . $v);
+}
+
+echo "----------------------------------------- 22 -----------------------------------------\n";
+
+// 用PHP实现一个双向队列（腾讯）
+
+class DoubleQueue
+{
+    private $queue = ["php", "java", "perl"];
+
+    public function init()
+    {
+        return $this->queue;
+    }
+
+    public function addFirst($item)
+    {
+        return array_unshift($this->queue, $item);
+    }
+
+    public function addLast($item)
+    {
+        return array_push($this->queue, $item);
+    }
+
+    public function removeFirst()
+    {
+        return array_shift($this->queue);
+    }
+
+    public function removeLast()
+    {
+        return array_pop($this->queue);
+    }
+}
+
+$queue = new DoubleQueue();
+
+$queue->addFirst('js');
+$queue->addLast('python');
+dump($queue->init());
+
+$queue->removeFirst();
+$queue->removeLast();
+dump($queue->init());
+
+
+echo "----------------------------------------- 23 -----------------------------------------\n";
+// 一群猴子排成一圈，按1，2，...，n依次编号。然后从第1只开始数，数到第m只,把它踢出圈，
+//从它后面再开始数，再数到第m只，在把它踢出去...，
+//如此不停的进行下去，直到最后只剩下一只猴子为止，那只猴子就叫做大王。
+//要求编程模拟此过程，输入m、n,输出最后那个大王的编号。（新浪）（小米）
+
+// 方案一，使用php来模拟这个过程
+function king($n, $m)
+{
+    //猴子的初始数量不能小于2
+    if ($n < 2) {
+        return false;
+    }
+
+    $arr = range(1, $n);
+    //将猴子分到一个数组里, 数组的值对应猴子的初始编号
+    $unsetNum = 0;
+    //定义一个变量,记录猴子的报数
+
+    for ($i = 2; $i <= $n * $m; $i++) //总的循环次数不知道怎么计算,
+    {
+        //不过因为循环中设置了return,所以$m*$len效率还可以
+        foreach ($arr as $k => $v) {
+            $unsetNum++; //每到一个猴子, 猴子报数+1
+
+            //当猴子的报数等于淘汰的数字时:淘汰猴子(删除数组元素)
+            //报数归0(下一个猴子从1开始数)
+            if ($unsetNum == $m) {
+//              print_r($arr);
+                unset($arr[$k]);
+                //淘汰猴子
+                $unsetNum = 0;
+                //报数归零
+                if (count($arr) == 1) //判断数组的长度, 如果只剩一个猴子, 返回它的值
+                {
+                    return reset($arr);
+                }
+            }
+        }
+    }
+}
+
+// 测试
+dump(king(10, 3));
+
+// 方案二，使用数学方法解决
+function josephus($n, $m)
+{
+    $r = 0;
+    //	$i=2指猴子的初始数量$n至少是两只
+    for ($i = 2; $i <= $n; $i++) {
+        $r = ($r + $m) % $i;
+    }
+    return $r + 1;
+}
+
+dump(josephus(10, 3));
+

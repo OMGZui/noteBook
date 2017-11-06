@@ -12,7 +12,6 @@ require '../vendor/autoload.php';
 
 set_time_limit(0);
 
-//$arr = [-1, 100, 23, 44, 511, -54, 77];
 $arr = [];
 for ($k = 0; $k < 10000; $k++) {
     $arr[] = $k;
