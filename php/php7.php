@@ -103,7 +103,6 @@ function strrev_utf8($str)
 {
     return implode('', array_reverse(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY)));
 }
-
 dump(strrev_utf8($str1));
 
 dump(strrev(substr('www.baidu.com', 4, 9)));
