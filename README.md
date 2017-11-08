@@ -30,7 +30,7 @@
 - [ ] javascript
 - [x] linux
 - [x] nginx
-- [ ] mysql
+- [x] mysql
 - [x] php
 - [x] redis
 - [x] http
