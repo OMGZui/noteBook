@@ -9,7 +9,16 @@
 //- 1、mysql事务的并行，锁问题
 //- 2、mysql论坛表设计
 //- 3、设计模式运用
+
+// ORM数据对象映射
+// 工厂模式
+// 单例模式
+// 装饰器模式
+
 //- 4、php代码解释
+
+// 通过zend引擎生成Opcode中间代码
+
 //- 5、百度统计的实现原理
 
 // 注册百度统计，拿到id，并赋值一段js代码嵌入到需要统计的网站内
@@ -38,3 +47,39 @@
 // 有不同吗？
 
 //- 10、restful设计
+
+//GET（SELECT）：从服务器取出资源（一项或多项）
+//POST（CREATE）：在服务器新建一个资源
+//PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）
+//PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）
+//DELETE（DELETE）：从服务器删除资源
+
+// 单例和工厂一起
+
+class Factory
+{
+     static function createInstance()
+     {
+         return DB::getInstance();
+     }
+}
+
+
+class DB
+{
+    private static $db;
+
+    final private function __construct(){}
+
+    final private function __clone(){}
+
+    public static function getInstance()
+    {
+        if (!self::$db){
+            self::$db = new self();
+        }
+        return self::$db;
+    }
+}
+
+$db = Factory::createInstance();
