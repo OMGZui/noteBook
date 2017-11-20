@@ -21,7 +21,7 @@ class Con
     private $host = "104.223.3.138";
     private $db = "demo";
     private $user_name = "shengj";
-    private $password = "Root666,./";
+    private $password = "Root666,.";
     private $conn;
     private $add_sql = "insert into user (account,password) values ('abc360','1234560')";
     private $select_sql = "select * from user";

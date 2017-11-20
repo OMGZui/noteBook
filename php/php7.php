@@ -497,3 +497,82 @@ function josephus($n, $m)
 
 dump(josephus(10, 3));
 
+
+//dump("1+5=". 5+1); // 2
+//dump("1+5=". 1+5); // 6
+//dump("5+1=". 5+1); // 6
+//dump("5+1=". 1+5); // 10
+
+echo "----------------------------------------- 24 -----------------------------------------\n";
+
+// 将一个二维数组的值首字母大写
+$array = [
+    ['name' => 'shengj','sex' => 'male'],
+    ['name' => 'wangm', 'sex' => 'male'],
+];
+function arrayToU(array $array) : array
+{
+    $arr = [];
+    foreach ($array as $k => $item) {
+        $keys = array_keys($item);
+        $values = array_values($item);
+        foreach ($keys as $kk=> $key) {
+            $arr[$k][$key] = ucfirst($values[$kk]);
+        }
+    }
+    return $arr;
+}
+dump(arrayToU($array));
+
+echo "----------------------------------------- 25 -----------------------------------------\n";
+
+// 使用正则获取html里的href属性的值和a标签内的值，并以href值为key，a标签内的值为value存入二维数组中
+$str = '
+    <ul class="attr">
+        <li>
+            <a href="www.baidu.com">百度baidu</a>
+            <a href=\'www.tecent.com\'>腾讯tengxun</a>
+            <a href="www.alibaba.com">阿里巴巴alibaba</a>
+        </li>
+    </ul>
+';
+
+function pregToArr(string $str) : array
+{
+    $preg_href = '/href=[\'\"](.*)[\'\"]/i';
+    preg_match_all($preg_href,$str,$match_href);
+//    dump($match_href);
+    $preg_a = '/\>(.*)\<\/a\>/';
+    preg_match_all($preg_a,$str,$match_a);
+//    dump($match_a);
+
+    $match_href = $match_href[1];
+    $match_a = $match_a[1];
+
+
+    $arr = [];
+    foreach ($match_href as $k => $item) {
+        $arr[$k][$item] = $match_a[$k];
+    }
+    return $arr;
+}
+
+dump(pregToArr($str));
+
+
+echo "----------------------------------------- 26 -----------------------------------------\n";
+
+//找出N个数中的第M大的数
+function findNInM(array $array,$n) :int
+{
+    $len = count($array);
+    if ($n > $len){
+        return '越界了，老妹';
+    }
+    sort($array);
+    return $array[$len-$n];
+}
+
+$arrM = [1,4,7,5];
+
+dump(findNInM($arrM,3));
