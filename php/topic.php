@@ -41,30 +41,3 @@ class DB
 Factory::createInstance();
 
 
-$str_p = '<p>啊实打实大苏打撒打算<img alt="docile.png" src="http://zmall.oss-cn-hangzhou.aliyuncs.com/fangde_sql%2F2017%2F11%2F15%2F143939docile.png" width="300" height="300"></p>';
-$str_a = '<li>
-<a href="www.baidu.com">拜服</a>
-<a href="www.baidu.com">拜服</a>
-</li>';
-//$preg = '/<img.*\">/';
-//$preg = '/alt=\"(\S*)\"/i';
-$preg_p = '/src=\"(\S*)\"/i';
-
-//$preg_a = '/\<li\>(\<a(.|\n)*>((.|\n)*)\<\/a\>)\<\/li\>/';
-$preg_a = '/\<li\>[.\n]*(\<a.*>(.*)\<\/a\>\\n*)\<\/li\>/';
-//$preg_a = '/\<li\>(.|\n)*\<\/li\>/';
-preg_match($preg_a,$str_a,$match_a);
-preg_match($preg_p,$str_p,$match_p);
-//dump($match_a);
-//dump($match_p);
-
-
-$url = 'www.baidu.com';
-$url = 'http://'.$url;
-
-$html = file_get_contents($url);
-preg_match('/\<title\>(.*)\<\/title\>/',$html,$icon_title);
-$icon = $url.'/favicon.ico';
-dump($icon_title[1]);
-dump($icon);
-
