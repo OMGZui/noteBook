@@ -279,7 +279,8 @@ select t_id from test where type_id=1 and plat_id=1 order by t_id limit 1;
 #### phpunit的用法
 
 ```php
-自己平时没注意这个东西，所以答的稀烂，问到有没有连数据库测，我说有，只是用预期数据与数据库查出的数据对比测试，面试官问有没有用过mock
+自己平时没注意这个东西，所以答的稀烂，问到有没有连数据库测，我说有，只是用预期数据与数据库查出的数据对比测试
+面试官问有没有用过mock
 懵逼了，这个概念确实听过，没去做过，意思是造假的意思，通过模拟数据库操作来达到测试目的，还有stub站桩，需要多实践啊骚年 o_o
 -------------
 参考：https://phpunit.de/manual/current/zh_cn/test-doubles.html
