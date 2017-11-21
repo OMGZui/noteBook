@@ -103,6 +103,7 @@ function strrev_utf8($str)
 {
     return implode('', array_reverse(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY)));
 }
+
 dump(strrev_utf8($str1));
 
 dump(strrev(substr('www.baidu.com', 4, 9)));
@@ -507,21 +508,22 @@ echo "----------------------------------------- 24 -----------------------------
 
 // 将一个二维数组的值首字母大写
 $array = [
-    ['name' => 'shengj','sex' => 'male'],
+    ['name' => 'shengj', 'sex' => 'male'],
     ['name' => 'wangm', 'sex' => 'male'],
 ];
-function arrayToU(array $array) : array
+function arrayToU(array $array): array
 {
     $arr = [];
     foreach ($array as $k => $item) {
         $keys = array_keys($item);
         $values = array_values($item);
-        foreach ($keys as $kk=> $key) {
+        foreach ($keys as $kk => $key) {
             $arr[$k][$key] = ucfirst($values[$kk]);
         }
     }
     return $arr;
 }
+
 dump(arrayToU($array));
 
 echo "----------------------------------------- 25 -----------------------------------------\n";
@@ -537,13 +539,13 @@ $str = '
     </ul>
 ';
 
-function pregToArr(string $str) : array
+function pregToArr(string $str): array
 {
     $preg_href = '/href=[\'\"](.*)[\'\"]/i';
-    preg_match_all($preg_href,$str,$match_href);
+    preg_match_all($preg_href, $str, $match_href);
 //    dump($match_href);
     $preg_a = '/\>(.*)\<\/a\>/';
-    preg_match_all($preg_a,$str,$match_a);
+    preg_match_all($preg_a, $str, $match_a);
 //    dump($match_a);
 
     $match_href = $match_href[1];
@@ -563,16 +565,16 @@ dump(pregToArr($str));
 echo "----------------------------------------- 26 -----------------------------------------\n";
 
 //找出N个数中的第M大的数
-function findNInM(array $array,$n) :int
+function findNInM(array $array, int $n): int
 {
     $len = count($array);
-    if ($n > $len){
+    if ($n > $len) {
         return '越界了，老妹';
     }
     sort($array);
-    return $array[$len-$n];
+    return $array[$len - $n];
 }
 
-$arrM = [1,4,7,5];
+$arrM = [1, 4, 7, 5];
 
-dump(findNInM($arrM,3));
+dump(findNInM($arrM, 3));
