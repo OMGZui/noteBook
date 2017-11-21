@@ -262,7 +262,7 @@ mysql事务可以理解为一系列操作，要么成功执行，要么失败。
 ### 1、原子性
 
 下图可以很好的描述事务的原子性：事务要不就在执行中，要不然就是成功或者失败的状态
-![](http://omgzui.oss-cn-hangzhou.aliyuncs.com/blog/mysq_transaction.jpeg)
+![](./php/mysq_transaction.jpeg)
 
 ### 2、一致性
 
