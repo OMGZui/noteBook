@@ -4,6 +4,21 @@
 
 平时积累的东西以笔记的形式分享出来
 
+## 使用
+
+```sh
+git clone https://github.com/OMGZui/noteBook.git
+composer install
+php -S localhost:8000
+# 浏览器
+http://localhost:8000/php/php7.php
+# 命令行
+cd php
+php -f php7.php
+或
+php php7.php
+```
+
 ## 一、前端
 
 - [1、html+css](html+css.md)
