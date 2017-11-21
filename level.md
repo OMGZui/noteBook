@@ -216,6 +216,7 @@ select t_id from test where type_id=1 and plat_id=1 order by t_id limit 1;
 ```
 
 **redis异步队列实现细节**
+
 看我简历中写用过
 ```php
 我当时用的是laravel中的队列机制，通过dispatch()触发任务，php artisan queue:work 开启后台进程监视队列并完成任务
@@ -234,6 +235,7 @@ https://segmentfault.com/q/1010000004669705
 ```
 
 **你对多进程和多线程还有协程的理解**
+
 作为cs专业的phper，大学学的都交给老师了，zzz
 ```php
 进程可以有多个线程，在php中yield可以实现协程，面试官问swoole新版本中自带协程，你怎么理解？
@@ -248,6 +250,7 @@ https://segmentfault.com/q/1010000004669705
 ```
 
 **说说怎么理解现在前端框架中的组件化和模块化**
+
 看到我会react.js问的
 ```php
 我说就比如react里的组件可以理解为一个class类，模块的意思是一个文件就是一个模块，有单独的作用域
@@ -289,6 +292,7 @@ choice installed on your machine before you begin development.
 ```
 
 **场景题：索引的建立规则和explain**
+
 有这样一张表 自增id、名字、昵称、年龄、客户类型、创建时间
 
 哪些字段需要建立索引？为什么？
@@ -311,6 +315,7 @@ choice installed on your machine before you begin development.
 ```
 
 **nginx相关**
+
 简历写了了解nginx负载均衡和反向代理，你是怎么做的
 
 php-fpm能代理其他端口吗？除了默认9000
