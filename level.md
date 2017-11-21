@@ -4,6 +4,8 @@
 
 有心的同学应该会看到我这个[noteBook][4]下面的其它知识，希望对你们有些许帮助。
 
+[本文地址][5]
+
 时间点：2017-11
 
 <!-- TOC -->
@@ -522,3 +524,4 @@ user用户表、role角色表、perm权限表、role-user用户角色关联表�
 [2]:https://www.zhihu.com/question/63878469
 [3]:https://www.zhihu.com/question/20029279
 [4]:https://github.com/OMGZui/noteBook
+[5]:https://github.com/OMGZui/noteBook/blob/master/level.md
