@@ -234,7 +234,7 @@ test表中数据有500w，字段有id/t_id/type_id/plat_id，语句为`select ma
 考察mysql语句优化，这里主要是优化max函数，max函数会导致全表扫描，效率会很低，可以使用order by加limit进行优化
 
 我是这样答的
-select t_id from test where type_id=1 and plat_id=1 order by t_id limit 1;
+select t_id from test where type_id=1 and plat_id=1 order by t_id desc limit 1;
 当然还可以使用加索引进一步优化速度，这里可以加上(type_id/plat_id)联合索引。
 -------------
 正确做法是给`t_id`加索引，还有(type_id/plat_id)联合索引，order by 并不能避免全表扫描。
