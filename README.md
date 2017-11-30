@@ -23,6 +23,7 @@ php php7.php
 
 - [1、html+css](html+css.md)
 - [2、javascript](javascript.md)
+- [3、node](node.md)
 
 ## 二、后端
 
@@ -32,6 +33,7 @@ php php7.php
 - [4、php](php.md)
 - [5、redis](redis.md)
 - [6、http](http.md)
+- [7、mongodb](mongodb.md)
 
 ## 三、工具
 
@@ -47,6 +49,7 @@ php php7.php
 
 - [ ] html+css
 - [ ] javascript
+- [ ] node
 - [x] linux
 - [x] nginx
 - [x] mysql
@@ -56,4 +59,5 @@ php php7.php
 - [x] git
 - [x] 设计模式
 - [x] bash
+- [ ] mongodb
 - [x] 面试
