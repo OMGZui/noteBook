@@ -8,6 +8,16 @@
 
 ```sh
 git clone https://github.com/OMGZui/noteBook.git
+
+# 前端
+cd js
+npm install
+node main.js
+# 浏览器
+http://localhost:5000/ 查看console
+
+
+# PHP
 composer install
 php -S localhost:8000
 # 浏览器
@@ -48,8 +58,8 @@ php php7.php
 ## 完成进度
 
 - [ ] html+css
-- [ ] javascript
-- [ ] node
+- [x] javascript
+- [x] node
 - [x] linux
 - [x] nginx
 - [x] mysql
