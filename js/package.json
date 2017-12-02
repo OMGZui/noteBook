@@ -1,0 +1,14 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "js",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "小粽子",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
