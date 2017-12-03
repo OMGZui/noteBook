@@ -15,6 +15,7 @@
             - [1.构造函数当函数](#1构造函数当函数)
             - [2.构造函数的问题](#2构造函数的问题)
         - [原型模式](#原型模式)
+        - [构造函数模式和原型模式](#构造函数模式和原型模式)
 
 <!-- /TOC -->
 
@@ -55,7 +56,7 @@ __defineGetter__()/__defineSetter__() 兼容老版本，呵呵哒
 
 ### 读取属性
 
-读取对象属性可以使用`Object.getOwnPropertyDescriptor()`和`Object.getOwnPropertyDescriptors()`
+读取原型对象属性可以使用`Object.getOwnPropertyDescriptor()`和`Object.getOwnPropertyDescriptors()`
 
 ### 工厂模式
 
@@ -124,3 +125,74 @@ person_compare2.sayName()
 `console.log(person_compare1.sayName == person_compare2.sayName) //false`
 
 ### 原型模式
+
+```js
+
+function PersonPrototype(){
+
+}
+
+PersonPrototype.prototype.name = 'Shengj'
+PersonPrototype.prototype.job = 'PHP Engineer'
+PersonPrototype.prototype.sayName = function(){
+    console.log(this.name)
+}
+
+var person1 = new PersonPrototype()
+var person2 = new PersonPrototype()
+
+# isPrototypeOf() 判断实例中[[Prototype]]是否指向原型的 PersonPrototype.prototype
+# getPrototypeOf() 获取实例中[[Prototype]]的值
+console.log(person1.sayName == person2.sayName) //true
+console.log(PersonPrototype.prototype.isPrototypeOf(person1)) //true
+console.log(Object.getPrototypeOf(person1) == PersonPrototype.prototype) //true
+
+# 屏蔽原型属性，类似方法重载，js里是由于两层搜索，先搜索实例再搜索原型
+person1.name = 'Shengj_1'
+console.log(person1.name) //Shengj_1 来自实例
+console.log(person2.name) //Shengj 来自原型
+
+# hasOwnProperty() 判断实例是否有这个属性或方法
+console.log(person1.hasOwnProperty('name')) //true
+console.log(person2.hasOwnProperty('name')) //false
+
+# keys()/getOwnPropertyNames()
+# 都是对于Object的，获取枚举属性，getOwnPropertyNames()会把constructor也列出来
+console.log(Object.keys(PersonPrototype.prototype)) //(3) ["name", "job", "sayName"]
+console.log(Object.getOwnPropertyNames(PersonPrototype.prototype)) //(4) ["constructor", "name", "job", "sayName"]
+console.log(Object.keys(person1)) //["name"]
+console.log(Object.getOwnPropertyNames(person1)) //["name"]
+
+# 重写原型对象
+我们先实例化一个原型对象，然后重写原型对象，再去调用其原有的属性和方法，error，因为重写原型对象失去了对象实例化的关联
+```
+
+### 构造函数模式和原型模式
+
+```js
+
+// 组合使用构造函数模式和原型模式
+function PersonTrue(name, job){
+    this.name = name
+    this.job = job
+    this.friends = ['wangm','chensw']
+}
+
+PersonTrue.prototype = {
+    constructor: PersonTrue,
+    sayName: function(){
+        console.log(this.name)
+    }
+}
+
+var personTrue1 = new PersonTrue('小粽子_True1','PHP')
+var personTrue2 = new PersonTrue('小粽子_True2','PHP')
+
+personTrue1.friends.push('liwt')
+
+console.log(personTrue1)
+console.log(personTrue2)
+
+console.log(personTrue1.name === personTrue2.name) //false
+console.log(personTrue1.sayName === personTrue2.sayName) //true
+```

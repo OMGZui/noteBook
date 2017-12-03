@@ -2,7 +2,7 @@
  * @Author: 小粽子 
  * @Date: 2017-12-02 21:28:33 
  * @Last Modified by: 小粽子
- * @Last Modified time: 2017-12-02 23:01:31
+ * @Last Modified time: 2017-12-03 20:02:12
  */
 
 // 早期对象写法
@@ -16,7 +16,7 @@ person.sayName = function () {
     console.log(this.name)
 }
 
- console.log(person)
+//  console.log(person)
 
 // 对象字面量写法
 var person_new = {
@@ -95,8 +95,8 @@ console.log(zongzi_construct)
 // __proto__:Object
 
 // 检测
-console.log(zongzi_construct instanceof Object) //true
-console.log(zongzi_construct instanceof Person) //true
+// console.log(zongzi_construct instanceof Object) //true
+// console.log(zongzi_construct instanceof Person) //true
 
 
 // 把构造函数当做普通函数
@@ -115,4 +115,68 @@ Person.call(person_compare2, '小粽子3', 'PHP')
 person_compare2.sayName()
 
 // 构造函数的问题
-console.log(person_compare1.sayName == person_compare2.sayName) //false
+// console.log(person_compare1.sayName == person_compare2.sayName) //false
+
+
+// 原型模式
+function PersonPrototype(){
+
+}
+
+PersonPrototype.prototype.name = 'Shengj'
+PersonPrototype.prototype.job = 'PHP Engineer'
+PersonPrototype.prototype.sayName = function(){
+    console.log(this.name)
+}
+
+var person1 = new PersonPrototype()
+var person2 = new PersonPrototype()
+
+// # isPrototypeOf() 判断实例中[[Prototype]]是否指向原型的 PersonPrototype.prototype
+// # getPrototypeOf() 获取实例中[[Prototype]]的值
+// console.log(person1.sayName == person2.sayName) //true
+// console.log(PersonPrototype.prototype.isPrototypeOf(person1)) //true
+// console.log(Object.getPrototypeOf(person1) == PersonPrototype.prototype) //true
+
+// # 屏蔽原型属性，类似方法重载，js里是由于两层搜索，先搜索实例再搜索原型
+person1.name = 'Shengj_1'
+// console.log(person1.name) //Shengj_1 来自实例
+// console.log(person2.name) //Shengj 来自原型
+
+// # hasOwnProperty() 判断实例是否有这个属性或方法
+// console.log(person1.hasOwnProperty('name')) //true
+// console.log(person2.hasOwnProperty('name')) //false
+
+// # keys
+// console.log(Object.keys(PersonPrototype.prototype)) //(3) ["name", "job", "sayName"]
+// console.log(Object.getOwnPropertyNames(PersonPrototype.prototype)) //(3) ["name", "job", "sayName"]
+// console.log(Object.keys(person1)) //["name"]
+// console.log(Object.getOwnPropertyNames(person1)) //["name"]
+
+// 原生对象的原型
+console.log('hello world'.indexOf('hello'))
+
+// 组合使用构造函数模式和原型模式
+function PersonTrue(name, job){
+    this.name = name
+    this.job = job
+    this.friends = ['wangm','chensw']
+}
+
+PersonTrue.prototype = {
+    constructor: PersonTrue,
+    sayName: function(){
+        console.log(this.name)
+    }
+}
+
+var personTrue1 = new PersonTrue('小粽子_True1','PHP')
+var personTrue2 = new PersonTrue('小粽子_True2','PHP')
+
+personTrue1.friends.push('liwt')
+
+console.log(personTrue1)
+console.log(personTrue2)
+
+console.log(personTrue1.name === personTrue2.name) //false
+console.log(personTrue1.sayName === personTrue2.sayName) //true
