@@ -16,6 +16,7 @@
             - [2.构造函数的问题](#2构造函数的问题)
         - [原型模式](#原型模式)
         - [构造函数模式和原型模式](#构造函数模式和原型模式)
+        - [原型链](#原型链)
 
 <!-- /TOC -->
 
@@ -196,3 +197,46 @@ console.log(personTrue2)
 console.log(personTrue1.name === personTrue2.name) //false
 console.log(personTrue1.sayName === personTrue2.sayName) //true
 ```
+
+### 原型链
+
+js中没有`接口继承interface`，只有`实现继承extends`，而且是基于`原型链`的。
+
+```js
+
+function SuperType(){
+    this.property = true
+}
+
+SuperType.prototype.getSuperValue = function(){
+    return this.property
+}
+
+function SubType(){
+    this.subproperty = false
+}
+
+// 继承
+SubType.prototype = new SuperType()
+
+SubType.prototype.getSubValue = function(){
+    return this.subproperty
+}
+
+var instance = new SubType()
+console.log(instance.getSuperValue()) //true
+
+# instance指向SubType的原型，SubType的原型又指向SuperType的原型，SuperType的原型又指向Object的原型
+
+console.log(instance instanceof Object) //true
+console.log(instance instanceof SuperType) //true
+console.log(instance instanceof SubType) //true
+
+console.log(Object.prototype.isPrototypeOf(instance)) //true
+console.log(SuperType.prototype.isPrototypeOf(instance)) //true
+console.log(SubType.prototype.isPrototypeOf(instance)) //true
+
+```
+
+**详细见图**
+![]('./js/public/完整的原型链.jpg')

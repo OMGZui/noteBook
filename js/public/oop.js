@@ -2,7 +2,7 @@
  * @Author: 小粽子 
  * @Date: 2017-12-02 21:28:33 
  * @Last Modified by: 小粽子
- * @Last Modified time: 2017-12-03 20:02:12
+ * @Last Modified time: 2017-12-03 20:44:13
  */
 
 // 早期对象写法
@@ -180,3 +180,36 @@ console.log(personTrue2)
 
 console.log(personTrue1.name === personTrue2.name) //false
 console.log(personTrue1.sayName === personTrue2.sayName) //true
+
+// 继承
+// 原型链
+function SuperType(){
+    this.property = true
+}
+
+SuperType.prototype.getSuperValue = function(){
+    return this.property
+}
+
+function SubType(){
+    this.subproperty = false
+}
+
+// 继承
+SubType.prototype = new SuperType()
+
+SubType.prototype.getSubValue = function(){
+    return this.subproperty
+}
+
+var instance = new SubType()
+console.log(instance.getSuperValue()) //true
+
+// # instance指向SubType的原型，SubType的原型又指向SuperType的原型，SuperType的原型又指向Object的原型
+console.log(instance instanceof Object) //true
+console.log(instance instanceof SuperType) //true
+console.log(instance instanceof SubType) //true
+
+console.log(Object.prototype.isPrototypeOf(instance)) //true
+console.log(SuperType.prototype.isPrototypeOf(instance)) //true
+console.log(SubType.prototype.isPrototypeOf(instance)) //true
