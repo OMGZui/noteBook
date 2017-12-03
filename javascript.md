@@ -303,7 +303,7 @@ instance_combine2.sayJob() //PHP
  * @param {any} superType
  */
 function inheritProtoType(SubTypeCombine, SuperTypeCombine){
-    var property = object(superType.property) //创建对象
+    var property = object(SuperTypeCombine.property) //创建对象
     property.constructor = SubTypeCombine //增强对象
     SubTypeCombine.property = property //指定对象
 }

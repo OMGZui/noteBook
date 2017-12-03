@@ -2,7 +2,7 @@
  * @Author: 小粽子 
  * @Date: 2017-12-02 21:28:33 
  * @Last Modified by: 小粽子
- * @Last Modified time: 2017-12-03 22:15:26
+ * @Last Modified time: 2017-12-03 22:23:40
  */
 
 // 早期对象写法
@@ -256,13 +256,13 @@ instance_combine2.sayJob() //PHP
  * SubTypeCombine.prototype.constructor = SubTypeCombine
  * 目的是为了减少一次调用SuperTypeCombine的constructor
  * 
- * @param {any} subType 
- * @param {any} superType 
+ * @param {any} SubTypeCombine
+ * @param {any} SuperTypeCombine
  */
-function inheritProtoType(subType, superType){
-    var property = object(superType.property) //创建对象
-    property.constructor = subType //增强对象
-    subType.property = property //指定对象
+function inheritProtoType(SubTypeCombine, SuperTypeCombine){
+    var property = object(SuperTypeCombine.property) //创建对象
+    property.constructor = SubTypeCombine //增强对象
+    SubTypeCombine.property = property //指定对象
 }
 
 
