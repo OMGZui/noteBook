@@ -17,6 +17,9 @@
         - [原型模式](#原型模式)
         - [构造函数模式和原型模式](#构造函数模式和原型模式)
         - [原型链](#原型链)
+        - [借用构造函数](#借用构造函数)
+        - [组合继承](#组合继承)
+        - [寄生组合继承](#寄生组合继承)
 
 <!-- /TOC -->
 
@@ -240,3 +243,96 @@ console.log(SubType.prototype.isPrototypeOf(instance)) //true
 
 **详细见图**
 ![](js/public/完整的原型链.jpg)
+
+### 借用构造函数
+
+主要是用到了`call()/apply()`，`SuperType.call(this, 'Shengj')`
+
+### 组合继承
+
+原型链和借用构造函数组合使用
+
+```js
+
+function SuperTypeCombine(name){
+    this.name = name
+    this.colors = ['red', 'blue', 'green']
+}
+SuperTypeCombine.prototype.sayName = function(){
+    console.log(this.name)
+}
+function SubTypeCombine(name, job){
+    SuperTypeCombine.call(this, name)
+
+    this.job = job
+}
+
+// 继承
+SubTypeCombine.prototype = new SuperTypeCombine()
+SubTypeCombine.prototype.constructor = SubTypeCombine
+SubTypeCombine.prototype.sayJob = function(){
+    console.log(this.job)
+}
+
+var instance_combine1 = new SubTypeCombine('小性子','JS')
+instance_combine1.colors.push('black') 
+console.log(instance_combine1.colors) //(4) ["red", "blue", "green", "black"]
+instance_combine1.sayName() //小性子
+instance_combine1.sayJob() //JS
+
+var instance_combine2 = new SubTypeCombine('小粽子','PHP')
+console.log(instance_combine2.colors) //(3) ["red", "blue", "green"]
+instance_combine2.sayName() //小粽子
+instance_combine2.sayJob() //PHP
+```
+
+### 寄生组合继承
+
+目的是为了只调用一次超类的constructor
+
+```js
+// inheritProtoType(SubTypeCombine,SuperTypeCombine)用来替换掉
+// SubTypeCombine.prototype = new SuperTypeCombine()
+// SubTypeCombine.prototype.constructor = SubTypeCombine
+// 目的是为了减少一次调用SuperTypeCombine的constructor
+function inheritProtoType(SubTypeCombine, SuperTypeCombine){
+    var property = object(superType.property) //创建对象
+    property.constructor = SubTypeCombine //增强对象
+    SubTypeCombine.property = property //指定对象
+}
+
+function SuperTypeCombine(name){
+    this.name = name
+    this.colors = ['red', 'blue', 'green']
+}
+
+SuperTypeCombine.prototype.sayName = function(){
+    console.log(this.name)
+}
+
+function SubTypeCombine(name, job){
+    SuperTypeCombine.call(this, name)
+
+    this.job = job
+}
+
+// 继承
+inheritProtoType(SubTypeCombine,SuperTypeCombine)
+SubTypeCombine.prototype.sayJob = function(){
+    console.log(this.job)
+}
+
+var instance_combine1 = new SubTypeCombine('小性子','JS')
+instance_combine1.colors.push('black')
+console.log(instance_combine1.colors) //(4) ["red", "blue", "green", "black"]
+instance_combine1.sayName() //小性子
+instance_combine1.sayJob() //JS
+
+var instance_combine2 = new SubTypeCombine('小粽子','PHP')
+console.log(instance_combine2.colors) //(3) ["red", "blue", "green"]
+instance_combine2.sayName() //小粽子
+instance_combine2.sayJob() //PHP
+```
+
+**详细见图**
+![](js/public/寄生组合继承.jpg)

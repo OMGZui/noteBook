@@ -2,7 +2,7 @@
  * @Author: 小粽子 
  * @Date: 2017-12-02 21:28:33 
  * @Last Modified by: 小粽子
- * @Last Modified time: 2017-12-03 20:44:13
+ * @Last Modified time: 2017-12-03 22:05:52
  */
 
 // 早期对象写法
@@ -175,11 +175,11 @@ var personTrue2 = new PersonTrue('小粽子_True2','PHP')
 
 personTrue1.friends.push('liwt')
 
-console.log(personTrue1)
-console.log(personTrue2)
+// console.log(personTrue1)
+// console.log(personTrue2)
 
-console.log(personTrue1.name === personTrue2.name) //false
-console.log(personTrue1.sayName === personTrue2.sayName) //true
+// console.log(personTrue1.name === personTrue2.name) //false
+// console.log(personTrue1.sayName === personTrue2.sayName) //true
 
 // 继承
 // 原型链
@@ -203,13 +203,58 @@ SubType.prototype.getSubValue = function(){
 }
 
 var instance = new SubType()
-console.log(instance.getSuperValue()) //true
+// console.log(instance.getSuperValue()) //true
 
 // # instance指向SubType的原型，SubType的原型又指向SuperType的原型，SuperType的原型又指向Object的原型
-console.log(instance instanceof Object) //true
-console.log(instance instanceof SuperType) //true
-console.log(instance instanceof SubType) //true
+// console.log(instance instanceof Object) //true
+// console.log(instance instanceof SuperType) //true
+// console.log(instance instanceof SubType) //true
 
-console.log(Object.prototype.isPrototypeOf(instance)) //true
-console.log(SuperType.prototype.isPrototypeOf(instance)) //true
-console.log(SubType.prototype.isPrototypeOf(instance)) //true
+// console.log(Object.prototype.isPrototypeOf(instance)) //true
+// console.log(SuperType.prototype.isPrototypeOf(instance)) //true
+// console.log(SubType.prototype.isPrototypeOf(instance)) //true
+
+// 组合继承
+function SuperTypeCombine(name){
+    this.name = name
+    this.colors = ['red', 'blue', 'green']
+}
+SuperTypeCombine.prototype.sayName = function(){
+    console.log(this.name)
+}
+function SubTypeCombine(name, job){
+    SuperTypeCombine.call(this, name)
+
+    this.job = job
+}
+
+// 继承
+
+SubTypeCombine.prototype = new SuperTypeCombine()
+SubTypeCombine.prototype.constructor = SubTypeCombine
+SubTypeCombine.prototype.sayJob = function(){
+    console.log(this.job)
+}
+
+var instance_combine1 = new SubTypeCombine('小性子','JS')
+instance_combine1.colors.push('black')
+console.log(instance_combine1.colors) //(4) ["red", "blue", "green", "black"]
+instance_combine1.sayName() //小性子
+instance_combine1.sayJob() //JS
+
+var instance_combine2 = new SubTypeCombine('小粽子','PHP')
+console.log(instance_combine2.colors) //(3) ["red", "blue", "green"]
+instance_combine2.sayName() //小粽子
+instance_combine2.sayJob() //PHP
+
+// 寄生组合继承
+function inheritProtoType(subType, superType){
+    var property = object(superType.property) //创建对象
+    property.constructor = subType //增强对象
+    subType.property = property //指定对象
+}
+
+// inheritProtoType(SubTypeCombine,SuperTypeCombine)用来替换掉
+// SubTypeCombine.prototype = new SuperTypeCombine()
+// SubTypeCombine.prototype.constructor = SubTypeCombine
+// 目的是为了减少一次调用SuperTypeCombine的constructor
