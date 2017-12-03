@@ -239,4 +239,4 @@ console.log(SubType.prototype.isPrototypeOf(instance)) //true
 ```
 
 **详细见图**
-![]('./js/public/完整的原型链.jpg')
+![](js/public/完整的原型链.jpg)
