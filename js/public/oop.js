@@ -2,7 +2,7 @@
  * @Author: 小粽子 
  * @Date: 2017-12-02 21:28:33 
  * @Last Modified by: 小粽子
- * @Last Modified time: 2017-12-03 22:05:52
+ * @Last Modified time: 2017-12-03 22:15:26
  */
 
 // 早期对象写法
@@ -248,13 +248,21 @@ instance_combine2.sayName() //小粽子
 instance_combine2.sayJob() //PHP
 
 // 寄生组合继承
+/**
+ * 寄生组合继承
+ * 
+ * inheritProtoType(SubTypeCombine,SuperTypeCombine)用来替换掉
+ * SubTypeCombine.prototype = new SuperTypeCombine()
+ * SubTypeCombine.prototype.constructor = SubTypeCombine
+ * 目的是为了减少一次调用SuperTypeCombine的constructor
+ * 
+ * @param {any} subType 
+ * @param {any} superType 
+ */
 function inheritProtoType(subType, superType){
     var property = object(superType.property) //创建对象
     property.constructor = subType //增强对象
     subType.property = property //指定对象
 }
 
-// inheritProtoType(SubTypeCombine,SuperTypeCombine)用来替换掉
-// SubTypeCombine.prototype = new SuperTypeCombine()
-// SubTypeCombine.prototype.constructor = SubTypeCombine
-// 目的是为了减少一次调用SuperTypeCombine的constructor
+

@@ -291,10 +291,17 @@ instance_combine2.sayJob() //PHP
 目的是为了只调用一次超类的constructor
 
 ```js
-// inheritProtoType(SubTypeCombine,SuperTypeCombine)用来替换掉
-// SubTypeCombine.prototype = new SuperTypeCombine()
-// SubTypeCombine.prototype.constructor = SubTypeCombine
-// 目的是为了减少一次调用SuperTypeCombine的constructor
+/**
+ * 寄生组合继承
+ *
+ * inheritProtoType(SubTypeCombine,SuperTypeCombine)用来替换掉
+ * SubTypeCombine.prototype = new SuperTypeCombine()
+ * SubTypeCombine.prototype.constructor = SubTypeCombine
+ * 目的是为了减少一次调用SuperTypeCombine的constructor
+ *
+ * @param {any} subType
+ * @param {any} superType
+ */
 function inheritProtoType(SubTypeCombine, SuperTypeCombine){
     var property = object(superType.property) //创建对象
     property.constructor = SubTypeCombine //增强对象
