@@ -8,7 +8,7 @@
 
 namespace PHP;
 
-require '../vendor/autoload.php';
+require 'index.php';
 
 echo "----------------------------------------- 1 -----------------------------------------\n";
 // strlen() 与 mb_strlen

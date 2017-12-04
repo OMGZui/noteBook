@@ -6,6 +6,8 @@
  * Time: 12:00
  */
 
+require 'index.php';
+
 $a = $b = 0;
 
 function solveMeFirst($a,$b){

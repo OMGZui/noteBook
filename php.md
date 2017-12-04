@@ -25,8 +25,9 @@
     - [五、PHP 实践](#五php-实践)
         - [1、多维数组变一维数组](#1多维数组变一维数组)
     - [六、PHP 面试](#六php-面试)
-    - [七、PHP优化](#七php优化)
-    - [八、参考资料](#八参考资料)
+    - [七、PHP扩展](#七php扩展)
+    - [八、PHP优化](#八php优化)
+    - [九、参考资料](#九参考资料)
 
 <!-- /TOC -->
 
@@ -110,8 +111,49 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 [PHP面试](php)
 
-## 七、PHP优化
+## 七、PHP扩展
 
-## 八、参考资料
+按phpinfo()上的扩展解读
+
+- date
+- dom
+- exif
+- fileinfo
+- filter
+- ftp
+- gd
+- hash
+- iconv
+- imagick
+- json
+- libxml
+- mbstring
+- mcrypt
+- memcached
+- mongodb
+- mysqli
+- mysqlnd
+- openssl
+- pcre
+- PDO
+- Phar
+- posix
+- readline
+- redis
+- Reflection
+- session
+- SimpleXML
+- SPL
+- swoole
+- tokenizer
+- xdebug
+- xml
+- Zend OPcache
+- zlib
+- dom
+
+## 八、PHP优化
+
+## 九、参考资料
 
 [php手册](http://php.net/)

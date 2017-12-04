@@ -2,7 +2,7 @@
 
 namespace PHP;
 
-require '../vendor/autoload.php';
+require 'index.php';
 
 /**
  *
