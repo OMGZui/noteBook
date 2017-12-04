@@ -6,7 +6,9 @@
  * Time: 12:00
  */
 
-require 'index.php';
+namespace PHP\Demo;
+
+require __DIR__.'/../bootstrap.php';
 
 $a = $b = 0;
 

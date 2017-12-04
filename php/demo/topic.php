@@ -6,9 +6,9 @@
  * Time: 21:53
  */
 
-namespace PHP;
+namespace PHP\Demo;
 
-require 'index.php';
+require __DIR__.'/../bootstrap.php';
 
 // 单例和工厂一起
 

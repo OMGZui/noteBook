@@ -6,9 +6,9 @@
  * Time: 09:54
  */
 
-namespace PHP;
+namespace PHP\Level;
 
-require 'index.php';
+require __DIR__.'/../bootstrap.php';
 
 set_time_limit(0);
 

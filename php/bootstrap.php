@@ -10,6 +10,3 @@ namespace PHP;
 
 require __DIR__.'/../vendor/autoload.php';
 
-use PHP\Ext\Date\ExtDate;
-
-new ExtDate();

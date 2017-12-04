@@ -1,14 +1,24 @@
 {
   "name": "omgzui/noteBook",
   "description": "linux nginx mysql php http redis",
-  "keywords": ["php", "skill"],
+  "keywords": [
+    "php",
+    "skill"
+  ],
   "license": "MIT",
   "type": "project",
   "require": {
     "symfony/var-dumper": "*"
   },
   "autoload": {
-    "classmap": ["php/"]
+    "psr-4": {
+      "PHP\\": "php/"
+    },
+    "classmap": [
+      "php/"
+    ],
+    "files": [
+    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true

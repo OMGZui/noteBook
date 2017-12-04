@@ -8,6 +8,10 @@
 
 namespace PHP\Ext\Date;
 
-require '../../index.php';
-
-
+class ExtDate
+{
+    public function __construct()
+    {
+        dump("ExtDate");
+    }
+}
