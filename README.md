@@ -4,7 +4,27 @@
 
 平时积累的东西以笔记的形式分享出来
 
-## 使用
+## Usage
+
+### 目录结构
+
+```sh
+
+- js
+    - public 项目包
+    - main.js 入口
+    - package.json 依赖管理
+
+- php
+    - demo 各种栗子
+    - ext php扩展包应用
+    - level 面试集合
+    - bootstrap.php 入口
+    - index.php 实例
+
+```
+
+### 使用
 
 ```sh
 git clone https://github.com/OMGZui/noteBook.git
@@ -21,12 +41,13 @@ http://localhost:5000/ 查看console
 composer install
 php -S localhost:8000
 # 浏览器
-http://localhost:8000/php/php7.php
+http://localhost:8000/php/index.php
 # 命令行
 cd php
-php -f php7.php
+php -f index.php
 或
-php php7.php
+php index.php
+
 ```
 
 ## 一、前端
