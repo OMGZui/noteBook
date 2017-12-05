@@ -20,6 +20,9 @@
         - [借用构造函数](#借用构造函数)
         - [组合继承](#组合继承)
         - [寄生组合继承](#寄生组合继承)
+    - [函数表达式](#函数表达式)
+        - [递归](#递归)
+        - [闭包](#闭包)
 
 <!-- /TOC -->
 
@@ -343,3 +346,50 @@ instance_combine2.sayJob() //PHP
 
 **详细见图**
 ![](js/public/寄生组合继承.jpg)
+
+## 函数表达式
+
+定义函数有两种
+
+```js
+
+# 函数声明
+function functionName1(arg){}
+console.log(functionName1.name) //functionName1
+
+# 函数表达式
+var functionName2 = function (arg){}
+console.log(functionName2.name) //functionName2
+```
+
+### 递归
+
+```js
+// # 递归
+function factorial(num){
+    if(num <= 1){
+        return 1
+    }
+    return num + factorial(num-1)
+}
+
+function factorial_better(num){
+    if(num <= 1){
+        return 1
+    }
+    return num + arguments.callee(num-1)
+}
+
+var factorial_best = (function f(num){
+    if(num <= 1){
+        return 1
+    }
+    return num + f(num-1)
+})
+
+console.log(factorial(100)) //5050
+console.log(factorial_better(100)) //5050
+console.log(factorial_best(100)) //5050
+```
+
+### 闭包
