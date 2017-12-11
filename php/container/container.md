@@ -1,5 +1,15 @@
 # laravel容器
 
+<!-- TOC -->
+
+- [laravel容器](#laravel容器)
+    - [理解自动加载](#理解自动加载)
+    - [理解控制反转IOC(Inversion of Control)和依赖注入DI(Dependency Injection)](#理解控制反转iocinversion-of-control和依赖注入didependency-injection)
+    - [理解生命周期](#理解生命周期)
+    - [理解容器](#理解容器)
+
+<!-- /TOC -->
+
 ## 理解自动加载
 
 composer，php包管理工具，自动加载的实现。
