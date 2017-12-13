@@ -90,5 +90,5 @@ php index.php
 - [x] git
 - [x] 设计模式
 - [x] bash
-- [ ] mongodb
+- [x] mongodb
 - [x] 面试
