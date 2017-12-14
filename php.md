@@ -115,42 +115,37 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 按phpinfo()上的扩展解读
 
-- date
-- dom
-- exif
-- fileinfo
-- filter
-- ftp
-- gd
-- hash
-- iconv
-- imagick
-- json
-- libxml
-- mbstring
-- mcrypt
-- memcached
-- mongodb
-- mysqli
-- mysqlnd
-- openssl
-- pcre
-- PDO
-- Phar
-- posix
-- readline
-- redis
-- Reflection
-- session
-- SimpleXML
-- SPL
-- swoole
-- tokenizer
-- xdebug
-- xml
-- Zend OPcache
-- zlib
-- dom
+- date 时间库
+- dom/xml/SimpleXML/libxml xml操作库
+- exif 相机库
+- fileinfo 文件相关库
+- filter 参数过滤库
+- ftp ftp库
+- gd 图像库
+- hash hash算法库
+- iconv 字符串转换库
+- imagick 图像库
+- json json操作库
+- mbstring 多字节字符串操作库
+- memcached 缓存库
+- mongodb 数据库
+- mysqli 数据库
+- mysqlnd 数据库
+- openssl 加密库
+- pcre 正则库
+- PDO 数据库
+- Phar 包
+- posix 多进程库
+- readline 交互库
+- redis 缓存库
+- Reflection 反射库
+- session 会话库
+- SPL 标准库
+- swoole 异步库
+- tokenizer 标记库
+- xdebug debug库
+- Zend OPcache 缓存库
+- zlib 压缩库
 
 ## 八、PHP优化
 
