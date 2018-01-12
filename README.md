@@ -72,6 +72,7 @@ php index.php
 - [1、git](git.md)
 - [2、设计模式](https://github.com/OMGZui/Design)
 - [3、bash](https://github.com/OMGZui/bash-step-to-step)
+- [4、docker](docker.md)
 
 ## 四、面试
 
@@ -91,5 +92,6 @@ php index.php
 - [x] git
 - [x] 设计模式
 - [x] bash
+- [x] docker
 - [x] mongodb
 - [x] 面试
