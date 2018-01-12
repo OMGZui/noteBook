@@ -30,7 +30,7 @@
 
 我自己用的是Docker for Mac
 
-其它系统可以参考http://docker_practice.gitee.io/install/
+其它系统可以参考 `http://docker_practice.gitee.io/install/`
 
 ## 基本概念
 
@@ -43,7 +43,7 @@ Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需�
 镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。
 
 - 仓库（Repository）
- 
+
 镜像构建完成后，可以很容易的在当前宿主机上运行，但是，如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry 就是这样的服务。
 
 一个 Docker Registry 中可以包含多个仓库（Repository）；每个仓库可以包含多个标签（Tag）；每个标签对应一个镜像。
@@ -75,7 +75,7 @@ docker system df
 docker image prune
 
 # 删除镜像
-docker image rm 
+docker image rm
 
 # 批量删除
 docker image rm $(docker image ls -q redis)
@@ -241,7 +241,7 @@ services:
   workspace:
     build:
       context: ./workspace
-      args: 
+      args:
         - WORKSPACE_SSH_PORT=${WORKSPACE_SSH_PORT}
         - INSTALL_IMAP=${WORKSPACE_INSTALL_IMAP}
         - INSTALL_XDEBUG=${WORKSPACE_INSTALL_XDEBUG}
@@ -264,7 +264,7 @@ services:
   php-fpm:
     build:
       context: ./php-fpm
-      args: 
+      args:
         - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
         - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
         - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
