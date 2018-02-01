@@ -1,6 +1,5 @@
 # HTTP协议
 
-
 <!-- TOC -->
 
 - [HTTP协议](#http协议)
@@ -20,6 +19,8 @@
         - [4、持久连接 keep-alive](#4持久连接-keep-alive)
         - [5、cookie](#5cookie)
     - [三、HTTP报文](#三http报文)
+        - [2、用于HTTP协议交互的信息称为HTTP报文](#2用于http协议交互的信息称为http报文)
+        - [2、多部分对象集合](#2多部分对象集合)
     - [四、HTTP状态码](#四http状态码)
     - [五、HTTP协作的Web服务器](#五http协作的web服务器)
         - [1、通信数据转发：代理、网关、隧道](#1通信数据转发代理网关隧道)
@@ -77,14 +78,16 @@
 ### 2、TCP/IP 通信传输流
 
 发送端从应用层往下走，接收端则往应用层往上走
-
-发送端每经过一层打上一个该层的首部信息  -> 封装
+![](public/img/http/http_trans.jpg)
+发送端每经过一层打上一个该层的首部信息  -> 封装encapsulate
 
 接收端每经过一层把首部信息消去
 
+![](public/img/http/http_trans2.jpg)
+
 ### 3、关系密切的IP、TCP、DNS协议（3次握手）
 
-```sh
+```bash
 
 IP协议的作用是把各种数据包传送给对方。 IP地址和MAC地址。 ARP协议（解析地址的协议)。
 
@@ -99,22 +102,33 @@ DNS服务提供域名到IP地址之间的解析服务  发送端发送http://t66
 
 ```
 
+![](public/img/http/three_way_handshanking.jpg)
+
 ### 4、URI和URL
 
-http://t66y.com/index.php  => URI  定位资源
+http://t66y.com/ => URL 统一资源定位符(Uniform Resource Locator)
 
-http://t66y.com/ => URL
+http://t66y.com/index.php  => URI  统一资源标识符(Uniform Resource Idenitifier)
+
+绝对URI格式
+![](public/img/http/uri.jpg)
 
 ## 二、简单的HTTP协议
 
 客户端：请求访问文本或图像等资源的一端
+
 服务端：提供资源响应的一端
+
+![](public/img/http/client1.jpg)
+![](public/img/http/client2.jpg)
 
 ### 1、通过请求和响应的交换达成通信
 
 请求报文是由请求方法、请求URI、协议版本、可选的请求首部字段和内容实体构成
+![](public/img/http/request.jpg)
 
 响应报文是由协议版本、状态码、状态码的原因短语、可选的响应首部字段和主体构成
+![](public/img/http/response.jpg)
 
 ### 2、HTTP是一种无状态协议
 
@@ -124,7 +138,7 @@ cookie可以保存状态
 
 ### 3、HTTP方法
 
-```sh
+```bash
 
 GET：获取资源
 POST：传输实体主体
@@ -149,37 +163,57 @@ Cookie技术通过在请求和响应报文中写入Cookie信息来控制客户�
 
 ## 三、HTTP报文
 
-用于HTTP协议交互的信息称为HTTP报文
+### 2、用于HTTP协议交互的信息称为HTTP报文
+
+报文首部和报文主体是由回车符和换行符（CR+LF）来划分，报文主体可以没有
 
 可以通过压缩来提升传输效率
 
-```sh
+```bash
+通用首部
+Request URL:http://t66y.com/
+Request Method:GET
+Status Code:200 OK
+Remote Address:127.0.0.1:1086
+Referrer Policy:no-referrer-when-downgrade
+```
+
+```bash
 请求报文
-GET /index.php HTTP/1.1   #请求行
+GET / HTTP/1.1
 Host: t66y.com
 Connection: keep-alive
 Cache-Control: max-age=0
 Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
 Accept-Encoding: gzip, deflate
-Accept-Language: zh-CN,zh;q=0.8
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: __cfduid=db7678b2090563fd2573d39bd6ea46ab21494210787; 227c9_lastfid=22; 227c9_lastvisit=0%091509547246%09%2Fthread0806.php%3Ffid%3D22%26search%3D%26page%3D661
+AlexaToolbar-ALX_NS_PH: AlexaToolbar/alx-4.0.1
 ```
 
-```sh
+```bash
 响应报文
-HTTP/1.1 200 OK  #状态行
-Date: Tue, 17 Oct 2017 12:01:57 GMT
+HTTP/1.1 200 OK
+Date: Thu, 01 Feb 2018 11:42:28 GMT
 Content-Type: text/html
-Content-Length: 4122
+Content-Length: 920
 Connection: keep-alive
-X-Powered-By: PHP/5.3.3
+X-Powered-By: PHP/5.6.33
 Vary: Accept-Encoding
 Content-Encoding: gzip
-Server: cloudflare-nginx
-CF-RAY: 3af31b2d8039228e-LAX
-
+Server: cloudflare
+CF-RAY: 3e64a5c607a313cb-LAX
 ```
+
+### 2、多部分对象集合
+
+MIME多用途因特网邮件扩展（Multipurpose Internet Mail Extensions）是允许邮件处理文本、图片、视频等的数据
+
+- multipart/form-data
+
+Web表单上传文件使用
 
 ## 四、HTTP状态码
 
@@ -230,9 +264,11 @@ CF-RAY: 3af31b2d8039228e-LAX
 
 ### HTTP首部字段
 
+HTTP首部字段都是由首部字段名和字段值构成的，中间用冒号（:）分隔
+
 4种：列举常见的
 
-1.通用首部字段
+1.通用首部字段General
 
 |名字|说明|
 |--|--|
@@ -242,7 +278,7 @@ CF-RAY: 3af31b2d8039228e-LAX
 |Transfer_Encoding|指定报文主体的传输编码方式|
 |Via|代理服务器的相关信息|
 
-2.请求首部字段
+2.请求首部字段Request
 
 |名字|说明|
 |--|--|
@@ -252,7 +288,7 @@ CF-RAY: 3af31b2d8039228e-LAX
 |Referer|原始请求方|
 |User-Agent|HTTP客户端程序的信息|
 
-3.响应首部字段
+3.响应首部字段Response
 
 |名字|说明|
 |--|--|
@@ -260,7 +296,7 @@ CF-RAY: 3af31b2d8039228e-LAX
 |Location|重定向至指定URI|
 |Server|服务器信息|
 
-4.实体首部字段
+4.实体首部字段Entity
 
 |名字|说明|
 |--|--|
@@ -302,15 +338,11 @@ HTTP是无状态协议，无法实现状态管理，因此我们用Cookie来管�
 
 ### 1、HTTP瓶颈
 
-一条连接上只可发送一个请求
-
-请求只能从客户端开始
-
-请求、响应首部未经压缩就发生
-
-发送冗余的首部
-
-可任意选择数据压缩格式
+- 一条连接上只可发送一个请求
+- 请求只能从客户端开始
+- 请求、响应首部未经压缩就发生
+- 发送冗余的首部
+- 可任意选择数据压缩格式
 
 ### 2、Ajax
 
@@ -321,6 +353,9 @@ Ajax（异步JavaScript和XML技术）操作DOM，以达到局部Web页面替换
 WebSocket是建立在HTTP基础上的协议，因此连接的发起方仍是客户端，服务器和客户端都可以直接向对方发送报文
 
 WebSocket是长连接，一直会保持状态，减少了连接开销
+
+- 握手请求 Upgrade: websocket
+- 握手响应 HTTP/1.1 101 Switching Protocols
 
 ## 十、构建Web内容的技术
 
@@ -347,6 +382,8 @@ JSON（JavaScript Object Notion）包含false、null、true、对象、数组、
 ## 十一、Web攻击技术
 
 ### 1、针对Web的攻击技术
+
+![](public/img/http/attack.jpg)
 
 一份调查：SQL注入（39%）、XSS（15%）、phpMyAdmin（9%）、ZanCart（5%）、其他（32%）
 
