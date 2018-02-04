@@ -66,6 +66,7 @@ php index.php
 - [5、redis](redis.md)
 - [6、http](http.md)
 - [7、mongodb](mongodb.md)
+- [8、tcp/ip](tcp-ip.md)
 
 ## 三、工具
 
@@ -89,6 +90,7 @@ php index.php
 - [x] php
 - [x] redis
 - [x] http
+- [ ] tcp/ip
 - [x] git
 - [x] 设计模式
 - [x] bash
