@@ -16,9 +16,22 @@
         - [8、地址](#8地址)
         - [9、网络的构成要素](#9网络的构成要素)
     - [二、TCP/IP基础知识](#二tcpip基础知识)
+        - [1、TCP/IP与OSI分层模型](#1tcpip与osi分层模型)
+        - [2、TCP/IP分层模型与通信示例](#2tcpip分层模型与通信示例)
     - [三、数据链路](#三数据链路)
+        - [1、Mac地址](#1mac地址)
+        - [2、半双工与全双工](#2半双工与全双工)
+        - [3、以太网帧格式](#3以太网帧格式)
+        - [4、无线通信](#4无线通信)
     - [四、IP协议](#四ip协议)
+        - [1、IP基础知识](#1ip基础知识)
+        - [2、IP地址基础知识](#2ip地址基础知识)
+        - [3、IPv6](#3ipv6)
     - [五、IP协议相关技术](#五ip协议相关技术)
+        - [1、DNS](#1dns)
+        - [2、ARP](#2arp)
+        - [3、ICMP](#3icmp)
+        - [4、DHCP](#4dhcp)
     - [六、TCP与UDP](#六tcp与udp)
     - [七、路由协议](#七路由协议)
     - [八、应用协议](#八应用协议)
@@ -133,11 +146,91 @@
 
 ## 二、TCP/IP基础知识
 
+### 1、TCP/IP与OSI分层模型
+
+![](public/img/tcp-ip/osi.jpg)
+
+### 2、TCP/IP分层模型与通信示例
+
+![](public/img/tcp-ip/data-head.jpg)
+
 ## 三、数据链路
+
+### 1、Mac地址
+
+- 用于识别数据链路中互联的节点
+- 长48比特
+- 使用网卡的情况下，会烧入到ROM中，是唯一的
+
+### 2、半双工与全双工
+
+- 半双工：只发送或接收
+- 全双工：既可以发送数据也可以接收数据
+
+### 3、以太网帧格式
+
+![](public/img/tcp-ip/frame.jpg)
+
+### 4、无线通信
+
+![](public/img/tcp-ip/wifi.jpg)
 
 ## 四、IP协议
 
+### 1、IP基础知识
+
+- 属于网络层
+- 主要由IP和ICMP组成
+- IPv4和IPv6
+- IP三大作用块：IP寻址、路由、IP分包组包
+- IP属于面向无连接型：一是为了简化，二是为了提速
+
+### 2、IP地址基础知识
+
+- IP地址由网络地址和主机地址组成
+
+![](public/img/tcp-ip/ip.jpg)
+
+### 3、IPv6
+
+![](public/img/tcp-ip/ipv6.jpg)
+
 ## 五、IP协议相关技术
+
+### 1、DNS
+
+- DNS（Domain Name System）
+- 系统为了自动将主机名转换为具体的IP地址，用了一个叫做hosts的数据库文件
+
+![](public/img/tcp-ip/dns.jpg)
+
+- 域名 -> t66y.com
+
+![](public/img/tcp-ip/t66y.jpg)
+
+### 2、ARP
+
+- ARP（Address Resolution Protocol）
+
+从一个IP地址发送ARP请求包以了解其MAC地址，目标地址将自己的MAC地址填入其中的ARP响应包返回到IP地址，因此可以通过ARP从IP地址中获得MAC地址，实现链路内的IP通信
+
+![](public/img/tcp-ip/arp.jpg)
+
+- RARP
+
+![](public/img/tcp-ip/rarp.jpg)
+
+### 3、ICMP
+
+- 确认IP包是否成功送达目标地址
+- 通知在发送过程当中IP包被废弃的原因
+- 改善网络设置
+
+### 4、DHCP
+
+- DHCP（Dynamic Host Configuration Protocol）
+
+![](public/img/tcp-ip/dhcp.jpg)
 
 ## 六、TCP与UDP
 
