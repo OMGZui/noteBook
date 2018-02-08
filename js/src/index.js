@@ -2,7 +2,7 @@
  * @Author: 小粽子
  * @Date: 2017-12-11 19:05:08
  * @Last Modified by: 小粽子
- * @Last Modified time: 2017-12-11 20:41:00
+ * @Last Modified time: 2018-02-08 22:39:03
  */
 import _ from 'lodash';
 import printMe from './print.js';
@@ -25,21 +25,14 @@ function component() {
 }
 
 let element = component(); // Store the element to re-render on print.js changes
-document
-    .body
-    .appendChild(element);
+document.body.appendChild(element);
 
 if (module.hot) {
-    module
-        .hot
-        .accept('./print.js', function () {
-            console.log('Accepting the updated printMe module!');
-            document
-                .body
-                .removeChild(element);
-            element = component(); // Re-render the "component" to update the click handler
-            document
-                .body
-                .appendChild(element);
-        })
+    module.hot.accept('./print.js', function () {
+        
+        console.log('Accepting the updated printMe module!');
+        document.body.removeChild(element);
+        element = component(); // Re-render the "component" to update the click handler
+        document.body.appendChild(element);
+    })
 }
