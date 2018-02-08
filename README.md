@@ -90,7 +90,7 @@ php index.php
 - [x] php
 - [x] redis
 - [x] http
-- [ ] tcp/ip
+- [x] tcp/ip
 - [x] git
 - [x] 设计模式
 - [x] bash
