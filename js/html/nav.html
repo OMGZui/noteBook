@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nav</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            margin: 50px;
+            width: 150px;
+        }
+
+        .list ul {
+            border: 1px solid #f00;
+            border-radius: 3px;
+            padding: 5px 10px 3px;
+        }
+
+        .list li {
+            list-style-type: none;
+            /* padding: 3px 10px; */
+        }
+
+        /* 等价于下面的注释部分 */
+        .list li+li a {
+            border-top: 1px solid #f00;
+        }
+        /* .list li+li {
+            border-top: 1px solid #f00;
+        } */
+        /* .list li {
+            border-top: 1px solid #f00;
+        }
+        .list li:first-child {
+            border-top: none;
+        } */
+
+        .list a {
+            text-decoration: none;
+            font: 20px 'Exo', helvetica, arial, sans-serif;
+            font-weight: 400;
+            color: #000;
+            /* background: #ffed53; */
+            display: block; 
+            padding: 3px 10px;
+        }
+
+        .list a:hover {
+            color: #069;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="list">
+        <ul>
+            <li>
+                <a href="#">Alternative</a>
+            </li>
+            <li>
+                <a href="#">Country</a>
+            </li>
+            <li>
+                <a href="#">Jazz</a>
+            </li>
+            <li>
+                <a href="#">Rock</a>
+            </li>
+        </ul>
+    </nav>
+</body>
+
+</html>

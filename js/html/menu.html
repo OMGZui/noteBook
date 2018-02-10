@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Menu</title>
+    <style>
+        /* 表现样式 */
+
+        .multi_drop_menu {
+            font: 1em helvetica, arial, sans-serif;
+        }
+
+        .multi_drop_menu a {
+            display: block;
+            color: #555;
+            background-color: #eee;
+            padding: .2em 1em;
+            border-width: 3px;
+            border-color: transparent;
+        }
+
+        .multi_drop_menu a:hover {
+            color: #fff;
+            background-color: #aaa;
+        }
+
+        .multi_drop_menu a:active {
+            background: #fff;
+            color: #ccc;
+        }
+
+        .multi_drop_menu li ul {
+            width: 9em;
+        }
+
+        .multi_drop_menu li li a {
+            border-right-style: none;
+            border-top-style: solid;
+        }
+
+        /* 功能样式 */
+
+        .multi_drop_menu * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .multi_drop_menu ul {
+            float: left;
+        }
+
+        .multi_drop_menu li {
+            float: left;
+            list-style-type: none;
+            position: relative;
+        }
+
+        .multi_drop_menu li a {
+            display: block;
+            border-right-style: solid;
+            background-clip: padding-box;
+            text-decoration: none;
+        }
+
+        .multi_drop_menu li:hover>ul {
+            display: block;
+        }
+
+        .multi_drop_menu li:hover>a {
+            color: #fff;
+            background-color: #aaa;
+        }
+
+        .multi_drop_menu li:last-child a {
+            border-right-style: none;
+        }
+
+        .multi_drop_menu li ul {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 100%;
+        }
+
+        .multi_drop_menu li li {
+            float: none;
+        }
+
+        .multi_drop_menu li li ul {
+            position: absolute;
+            left: 100%;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class=" multi_drop_menu">
+        <!--一级 开始 -->
+        <ul>
+            <li>
+                <a href="#"> Power</a>
+            </li>
+            <li>
+                <a href="#"> Money</a>
+            </li>
+            <li>
+                <a href="#"> Love</a>
+            </li>
+            <li>
+                <a href="#"> Fame</a>
+                <!--二级 开始 -->
+                <ul>
+                    <li>
+                        <a href="#"> Sports Star</a>
+                    </li>
+                    <li>
+                        <a href="#"> Movie Star</a>
+                    </li>
+                    <li>
+                        <a href="#"> Rock Star</a>
+                        <!--三级 开始 -->
+                        <ul>
+                            <li>
+                                <a href="#"> Bruce Springsteen</a>
+                            </li>
+                            <li>
+                                <a href="#"> Bono</a>
+                            </li>
+                            <li>
+                                <a href="#"> Mick Jagger</a>
+                            </li>
+                            <li>
+                                <a href="#"> Bob Dylan</a>
+                            </li>
+                        </ul>
+                        <!--三级 结束 -->
+                    </li>
+                    <li>
+                        <a href="#"> Web Designer</a>
+                    </li>
+                </ul>
+                <!--二级 结束 -->
+            </li>
+        </ul>
+        <!--一级 结束 -->
+    </nav>
+</body>
+</html>

@@ -31,6 +31,11 @@
             - [1、来源](#1来源)
             - [2、字体](#2字体)
             - [3、文本](#3文本)
+        - [4、页面布局](#4页面布局)
+        - [5、界面组件](#5界面组件)
+            - [1、导航菜单](#1导航菜单)
+            - [2、表单](#2表单)
+            - [3、弹出层](#3弹出层)
 
 <!-- /TOC -->
 
@@ -236,3 +241,48 @@ absolute一般是参照body，但是如果把父元素设置为relative，那么
 - word-spacing
 - line-height
 - vertical-align
+
+[实例：文本排布](js/html/text.html)
+
+### 4、页面布局
+
+- 固定宽度 960px合适
+- 流动
+- 弹性
+
+    布局高度一般设置auto
+    宽度需要精确设置
+
+[实例：页面布局](js/html/flow.html)
+
+### 5、界面组件
+
+UI（User Interface）
+
+#### 1、导航菜单
+
+[实例：导航栏](js/html/nav.html)
+
+[实例：菜单](js/html/menu.html)
+
+#### 2、表单
+
+```html
+    <label for="user_name">User</label>
+    <input type="text" id="user_name" name="user_name">
+```
+
+> for 属性 与 id 属性 通过 相同 的 值 关联 起来 后， 用户 点击 标注 文本 也可以 选择 单选 按钮 和 复选框。
+
+- text： 基本 的 单行 文本 框。
+- password： 文本 显示 为 掩 码。
+- checkbox： 复选框。
+- radio： 单选 按钮。
+- submit： 提交 表单 的 按钮。
+- time、 date、 search： HTML5 文本 框 的 变体。
+
+#### 3、弹出层
+
+- z-index 越大越上面，默认0，只对非static有效
+
+[实例：弹出层](js/html/menu.html)

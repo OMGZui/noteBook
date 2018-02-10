@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flow</title>
+    <style>
+        /* 通用 */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: helvetica, arial, sans-serif;
+        }
+
+        #wrapper {
+            width: 960px;
+            margin: 0 auto;
+            border: 1px solid #6b5678;
+        }
+
+        header {
+            background: #a292ac;
+            padding: 3px 10px;
+        }
+
+        header h1 {
+            font-family: Metrophobic;
+            font-size: 2.5em;
+            letter-spacing: -.05em;
+            color: #fff;
+        }
+
+        nav {
+            background: #f7923a;
+            padding: 3px 10px;
+        }
+
+        /* 专题区 */
+        #feature_area article {
+            float: left;
+            width: 320px;
+            padding: 10px 0;
+            background: #fff;
+            border-top: 4px solid #f7be84;
+        }
+
+        #feature_area article .inner {
+            margin: 10px 20px;
+            padding: 5px;
+            background: #fff;
+            border: 5px solid;
+        }
+
+        #feature_area article p {
+            font-family: 'Open Sans';
+            font-weight: 300;
+            font-size: 1.15em;
+            line-height: 1em;
+            text-align: center;
+            color: #616161;
+        }
+
+        /* 广告区 */
+        #promo_area article {
+            float: left;
+            width: 240px;
+            padding: 10px 0;
+            border-top: 4px solid #f7be84;
+            background: #fff;
+        }
+
+        #promo_area article .inner {
+            margin: 0 20px;
+            padding: 10px;
+            background: #e5e8ed;
+        }
+
+        #promo_area article p {
+            font-family: 'Open Sans Condensed';
+            font-weight: 300;
+            font-size: 1em;
+            line-height: 1.5em;
+            color: #616161;
+        }
+
+        footer {
+            clear: both;
+            text-align: center;
+            background: #6b5678;
+        }
+
+        footer p {
+            font-family: 'Open Sans';
+            font-weight: 600;
+            font-size: .7em;
+            letter-spacing: -.05em;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>Header</h1>
+        </header>
+        <!-- 导航栏 -->
+        <nav>
+            <p>Nav</p>
+        </nav>
+        <!-- 轮播图 -->
+        <section id="branding">
+            <div style="height: 193px;"></div>
+        </section>
+        <!-- 专题区 -->
+        <section id="feature_area">
+            <article>
+                <div class="inner">
+                    <p>左</p>
+                </div>
+            </article>
+            <article>
+                <div class="inner">
+                    <p>中</p>
+                </div>
+            </article>
+            <article>
+                <div class="inner">
+                    <p>右</p>
+                </div>
+            </article>
+        </section>
+        <!-- 广告区 -->
+        <section id="promo_area">
+            <article>
+                <div class="inner">
+                    <p>1</p>
+                </div>
+            </article>
+            <article>
+                <div class="inner">
+                    <p>2</p>
+                </div>
+            </article>
+            <article>
+                <div class="inner">
+                    <p>3</p>
+                </div>
+            </article>
+            <article>
+                <div class="inner">
+                    <p>4</p>
+                </div>
+            </article>
+        </section>
+        <footer>
+            <p>A CSS</p>
+        </footer>
+    </div>
+</body>
+
+</html>
