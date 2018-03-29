@@ -1,5 +1,7 @@
 # 我的苹果笔记本
 
+前言：有生之年系列
+
 ## 零、序言
 
 平时积累的东西以笔记的形式分享出来
@@ -81,7 +83,7 @@ php index.php
 
 ## 完成进度
 
-- [ ] html+css
+- [x] html+css
 - [x] javascript
 - [x] node
 - [x] linux
