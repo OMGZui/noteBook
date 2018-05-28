@@ -1,6 +1,5 @@
 # nginx
 
-
 <!-- TOC -->
 
 - [nginx](#nginx)
@@ -188,11 +187,11 @@ http {
 # laravel
 server {
   listen 80;
-  server_name blog.omgzui.pub;
-  access_log /var/log/nginx/blog.omgzui.pub.access.log main;
-  error_log /var/log/nginx/blog.omgzui.pub.error.log;
+  server_name xxx;
+  access_log /var/log/nginx/xxx.access.log main;
+  error_log /var/log/nginx/xxx.error.log;
   index index.html index.htm index.php;
-  root /var/www/html/;
+  root /var/www/;
 
   location / {
     try_files $uri /index.php$is_args$args;
@@ -216,9 +215,9 @@ server {
 # react
 server {
     listen 80;
-    server_name react.lumen.omgzui.pub;
+    server_name xxx;
     index  index.html;
-    root /data/wwwroot/react-lumen/build;
+    root /var/www/xxx/build;
     location / {
         try_files $uri  /index.html;
     }

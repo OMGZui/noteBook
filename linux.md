@@ -1,6 +1,5 @@
 # linux
 
-
 <!-- TOC -->
 
 - [linux](#linux)

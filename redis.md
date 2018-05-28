@@ -1,6 +1,5 @@
 # redis笔记
 
-
 <!-- TOC -->
 
 - [redis笔记](#redis笔记)
@@ -35,7 +34,7 @@ redis是什么，是一种非关系型数据库，统称nosql。
 ## 一、redis与memcached比较
 
 - 1、redis受益于“持久化”可以做存储(storge)，memcached只能做缓存(cache)
-- 2、redis有多种数据结构，memcached只有一种类型“字符串(string)”
+- 2、redis有多种数据结构，memcached只有一种类型`字符串(string)`
 
 ## 二、安装
 
@@ -96,13 +95,14 @@ databases 16
 
 ```sh
 在redis里,允许模糊查询key
-有3个通配符 * ? []
-*: 通配任意多个字符
+有3个通配符 - ? []
+-: 通配任意多个字符
 ?: 通配单个字符
 []: 通配括号内的某1个字符
 
 ```
 
+1. keys 查询
 2. del 删除
 3. rename 重命名
 4. move 移到另外一个库
@@ -118,115 +118,116 @@ databases 16
 
 ### 1. 字符串（string）
 
-* set
-    * set name shengj -> OK
-* get
-    * get name -> "shengj"
-* del
-    * del name -> (integer) 1
-    * get name -> (nil)
-* mset
-    * mset name shengj age 23 sex male -> OK
-* mget
-    * mget age sex
+- set
+  - set name shengj -> OK
+- get
+  - get name -> "shengj"
+- del
+  - del name -> (integer) 1
+  - get name -> (nil)
+- mset
+  - mset name shengj age 23 sex male -> OK
+- mget
+  - mget age sex
     ```sh
     1) "23"
     2) "male"
     ```
-* setrange
-    * setrange sex 2 1 将sex的第3个字符改成1  -> (integer) 4
-    * get sex -> "ma1e"
-* append
-    * append name GG -> (integer) 8
-    * get name -> "shengjGG"
-* getrange
-    * getrange name 1 2 -> "he"
-* incr 自增
-* incrby 自增一个量级
-* incrbyfloat 自增一个浮点数
-* decr 递减
-* decrby 递减一个量级
-* decrbyfloat 递减一个浮点数
-* setbit 设置二进制位数
-* getbit 获取二进制表示
-* bitop 位操作
+- setrange
+  - setrange sex 2 1 将sex的第3个字符改成1 -> (integer) 4
+  - get sex -> "ma1e"
+- append
+  - append name GG -> (integer) 8
+  - get name -> "shengjGG"
+- getrange
+  - getrange name 1 2 -> "he"
+- incr 自增
+- incrby 自增一个量级
+- incrbyfloat 自增一个浮点数
+- decr 递减
+- decrby 递减一个量级
+- decrbyfloat 递减一个浮点数
+- setbit 设置二进制位数
+- getbit 获取二进制表示
+- bitop 位操作
 
 ---
 
 ### 2. 列表（list）链表支持 有序 可重复
 
-* rpush 右边插入
-    * rpush list item1 -> (integer) 1
-    * rpush list item2 -> (integer) 2
-    * rpush list item3 -> (integer) 3
-* lrange 列出链表值
-    * lrange list 0 -1
+- rpush 右边插入
+  - rpush list item1 -> (integer) 1
+  - rpush list item2 -> (integer) 2
+  - rpush list item3 -> (integer) 3
+- lrange 列出链表值
+  - lrange list 0 -1
     ```sh
     1) "item1"
     2) "item2"
     3) "item3"
     ```
-* lindex
-    * lindex list 1 -> "item2"
-* lpop
-    * lpop list -> "item1"
-    * lrange list 0 -1
+- lindex
+  - lindex list 1 -> "item2"
+- lpop
+  - lpop list -> "item1"
+  - lrange list 0 -1
     ```sh
     1) "item2"
     2) "item3"
     ```
-* ltrim
-    * ltrim list 3 0 -> OK
-    * lrange list 0 -1 -> (empty list or set)
-* lpush 左边插入
-* rpop 右边删除
-* lrem
+- ltrim
+  - ltrim list 3 0 -> OK
+  - lrange list 0 -1 -> (empty list or set)
+- lpush 左边插入
+- rpop 右边删除
+- lrem
 
 ---
 
 ### 3. 集合（set）无序 不可重复
 
-* sadd 增加
-    * sadd set item1 -> (integer) 1
-    * sadd set item2 -> (integer) 1
-    * sadd set item3 -> (integer) 1
-    * sadd set item1 -> (integer) 0  已存在
-* smembers 所有集合元素
-    * smembers set
+- sadd 增加
+  - sadd set item1 -> (integer) 1
+  - sadd set item2 -> (integer) 1
+  - sadd set item3 -> (integer) 1
+  - sadd set item1 -> (integer) 0  已存在
+- smembers 所有集合元素
+  - smembers set
     ```sh
     1) "item3"
     2) "item2"
     3) "item1"
     ```
-* sismember 存不存在
-    * sismember set item1 -> (integer) 1
-    * sismember set item -> (integer) 0 不存在
-* srem 移除元素
-    * srem set item1 -> (integer) 1
-    * smembers set
+- sismember 存不存在
+  - sismember set item1 -> (integer) 1
+  - sismember set item -> (integer) 0 不存在
+- srem 移除元素
+  - srem set item1 -> (integer) 1
+  - smembers set
     ```sh
     1) "item3"
     2) "item2"
     ```
-* spop 随机删除一个元素
-* srandmember 随机获取一个元素 -> 抽奖
-* scard 多少个元素
-* smove 移动
-* sinter 交集
-* sinterstore 交集并赋值
-* suion 并集
-* sdiff 差集
+- spop 随机删除一个元素
+- srandmember 随机获取一个元素 -> 抽奖
+- scard 多少个元素
+- smove 移动
+- sinter 交集
+- sinterstore 交集并赋值
+- suion 并集
+- sdiff 差集
+
 ---
 
 ### 4. 哈希（hash）键值对  key => value
 
-* hset 设置一个
-    * hset hash key1 value1 -> (integer) 1
-    * hset hash key2 value2 -> (integer) 1
-    * hset hash key3 value3 -> (integer) 1
-    * hset hash key1 value1 -> (integer) 0 已存在
-* hgetall 获取全部
-    * hgetall hash
+- hset 设置一个
+  - hset hash key1 value1 -> (integer) 1
+  - hset hash key2 value2 -> (integer) 1
+  - hset hash key3 value3 -> (integer) 1
+  - hset hash key1 value1 -> (integer) 0 已存在
+- hgetall 获取全部
+  - hgetall hash
     ```sh
     1) "key1"
     2) "value1"
@@ -235,35 +236,36 @@ databases 16
     5) "key3"
     6) "value3"
     ```
-* hget 获取一个
-    * hget hash key1 -> "value1"
-* hdel 删除
-    * hdel hash key1 -> (integer) 1
-    * hgetall hash
+- hget 获取一个
+  - hget hash key1 -> "value1"
+- hdel 删除
+  - hdel hash key1 -> (integer) 1
+  - hgetall hash
     ```sh
     1) "key2"
     2) "value2"
     3) "key3"
     4) "value3"
     ```
-* hmset 设置多个
-* hmget 获取多个
-* hlen 个数
-* hexists 是否存在增长
-* hinrby 增长
-* hkeys 所有的key
-* hvals 所有的值
+- hmset 设置多个
+- hmget 获取多个
+- hlen 个数
+- hexists 是否存在增长
+- hinrby 增长
+- hkeys 所有的key
+- hvals 所有的值
+
 ---
 
 ### 5. 有序集合（zset）键值对  成员 => 分值 成员必须唯一
 
-* zadd 增加
-    * zadd zset 100 item1 -> (integer) 1
-    * zadd zset 200 item2 -> (integer) 1
-    * zadd zset 300 item3 -> (integer) 1
-    * zadd zset 100 item1 -> (integer) 0 已存在
-* zrange 按分值排序
-    * zrange zset 0 -1 withscores
+- zadd 增加
+  - zadd zset 100 item1 -> (integer) 1
+  - zadd zset 200 item2 -> (integer) 1
+  - zadd zset 300 item3 -> (integer) 1
+  - zadd zset 100 item1 -> (integer) 0 已存在
+- zrange 按分值排序
+  - zrange zset 0 -1 withscores
     ```sh
     1) "item1"
     2) "100"
@@ -272,27 +274,27 @@ databases 16
     5) "item3"
     6) "300"
     ```
-* zrangebyscore 按分值的一部分排序
-    * zrangebyscore zset 0 200 withscores
+- zrangebyscore 按分值的一部分排序
+  - zrangebyscore zset 0 200 withscores
     ```sh
     1) "item1"
     2) "100"
     3) "item2"
     4) "200"
     ```
-* zrem 删除
-    * zrem zset item1 -> (integer) 1
-    * zrange zset 0 -1 withscores
+- zrem 删除
+  - zrem zset item1 -> (integer) 1
+  - zrange zset 0 -1 withscores
     ```sh
     1) "item2"
     2) "200"
     3) "item3"
     4) "300"
     ```
-* zrank 排名升序
-* zremrangebyscore 按分值删除一部分
-* zremrangebyrank 按排名删除一部分
-* zcard 个数
+- zrank 排名升序
+- zremrangebyscore 按分值删除一部分
+- zremrangebyrank 按排名删除一部分
+- zcard 个数
 
 ## 六、redis事务
 
@@ -322,7 +324,7 @@ discard只是结束本次事务,前2条语句造成的影响仍然还在
 乐观的想法:
 
     没有那么人和我抢,因此,我只需要注意,
-    --有没有人更改ticket的值就可以了 [乐观锁]
+  --有没有人更改ticket的值就可以了 [乐观锁]
 
 Redis的事务中,启用的是乐观锁,只负责监测key没有被改动
 
