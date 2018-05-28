@@ -20,10 +20,10 @@ require 'bootstrap.php';
 //new ExtDate();
 
 //dom/xml/SimpleXML/libxml
-//new ExtDom();
+new ExtDom();
 
 // exif
-new ExtExif();
+//new ExtExif();
 
 // hash
 

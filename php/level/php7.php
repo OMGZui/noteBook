@@ -21,7 +21,7 @@ dump(mb_strlen($str1, 'utf-8')); // 10
 dump(mb_substr($str1, 4, mb_strlen($str1, 'utf-8') - 4, 'utf-8'));
 
 // 等值 mb_substr
-function substr_utf8($str, $start, $length = null)
+function sub_str_utf8($str, $start, $length = null)
 {
     $arr = array_slice(
         preg_split("//u", $str, -1, 1),
@@ -32,13 +32,13 @@ function substr_utf8($str, $start, $length = null)
 }
 
 // 等值 mb_strlen
-function strlen_utf8($str)
+function str_len_utf8($str)
 {
     return count(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY));
 }
 
 // 输出  5ge小苹果
-dump(substr_utf8($str1, 4, strlen_utf8($str1) - 4));
+dump(sub_str_utf8($str1, 4, str_len_utf8($str1) - 4));
 
 echo "----------------------------------------- 2 -----------------------------------------\n";
 //超全局数组
@@ -99,12 +99,12 @@ dump(number_thousands($number));
 
 echo "----------------------------------------- 7 -----------------------------------------\n";
 // 如何实现中文字符串翻转
-function strrev_utf8($str)
+function str_rev_utf8($str)
 {
     return implode('', array_reverse(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY)));
 }
 
-dump(strrev_utf8($str1));
+dump(str_rev_utf8($str1));
 
 dump(strrev(substr('www.baidu.com', 4, 9)));
 dump(strrev(str_replace('www.', '', 'www.baidu.com')));
@@ -179,7 +179,7 @@ dump(strpos('abc', 'a') === false);
 dump(strpos('abc', 'a') == false);
 
 echo "----------------------------------------- 13 -----------------------------------------\n";
-// 请 写 一 个 函 数 ， 实 现 以 下 功 能 ： 字 符 串 "open_door" 转 换 成 "OpenDoor" 、"make_by_id" 转换成 "MakeById"。
+// 请写一个函数，实现以下功能 ：字符串"open_door"转换成"OpenDoor"、"make_by_id" 转换成 "MakeById"。
 function change_str($str)
 {
     //先切割，转为首字母大写后，再聚合
@@ -276,8 +276,7 @@ dump('核心思路：加锁');
 
 echo "----------------------------------------- 18 -----------------------------------------\n";
 // 写一个函数，能够遍历一个文件夹下的所有文件和子文件夹。（新浪）
-
-function my_scandir($dir)
+function my_scan_dir($dir)
 {
     $files = array();
     if (is_dir($dir)) {
@@ -285,7 +284,7 @@ function my_scandir($dir)
             while (($file = readdir($handle)) !== false) {
                 if ($file != "." && $file != "..") {
                     if (is_dir($dir . "/" . $file)) {
-                        $files[$file] = my_scandir($dir . "/" . $file);
+                        $files[$file] = my_scan_dir($dir . "/" . $file);
                     } else {
                         $files[] = $dir . "/" . $file;
                     }
@@ -297,7 +296,7 @@ function my_scandir($dir)
     }
 }
 
-//dump(my_scandir('/Users/shengj/mac/php/noteBook'));
+dump(my_scan_dir('/Users/shengj/mac/php/noteBook/php/level'));
 
 
 echo "----------------------------------------- 19 -----------------------------------------\n";
@@ -529,15 +528,15 @@ dump(arrayToU($array));
 echo "----------------------------------------- 25 -----------------------------------------\n";
 
 // 使用正则获取html里的href属性的值和a标签内的值，并以href值为key，a标签内的值为value存入二维数组中
-$str = '
+$str = <<< HTML
     <ul class="attr">
         <li>
             <a href="www.baidu.com">百度baidu</a>
-            <a href=\'www.tecent.com\'>腾讯tengxun</a>
+            <a href='www.tecent.com'>腾讯tengxun</a>
             <a href="www.alibaba.com">阿里巴巴alibaba</a>
         </li>
     </ul>
-';
+HTML;
 
 function pregToArr(string $str): array
 {
