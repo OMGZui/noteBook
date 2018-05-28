@@ -74,6 +74,7 @@ php index.php
 - [2、设计模式](https://github.com/OMGZui/Design)
 - [3、bash](https://github.com/OMGZui/bash-step-to-step)
 - [4、docker](docker.md)
+- [4、数据结构与算法](https://github.com/OMGZui/basic_c)
 
 ## 四、面试
 
@@ -97,3 +98,4 @@ php index.php
 - [x] docker
 - [x] mongodb
 - [x] 面试
+- [ ] 数据结构与算法
