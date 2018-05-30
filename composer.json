@@ -1,5 +1,5 @@
 {
-  "name": "omgzui/noteBook",
+  "name": "omgzui/note-book",
   "description": "linux nginx mysql php http redis",
   "keywords": [
     "php",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "symfony/var-dumper": "*"
+    "symfony/var-dumper": "v3.3.10"
   },
   "autoload": {
     "psr-4": {
