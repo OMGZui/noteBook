@@ -8,11 +8,19 @@
 
 namespace Shengj\Container;
 
-class Hello
+class Hello implements HelloInterface
 {
-    public function __construct(){}
+    public function __construct()
+    {
+
+    }
 
     public function echo()
+    {
+        return 'echo';
+    }
+
+    public function hello()
     {
         return 'hello';
     }
