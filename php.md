@@ -53,15 +53,15 @@ yum -y install php71w-fpm php71w-opcache php71w-cli php71w-common php71w-dba php
 
 ### 1、类型
 
-Boolean 布尔类型
-Integer 整型
-Float 浮点型
-String 字符串
-Array 数组
-Object 对象
-Resource 资源类型
-NULL
-Callback / Callable 类型
+    Boolean 布尔类型
+    Integer 整型
+    Float 浮点型
+    String 字符串
+    Array 数组
+    Object 对象
+    Resource 资源类型
+    NULL
+    Callback / Callable 类型
 
 ### 2、变量
 
