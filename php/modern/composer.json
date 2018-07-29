@@ -1,5 +1,7 @@
 {
   "require": {
-    "monolog/monolog": "1.*"
+    "monolog/monolog": "1.*",
+    "league/csv": "9.1.*",
+    "guzzlehttp/guzzle": "^6.3"
   }
 }

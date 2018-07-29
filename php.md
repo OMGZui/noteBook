@@ -28,7 +28,8 @@
     - [六、PHP 面试](#六php-面试)
     - [七、PHP扩展](#七php扩展)
     - [八、PHP优化](#八php优化)
-    - [九、参考资料](#九参考资料)
+    - [九、Modern PHP](#九modern-php)
+    - [十、参考资料](#十参考资料)
 
 <!-- /TOC -->
 
@@ -117,7 +118,7 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 ## 六、PHP 面试
 
-[PHP面试](php)
+[PHP面试](php/level)
 
 ## 七、PHP扩展
 
@@ -158,6 +159,8 @@ array_walk_recursive($arr, function($value) use (&$result) {
 ## 八、PHP优化
 
 ## 九、Modern PHP
+
+[Modern PHP](php/modern)
 
 ## 十、参考资料
 
