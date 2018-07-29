@@ -12,5 +12,5 @@ $sql = [
     'db_name' => 'pdo',
     'username' => 'root',
     'password' => 'root',
-    'charset' => 'utf8',
+    'charset' => 'xxx',
 ];
