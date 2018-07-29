@@ -11,6 +11,6 @@ $sql = [
     'port' => 3306,
     'db_name' => 'pdo',
     'username' => 'root',
-    'password' => 'root',
-    'charset' => 'xxx',
+    'password' => 'xxx',
+    'charset' => 'utf8',
 ];
