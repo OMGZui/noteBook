@@ -1,4 +1,4 @@
-/vendor/
-/.idea*
-/js/node_modules
-/.vscode
+vendor
+.idea
+js/node_modules
+.vscode
