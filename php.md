@@ -6,7 +6,8 @@
     - [一、PHP是什么](#一php是什么)
     - [二、PHP安装](#二php安装)
         - [1、yum安装](#1yum安装)
-        - [2、源码安装](#2源码安装)
+    - [2、apt安装](#2apt安装)
+        - [3、源码安装](#3源码安装)
     - [三、PHP 基础](#三php-基础)
         - [1、类型](#1类型)
         - [2、变量](#2变量)
@@ -47,7 +48,14 @@ rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
 yum -y install php71w-fpm php71w-opcache php71w-cli php71w-common php71w-dba php71w-devel php71w-embedded php71w-enchant php71w-gd php71w-imap php71w-interbase php71w-intl php71w-ldap php71w-mbstring php71w-mcrypt php71w-mysqlnd php71w-odbc php71w-pdo php71w-pdo_dblib php71w-pear  php71w-pecl-imagick php71w-pecl-memcached php71w-pecl-mongodb php71w-pecl-redis php71w-pecl-xdebug php71w-pgsql php71w-phpdbg php71w-process php71w-pspell php71w-recode php71w-snmp php71w-soap php71w-tidy php71w-xml php71w-xmlrpc
 ```
 
-### 2、源码安装
+## 2、apt安装
+
+```bash
+apt -y install php php-pear php-fpm php-dev php-zip php-curl php-xmlrpc php-gd php-mysql php-mbstring php-xml libapache2-mod-php
+
+```
+
+### 3、源码安装
 
 ## 三、PHP 基础
 
@@ -149,6 +157,8 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 ## 八、PHP优化
 
-## 九、参考资料
+## 九、Modern PHP
+
+## 十、参考资料
 
 [php手册](http://php.net/)
