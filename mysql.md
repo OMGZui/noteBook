@@ -21,6 +21,7 @@
     - [六、mysql优化](#六mysql优化)
         - [1、编码](#1编码)
         - [2、多列索引规则](#2多列索引规则)
+        - [3、myisam和innodb索引区别](#3myisam和innodb索引区别)
     - [七、参考资料](#七参考资料)
 
 <!-- /TOC -->
@@ -327,6 +328,13 @@ _bin表示按编码值比较
 |Where a=3 and c=4| 是|a列能发挥索引,c不能|
 |Where a=3 and b>10 and c=7| 是|a能利用,b能利用, c不能利用|
 |where a=3 and b like ‘xxxx%’ and c=7| 是|a能用,b能用,c不能用|
+
+### 3、myisam和innodb索引区别
+
+描述
+
+- myisam主索引和次索引都指向物理行，比如id指向了物理行
+- innodb的主索引行上直接存储行的数据，称为聚簇索引，次索引指向主索引，比如id行包括了name、age等等数据，name包括了id
 
 ## 七、参考资料
 
