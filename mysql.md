@@ -23,6 +23,7 @@
         - [2、多列索引规则](#2多列索引规则)
         - [3、myisam和innodb索引区别](#3myisam和innodb索引区别)
         - [4、索引选择](#4索引选择)
+        - [5、分页优化](#5分页优化)
     - [七、参考资料](#七参考资料)
 
 <!-- /TOC -->
@@ -348,6 +349,15 @@ myisam则分裂较快
 2. 区分度高
 3. 长度小 比如在word字段上设索引，最短长度为2，最长为14，需要测试覆盖率，count(left(word, 4))/count(*)
 4. 尽量能覆盖常用查询字段
+
+### 5、分页优化
+
+- 使用where id > 5000000 limit 10  => limit 5000000,10
+  - 这样的做法是会走id主键索引，速度是非常快的
+  - 需要id连续，因为逻辑删除数据
+- 延迟关联，先取索引数据，再由索引到磁盘拿数据（回行）
+  - select id,name from lx limit 5000000,10 => select lx.id,name from lx inner join (select id
+  - from lx limit 5000000,10) as tmp on lx.id = tmp.id
 
 ## 七、参考资料
 
