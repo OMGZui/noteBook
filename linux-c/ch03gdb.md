@@ -32,17 +32,21 @@
 
 ## 3、断点
 
-- break(b)行号 在某一行设置断点
-- continue(c) 从当前位置开始连续运行程序
-- delete breakpoints 断点号 删除某个断点
-- display 变量名 跟踪某个变量，每次停下都显示它的值
-- disable breakpoint 断点号 禁用某个断点
-- enable 断点号 启用某个断点号
-- info(i) points 查看设置了哪些断点号
-- run(r) 从头开始连续运行程序
+|命令|描述|
+|-|-|
+|break(b)行号 |在某一行设置断点|
+|continue(c) |从当前位置开始连续运行程序|
+|delete breakpoints 断点号 |删除某个断点|
+|display 变量名 |跟踪某个变量，每次停下都显示它的值|
+|disable breakpoint 断点号 |禁用某个断点|
+|enable 断点号 |启用某个断点号|
+|info(i) points |查看设置了哪些断点号|
+|run(r) |从头开始连续运行程序|
 
 ## 4、观察点
 
-- watch 设置观察点
-- info(i) watchpoints 查看当前设置的观察点
-- x 从某个位置开始打印，不区分哪个字节属于哪个变量
+|命令|描述|
+|-|-|
+|watch |设置观察点|
+|info(i) watchpoints |查看当前设置的观察点|
+|x |从某个位置开始打印，不区分哪个字节属于哪个变量|
