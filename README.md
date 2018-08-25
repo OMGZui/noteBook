@@ -67,7 +67,7 @@ php index.php
 - [6、http](http.md)
 - [7、mongodb](mongodb.md)
 - [8、tcp-ip](tcp-ip.md)
-- [9、linux-c](linux-c.md)
+- [9、linux-c](linux-c)
 
 ## 三、工具
 
