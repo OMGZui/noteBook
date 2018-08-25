@@ -66,7 +66,8 @@ php index.php
 - [5、redis](redis.md)
 - [6、http](http.md)
 - [7、mongodb](mongodb.md)
-- [8、tcp/ip](tcp-ip.md)
+- [8、tcp-ip](tcp-ip.md)
+- [9、linux-c](linux-c.md)
 
 ## 三、工具
 
@@ -74,7 +75,8 @@ php index.php
 - [2、设计模式](https://github.com/OMGZui/Design)
 - [3、bash](https://github.com/OMGZui/bash-step-to-step)
 - [4、docker](docker.md)
-- [4、数据结构与算法](https://github.com/OMGZui/basic_c)
+- [5、数据结构与算法](https://github.com/OMGZui/basic_c)
+- [6、leetcode](https://github.com/OMGZui/go_leetcode)
 
 ## 四、面试
 
@@ -98,4 +100,4 @@ php index.php
 - [x] docker
 - [x] mongodb
 - [x] 面试
-- [ ] 数据结构与算法
+- [x] 数据结构与算法
