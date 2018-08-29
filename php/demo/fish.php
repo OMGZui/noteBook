@@ -8,18 +8,18 @@
 
 namespace PHP\Demo;
 
-require __DIR__.'/../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
-$a = $b = 0;
-
-function solveMeFirst($a,$b){
+function solveMeFirst($a, $b)
+{
     return $a + $b;
 }
-$handle = fopen ("php://stdin","r");
+
+$handle = fopen("php://stdin", "r");
 $s = fgets($handle);
-while ($s != "") {
+while (!empty($s)) {
     $a = explode(" ", $s);
-    $sum = solveMeFirst((int)$a[0],(int)$a[1]);
+    $sum = solveMeFirst((int)$a[0], (int)$a[1]);
     print ($sum);
     print ("\n");
     $s = fgets($handle);
