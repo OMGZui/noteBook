@@ -59,6 +59,101 @@ apt -y install php php-pear php-fpm php-dev php-zip php-curl php-xmlrpc php-gd p
 
 ### 3、源码安装
 
+```bash
+# 下载
+wget http://hk1.php.net/get/php-7.2.10.tar.gz/from/this/mirror php-7.2.10.tar.gz
+# 解压
+tar -zxf php-7.2.10.tar.gz php-7.2.10
+# 依赖
+apt -y install \
+build-essential \
+gcc \
+g++ \
+autoconf \
+libiconv-hook-dev \
+libmcrypt-dev \
+libxml2-dev \
+libmysqlclient-dev \
+libcurl4-openssl-dev \
+libjpeg8-dev \
+libfreetype6-dev \
+libssl-dev
+# 编译
+./configure --prefix=/usr/local/php7.2 \
+--with-config-file-path=/etc/php7.2 \
+--enable-fpm \
+--enable-pcntl \
+--enable-mysqlnd \
+--enable-opcache \
+--enable-sockets \
+--enable-sysvmsg \
+--enable-sysvsem \
+--enable-sysvshm \
+--enable-shmop \
+--enable-zip \
+--enable-soap \
+--enable-xml \
+--enable-mbstring \
+--disable-rpath \
+--disable-debug \
+--disable-fileinfo \
+--with-mysqli=mysqlnd \
+--with-pdo-mysql=mysqlnd \
+--with-pcre-regex \
+--with-iconv \
+--with-zlib \
+--with-gd \
+--with-openssl \
+--with-mhash \
+--with-xmlrpc \
+--with-curl \
+--with-imap-ssl
+# 安装
+make && make install
+# 输出
+Build complete.
+Don't forget to run 'make test'.
+
+Installing shared extensions:     /usr/local/php7.2/lib/php/extensions/no-debug-non-zts-20170718/
+Installing PHP CLI binary:        /usr/local/php7.2/bin/
+Installing PHP CLI man page:      /usr/local/php7.2/php/man/man1/
+Installing PHP FPM binary:        /usr/local/php7.2/sbin/
+Installing PHP FPM defconfig:     /usr/local/php7.2/etc/
+Installing PHP FPM man page:      /usr/local/php7.2/php/man/man8/
+Installing PHP FPM status page:   /usr/local/php7.2/php/php/fpm/
+Installing phpdbg binary:         /usr/local/php7.2/bin/
+Installing phpdbg man page:       /usr/local/php7.2/php/man/man1/
+Installing PHP CGI binary:        /usr/local/php7.2/bin/
+Installing PHP CGI man page:      /usr/local/php7.2/php/man/man1/
+Installing build environment:     /usr/local/php7.2/lib/php/build/
+Installing header files:          /usr/local/php7.2/include/php/
+Installing helper programs:       /usr/local/php7.2/bin/
+  program: phpize
+  program: php-config
+Installing man pages:             /usr/local/php7.2/php/man/man1/
+  page: phpize.1
+  page: php-config.1
+Installing PEAR environment:      /usr/local/php7.2/lib/php/
+[PEAR] Archive_Tar    - installed: 1.4.3
+[PEAR] Console_Getopt - installed: 1.4.1
+[PEAR] Structures_Graph- installed: 1.1.1
+[PEAR] XML_Util       - installed: 1.4.2
+[PEAR] PEAR           - installed: 1.10.5
+Wrote PEAR system config file at: /usr/local/php7.2/etc/pear.conf
+You may want to add: /usr/local/php7.2/lib/php to your php.ini include_path
+/home/vps/php-7.2.10/build/shtool install -c ext/phar/phar.phar /usr/local/php7.2/bin
+ln -s -f phar.phar /usr/local/php7.2/bin/phar
+Installing PDO headers:           /usr/local/php7.2/include/php/ext/pdo/
+# 配置
+mkdir /etc/php7.2
+cp php.ini-development /etc/php7.2/php.ini
+export PATH=/usr/local/php7.2/bin:$PATH
+export PATH=/usr/local/php7.2/sbin:$PATH
+source ~/.bashrc
+# 测试
+php -v
+```
+
 ## 三、PHP 基础
 
 ### 1、类型
