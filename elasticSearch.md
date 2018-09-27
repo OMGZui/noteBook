@@ -305,6 +305,8 @@ curl -XGET "http://localhost:9200/website/_mapping/blog?pretty" -H 'Content-Type
 - `position` 指明词条在原始文本中出现的位置
 - `start_offset` 和 `end_offset` 指明字符在原始字符串中的位置
 
+ik_max_word是中文分词[elasticsearch-analysis-ik](https://github.com/medcl/elasticsearch-analysis-ik)
+
 ```bash
 curl -XPOST "http://localhost:9200/_analyze?pretty" -H 'Content-Type:application/json' -d '
 {
