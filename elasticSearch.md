@@ -8,7 +8,7 @@
     - [三、基础](#三基础)
     - [四、增删改查](#四增删改查)
         - [1、新增](#1新增)
-    - [2、更新](#2更新)
+        - [2、更新](#2更新)
         - [3、查询](#3查询)
         - [4、删除](#4删除)
     - [五、搜索](#五搜索)
@@ -124,7 +124,7 @@ curl -X PUT "http://localhost:9200/website/blog/123?pretty" -H 'Content-Type: ap
 
 ```
 
-## 2、更新
+### 2、更新
 
 ```bash
 # 更新
@@ -305,7 +305,7 @@ curl -XGET "http://localhost:9200/website/_mapping/blog?pretty" -H 'Content-Type
 - `position` 指明词条在原始文本中出现的位置
 - `start_offset` 和 `end_offset` 指明字符在原始字符串中的位置
 
-ik_max_word是中文分词[elasticsearch-analysis-ik](https://github.com/medcl/elasticsearch-analysis-ik)
+> ik_max_word是中文分词[elasticsearch-analysis-ik](https://github.com/medcl/elasticsearch-analysis-ik)
 
 ```bash
 curl -XPOST "http://localhost:9200/_analyze?pretty" -H 'Content-Type:application/json' -d '
