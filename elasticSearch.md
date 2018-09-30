@@ -16,7 +16,12 @@
         - [2、映射](#2映射)
         - [3、分析](#3分析)
         - [4、映射和分析](#4映射和分析)
-        - [5、高级搜索](#5高级搜索)
+    - [六、高级搜索](#六高级搜索)
+        - [1、精确搜索](#1精确搜索)
+        - [2、多条件查询](#2多条件查询)
+        - [3、范围查询](#3范围查询)
+        - [4、null处理](#4null处理)
+        - [5、全文搜索](#5全文搜索)
     - [参考](#参考)
 
 <!-- /TOC -->
@@ -76,7 +81,7 @@ curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:
 
 - `hits` 中文意思是`击中`，这里相当于匹配到的数据
 - `total` 匹配的总个数
-- `max_score` 最大分值，1是最大
+- `max_score` 最大分值
 - `_index` 索引 相当于SQL中的`database`
 - `_type` 类型 相当于SQL中的`table`
 - `_id` 唯一标识 相当于SQL中的`id`
@@ -409,7 +414,191 @@ curl -XGET "http://localhost:9200/gb/_mapping/tweet?pretty" -H 'Content-Type:app
 
 ```
 
-### 5、高级搜索
+## 六、高级搜索
+
+### 1、精确搜索
+
+- `constant_score` 非评分模式，`_score`都是1
+- `filter` 过滤
+- `term` 精确搜索单个
+- `terms` 精确搜索多个
+
+```sql
+select * from blog where views=123
+```
+
+```bash
+curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:application/json' -d '
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "term": {
+          "views": 123
+        }
+      }
+    }
+  }
+}
+'
+
+{
+  "took" : 30,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 1,
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "website",
+        "_type" : "blog",
+        "_id" : "123",
+        "_score" : 1.0,
+        "_source" : {
+          "title" : "标题123",
+          "text" : "内容123",
+          "views" : 123,
+          "tags" : [
+            "标签122",
+            "标签133"
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+### 2、多条件查询
+
+- `must` 所有的语句都 必须（must） 匹配，与 `AND` 等价。
+- `must_not` 所有的语句都 不能（must not） 匹配，与 `NOT` 等价。
+- `should` 至少有一个语句要匹配，与 `OR` 等价。
+
+```sql
+select * from blog where views=123 and text="内容123"
+```
+
+```bash
+curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:application/json' -d '
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"term": {"views": 123}},
+        {"match": {"text": "内容"}}
+      ]
+    }
+  }
+}
+'
+
+结果同上
+```
+
+### 3、范围查询
+
+- `range` 范围
+- `gt` 大于
+- `gte` 大于等于
+- `lt` 小于
+- `lte` 小于等于
+
+```sql
+select * from blog where views between 100 and 200
+
+```
+
+```bash
+curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:application/json' -d '
+{
+  "query": {
+    "range": {
+      "views": {
+        "gte": 100,
+        "lte": 200
+      }
+    }
+  }
+}
+'
+
+结果同上
+```
+
+### 4、null处理
+
+- `exists` 存在值 `is not null`
+- `missing` 缺失值 `is null`
+
+```bash
+
+curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:application/json' -d '
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "exists": {
+          "field": "tags"
+        }
+      },
+      "boost": 1.2
+    }
+  }
+}
+'
+
+```
+
+### 5、全文搜索
+
+- `match` 匹配，可以多词
+- `"operator": "and"` 提高精度
+- `"minimum_should_match": "75%"` 控制精度
+- `boost` 权重
+
+```sql
+select * from blog where title like %标题%
+```
+
+```bash
+curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:application/json' -d '
+{
+  "query": {
+    "match": {
+      "title": "标题 2",
+      "operator": "and",
+      "minimum_should_match": "75%"
+    }
+  }
+}
+'
+
+```
+
+Elasticsearch 执行上面这个 match 查询的步骤是：
+
+> 检查字段类型
+
+标题 title 字段是一个 `text` 类型（ analyzed ）已分析的全文字段，这意味着查询字符串本身也应该被分析
+
+> 分析查询字符串
+
+将查询的字符串 `标题` 传入标准分析器中，输出的结果是单个项 `标题` 。因为只有一个单词项，所以 match 查询执行的是单个底层 term 查询
+
+> 查找匹配文档
+
+用 term 查询在倒排索引中查找 `标题` 然后获取一组包含该项的文档
+
+> 为每个文档评分
+
+用 term 查询计算每个文档相关度评分 _score ，这是种将 词频（term frequency，即词 `标题` 在相关文档的 title 字段中出现的频率）和反向文档频率（inverse document frequency，即词 `标题` 在所有文档的 title 字段中出现的频率），以及字段的长度（即字段越短相关度越高）相结合的计算方式
 
 ## 参考
 
