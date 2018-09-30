@@ -41,6 +41,20 @@ https://www.elastic.co/downloads/elasticsearch
 
 ## 三、基础
 
+概念：
+
+- `hits` 中文意思是`击中`，这里相当于匹配到的数据
+- `total` 匹配的总个数
+- `max_score` 最大分值
+- `_index` 索引 相当于SQL中的`database`
+- `_type` 类型 相当于SQL中的`table`
+- `_id` 唯一标识 相当于SQL中的`id`
+- `_score` 分值，代表匹配的程度
+- `_source` 元数据 相当于SQL中`table`中的`字段`合集
+- `took` 搜索耗时
+- `_shards` 查询中参与分片的总数
+- `timed_out` 查询是否超时
+
 ```bash
 curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:application/json'
 
@@ -76,20 +90,6 @@ curl -XGET "http://localhost:9200/website/blog/_search?pretty" -H 'Content-Type:
   }
 }
 ```
-
-概念：
-
-- `hits` 中文意思是`击中`，这里相当于匹配到的数据
-- `total` 匹配的总个数
-- `max_score` 最大分值
-- `_index` 索引 相当于SQL中的`database`
-- `_type` 类型 相当于SQL中的`table`
-- `_id` 唯一标识 相当于SQL中的`id`
-- `_score` 分值，代表匹配的程度
-- `_source` 元数据
-- `took` 搜索耗时
-- `_shards` 查询中参与分片的总数
-- `timed_out` 查询是否超时
 
 ## 四、增删改查
 
