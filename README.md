@@ -39,14 +39,12 @@ http://localhost:5000/ 查看console
 
 
 # PHP
+cd php
 composer install
 php -S localhost:8000
 # 浏览器
 http://localhost:8000/php/index.php
 # 命令行
-cd php
-php -f index.php
-或
 php index.php
 
 ```
@@ -64,11 +62,7 @@ php index.php
 - [3、mysql](mysql.md)
 - [4、php](php.md)
 - [5、redis](redis.md)
-- [6、http](http.md)
-- [7、mongodb](mongodb.md)
-- [8、tcp-ip](tcp-ip.md)
-- [9、linux-c](linux-c)
-- [10、elasticSearch](elasticSearch.md)
+- [6、mongodb](mongodb.md)
 
 ## 三、工具
 
@@ -83,22 +77,10 @@ php index.php
 
 - [level](level.md)
 
-## 完成进度
+## 五、书籍
 
-- [x] html+css
-- [x] javascript
-- [x] node
-- [x] linux
-- [x] nginx
-- [x] mysql
-- [x] php
-- [x] redis
-- [x] http
-- [x] tcp/ip
-- [x] git
-- [x] 设计模式
-- [x] bash
-- [x] docker
-- [x] mongodb
-- [x] 面试
-- [x] 数据结构与算法
+- [1、Linux C 一站式编程](linux-c)
+- [2、Elasticsearch: 权威指南](elasticSearch.md)
+- [3、图解HTTP](http.md)
+- [4、图解TCP/IP](tcp-ip.md)
+- [5、高性能Mysql](mysql-high.md)
