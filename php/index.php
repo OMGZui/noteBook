@@ -8,23 +8,4 @@
 
 namespace PHP;
 
-use PHP\Ext\Date\ExtDate;
-use PHP\Ext\Dom\ExtDom;
-use PHP\Ext\Exif\ExtExif;
-
 require 'bootstrap.php';
-
-// 扩展使用
-
-// date
-//new ExtDate();
-
-//dom/xml/SimpleXML/libxml
-new ExtDom();
-
-// exif
-//new ExtExif();
-
-// hash
-
-
