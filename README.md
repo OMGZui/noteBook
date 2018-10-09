@@ -8,11 +8,14 @@
 
 ### 目录结构
 
-```sh
+```bash
 
 - js
-    - public 项目包
-    - main.js 入口
+    - public js示例
+    - main.js es6入口
+    - src webpack示例
+    - server.js webpack入口
+    - webpack.*.js webpack配置文件
     - package.json 依赖管理
 
 - php
@@ -27,7 +30,7 @@
 
 ### 使用
 
-```sh
+```bash
 git clone https://github.com/OMGZui/noteBook.git
 
 # 前端
@@ -36,7 +39,9 @@ npm install
 node main.js
 # 浏览器
 http://localhost:5000/ 查看console
-
+# webpack
+npm run server
+http://localhost:3000/ 查看console
 
 # PHP
 cd php
