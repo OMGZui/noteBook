@@ -10,6 +10,9 @@
         - [3、源码安装](#3源码安装)
     - [三、PHP 基础](#三php-基础)
         - [1、类型](#1类型)
+            - [整形](#整形)
+            - [字符串](#字符串)
+            - [数组](#数组)
         - [2、变量](#2变量)
         - [3、常量](#3常量)
         - [4、表达式](#4表达式)
@@ -163,17 +166,125 @@ php -v
 
 ## 三、PHP 基础
 
+当解析一个文件时，PHP 会寻找起始和结束标记，也就是 `<?php 和 ?>`，这告诉 PHP 开始和停止解析二者之间的代码。此种解析方式使得 PHP 可以被嵌入到各种不同的文档中去，而任何起始和结束标记之外的部分都会被 PHP 解析器忽略。
+
+```php
+# 纯php文件
+<?php echo "Hello World!";
+
+```
+
+```php
+# 嵌入html中的php文件
+<p><?php echo "Hello World!"; ?></p>
+```
+
 ### 1、类型
 
-    Boolean 布尔类型
-    Integer 整型
-    Float 浮点型
-    String 字符串
-    Array 数组
-    Object 对象
-    Resource 资源类型
-    NULL
-    Callback / Callable 类型
+PHP 支持 9 种原始数据类型。
+
+四种标量类型：
+
+- boolean（布尔型）
+- integer（整型）
+- float（浮点型，也称作 double)
+- string（字符串）
+
+三种复合类型：
+
+- array（数组）
+- object（对象）
+- callable（可调用）
+
+最后是两种特殊类型：
+
+- resource（资源）
+- NULL（无类型）
+
+#### 整形
+
+注意事项：
+
+- var_dump($0x1A) //int(26) 16进制
+- var_dump($9223372036854775808) //float(9.2233720368548E+18) 整数溢出自动转换成float
+- var_dump(25/7)         // float(3.5714285714286) PHP中没有整除的运算符
+- var_dump((int) (25/7)) // int(3) 舍弃小数部分转换为int
+- var_dump(round(25/7))  // float(4) 四舍五入
+
+#### 字符串
+
+Heredoc结构 和 Nowdoc结构
+
+- Heredoc结构类似于双引号字符串，Nowdoc结构是类似于单引号字符串
+
+```php
+# Heredoc结构
+<?php
+$s = 'yy';
+$str = <<<"EOD"
+$s
+EOD;
+var_dump($str);
+
+输出：string(2) "yy"
+```
+
+```php
+# Nowdoc结构
+<?php
+$s = 'yy';
+$str = <<<'EOD'
+$s
+EOD;
+var_dump($str);
+
+输出：string(2) "$s"
+```
+
+#### 数组
+
+PHP中的数组实际上是一个有序映射。映射是一种把 values 关联到 keys 的类型。此类型在很多方面做了优化，因此可以把它当成真正的数组，或列表（向量），散列表（是映射的一种实现），字典，集合，栈，队列以及更多可能性。由于数组元素的值也可以是另一个数组，树形结构和多维数组也是允许的。
+
+key 可以是 integer 或者 string。value 可以是任意类型。此外 key 会有如下的强制转换：
+
+- 包含有合法整型值的字符串会被转换为整型。例如键名 "8" 实际会被储存为 8。但是 "08" 则不会强制转换，因为其不是一个合法的十进制数值。
+- 浮点数也会被转换为整型，意味着其小数部分会被舍去。例如键名 8.7 实际会被储存为 8。
+- 布尔值也会被转换成整型。即键名 true 实际会被储存为 1 而键名 false 会被储存为 0。
+- Null 会被转换为空字符串，即键名 null 实际会被储存为 ""。
+- 数组和对象不能被用为键名。坚持这么做会导致警告：Illegal offset type。
+
+栗子：类型强制与覆盖
+
+```php
+
+<?php
+$arr = [
+    1    => "a",
+    "1"  => "b",
+    1.5  => "c",
+    true => "d",
+];
+var_dump($arr);
+
+输出：array(1) {
+  [1]=>
+  string(1) "d"
+}
+?>
+
+```
+
+栗子：将目录中的文件名填充入数组
+
+```php
+<?php
+$handle = opendir('.');
+while (false !== ($file = readdir($handle))) {
+    $files[] = $file;
+}
+closedir($handle);
+
+```
 
 ### 2、变量
 
