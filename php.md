@@ -6,7 +6,7 @@
     - [一、PHP是什么](#一php是什么)
     - [二、PHP安装](#二php安装)
         - [1、yum安装](#1yum安装)
-    - [2、apt安装](#2apt安装)
+        - [2、apt安装](#2apt安装)
         - [3、源码安装](#3源码安装)
     - [三、PHP 基础](#三php-基础)
         - [1、类型](#1类型)
@@ -42,19 +42,26 @@ PHP（全称：PHP：Hypertext Preprocessor，即“PHP：超文本预处理器�
 
 ### 1、yum安装
 
-```sh
-# php7.1
-rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
-rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
-
-yum -y install php71w-fpm php71w-opcache php71w-cli php71w-common php71w-dba php71w-devel php71w-embedded php71w-enchant php71w-gd php71w-imap php71w-interbase php71w-intl php71w-ldap php71w-mbstring php71w-mcrypt php71w-mysqlnd php71w-odbc php71w-pdo php71w-pdo_dblib php71w-pear  php71w-pecl-imagick php71w-pecl-memcached php71w-pecl-mongodb php71w-pecl-redis php71w-pecl-xdebug php71w-pgsql php71w-phpdbg php71w-process php71w-pspell php71w-recode php71w-snmp php71w-soap php71w-tidy php71w-xml php71w-xmlrpc
+```bash
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum install yum-utils
+subscription-manager repos --enable=rhel-7-server-optional-rpms
+yum-config-manager --enable remi-php72
+yum update
+yum install php72 php72-php-fpm php72-php-gd php72-php-json php72-php-mbstring php72-php-mysqlnd php72-php-xml php72-php-xmlrpc php72-php-opcache
+php -v
 ```
 
-## 2、apt安装
+### 2、apt安装
 
 ```bash
-apt -y install php php-pear php-fpm php-dev php-zip php-curl php-xmlrpc php-gd php-mysql php-mbstring php-xml libapache2-mod-php
-
+apt -y install software-properties-common
+add-apt-repository ppa:ondrej/php
+apt -y update
+apt install php7.2
+apt install php-pear php7.2-fpm php7.2-curl php7.2-dev php7.2-gd php7.2-mbstring php7.2-zip php7.2-mysql php7.2-xml
+php -v
 ```
 
 ### 3、源码安装
