@@ -395,6 +395,71 @@ $greet('PHP');
 
 ### 1、类与对象
 
+类的基本概念：`class`,`new`,`extends`,`::class`
+
+属性和方法：`public`,`protected`,`private`
+
+类常量：`self`,`parent`,`static`
+
+自动加载：`spl_autoload_register()`
+
+构造函数和析构函数：`__construct()`,`__destruct()`
+
+范围解析操作符：`::`
+
+抽象类：`abstract`
+
+对象接口：`interface`,`implements`
+
+Trait：`trait`
+
+重载：`__set()`,`__get()`,`__isset()`,`__unset()`,`__call()`,`__callStatic()`
+
+魔术方法：`__toString()`,`__invoke()`
+
+Final：`final`
+
+对象复制：`clone`
+
+后期静态调用：
+
+```php
+<?php
+class A {
+    public static function foo() {
+        static::who(); // 后期静态调用
+    }
+
+    public static function who() {
+        echo __CLASS__."\n";
+    }
+}
+
+class B extends A {
+    public static function test() {
+        A::foo(); //非转发
+        parent::foo(); //转发
+        self::foo(); //转发
+    }
+
+    public static function who() {
+        echo __CLASS__."\n";
+    }
+}
+class C extends B {
+    public static function who() {
+        echo __CLASS__."\n";
+    }
+}
+
+C::test();
+
+输出：
+A
+C
+C
+```
+
 ### 2、命名空间
 
 ### 3、异常处理
