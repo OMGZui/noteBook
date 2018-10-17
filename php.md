@@ -13,12 +13,16 @@
             - [整形](#整形)
             - [字符串](#字符串)
             - [数组](#数组)
+            - [PHP类型比较](#php类型比较)
         - [2、变量](#2变量)
         - [3、常量](#3常量)
+            - [魔术常量](#魔术常量)
         - [4、表达式](#4表达式)
         - [5、运算符](#5运算符)
         - [6、流程控制](#6流程控制)
         - [7、函数](#7函数)
+            - [可变参数](#可变参数)
+            - [匿名函数](#匿名函数)
     - [四、PHP 进阶](#四php-进阶)
         - [1、类与对象](#1类与对象)
         - [2、命名空间](#2命名空间)
@@ -286,17 +290,106 @@ closedir($handle);
 
 ```
 
+#### PHP类型比较
+
+`empty()`更符合我们的需求
+
 ### 2、变量
+
+```php
+<?php
+// 静态变量只在第一次调用函数时被初始化
+function test()
+{
+    static $a = 0;
+    echo $a;
+    $a++;
+}
+
+test(); // 0
+test(); // 1
+test(); // 2
+
+```
 
 ### 3、常量
 
+`define("CONSTANT", "hello world")`
+
+`const CONSTANT = 'Hello World'`
+
+#### 魔术常量
+
+- `__LINE__` 文件中的当前行号
+- `__FILE__` 文件的完整路径和文件名
+- `__DIR__` 文件所在的目录 `dirname(__FILE__)`
+- `__FUNCTION__` 函数名称
+- `__CLASS__` 类的名称
+- `__TRAIT__` Trait 的名字
+- `__METHOD__` 类的方法名
+- `__NAMESPACE__` 当前命名空间的名称
+
 ### 4、表达式
+
+略
 
 ### 5、运算符
 
+```php
+<?php
+// $a % $b 的结果和 $a 的符号相同
+echo (5 % 3)."\n";           // prints 2
+echo (5 % -3)."\n";          // prints 2
+echo (-5 % 3)."\n";          // prints -2
+echo (-5 % -3)."\n";         // prints -2
+```
+
 ### 6、流程控制
 
+略
+
 ### 7、函数
+
+#### 可变参数
+
+```php
+<?php
+// php5.6+
+function sum(...$numbers) {
+    $acc = 0;
+    foreach ($numbers as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4); //10
+
+// php5.5
+<?php
+function sum() {
+    $acc = 0;
+    foreach (func_get_args() as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4); //10
+```
+
+#### 匿名函数
+
+```php
+<?php
+$greet = function($name)
+{
+    printf("Hello %s\n", $name);
+};
+
+$greet('World');
+$greet('PHP');
+```
 
 ## 四、PHP 进阶
 
