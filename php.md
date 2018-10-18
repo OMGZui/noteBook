@@ -27,7 +27,7 @@
         - [1、类与对象](#1类与对象)
         - [2、命名空间](#2命名空间)
         - [3、异常处理](#3异常处理)
-        - [4、生成器](#4生成器)
+        - [4、生成器和引用](#4生成器和引用)
         - [5、预定义变量/异常/接口/](#5预定义变量异常接口)
         - [6、上下文（Context）选项和参数](#6上下文context选项和参数)
     - [五、PHP 实践](#五php-实践)
@@ -460,11 +460,84 @@ C
 C
 ```
 
+序列化：`serialize()`,`unserialize()`
+
 ### 2、命名空间
+
+命名空间是一种封装事物的方法
+
+概述：`namespace`,`use`,`as`
 
 ### 3、异常处理
 
-### 4、生成器
+```php
+try {
+    $a = 10;
+    if ($a !== '10') {
+        throw new \Exception('垃圾');
+    }
+} catch (\Exception $e) {
+    echo $e->getMessage() . "\n";
+} finally {
+    echo "结束\n";
+}
+
+```
+
+### 4、生成器和引用
+
+`yield`
+
+```php
+// 类似range()，100w数据占用内存不到1kb，而range()在php7.2下面需要占用32mb
+function xRange($start, $limit, $step = 1)
+{
+    if ($start < $limit) {
+        if ($step <= 0) {
+            throw new \LogicException('Step must be +ve');
+        }
+
+        for ($i = $start; $i <= $limit; $i += $step) {
+            yield $i;
+        }
+    } else {
+        if ($step >= 0) {
+            throw new \LogicException('Step must be -ve');
+        }
+
+        for ($i = $start; $i >= $limit; $i += $step) {
+            yield $i;
+        }
+    }
+}
+
+```
+
+`&`
+
+```php
+// $a 和 $b 在这里是完全相同的，这并不是 $a 指向了 $b 或者相反，而是 $a 和 $b 指向了同一个地方。
+<?php
+$a = &$b;
+
+```
+
+```php
+// 通过引用修改变量的值
+<?php
+function foo(&$var)
+{
+    $var++;
+}
+
+$a=5;
+foo($a);
+echo $a; //6
+```
+
+`$this`：在一个对象的方法中，`$this`永远是调用它的对象的引用。
+
+`global`：`$var = &$GLOBALS["var"]` unset $var 不会 unset 全局变量。
 
 ### 5、预定义变量/异常/接口/
 
