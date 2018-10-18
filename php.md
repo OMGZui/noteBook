@@ -28,7 +28,7 @@
         - [2、命名空间](#2命名空间)
         - [3、异常处理](#3异常处理)
         - [4、生成器和引用](#4生成器和引用)
-        - [5、预定义变量/异常/接口/](#5预定义变量异常接口)
+        - [5、预定义变量/接口](#5预定义变量接口)
         - [6、上下文（Context）选项和参数](#6上下文context选项和参数)
     - [五、PHP 实践](#五php-实践)
         - [1、多维数组变一维数组](#1多维数组变一维数组)
@@ -539,9 +539,48 @@ echo $a; //6
 
 `global`：`$var = &$GLOBALS["var"]` unset $var 不会 unset 全局变量。
 
-### 5、预定义变量/异常/接口/
+### 5、预定义变量/接口
+
+- $GLOBALS
+- $_SERVER  http://php.net/manual/zh/reserved.variables.server.php
+- $_GET
+- $_POST
+- $_FILES
+- $_COOKIE
+- $_SESSION
+- $_REQUEST
+- $_ENV
+- $argc
+- $argv
+
+```php
+// 迭代对象
+Iterator extends Traversable {
+    /* 方法 */
+    abstract public mixed current ( void )
+    abstract public scalar key ( void )
+    abstract public void next ( void )
+    abstract public void rewind ( void )
+    abstract public bool valid ( void )
+}
+
+```
+
+```php
+// 对象能像数组一样访问
+ArrayAccess {
+    /* 方法 */
+    abstract public boolean offsetExists ( mixed $offset )
+    abstract public mixed offsetGet ( mixed $offset )
+    abstract public void offsetSet ( mixed $offset , mixed $value )
+    abstract public void offsetUnset ( mixed $offset )
+}
+
+```
 
 ### 6、上下文（Context）选项和参数
+
+`stream_context_create`,`file_get_contents`,`curl`
 
 ## 五、PHP 实践
 
