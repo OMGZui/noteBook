@@ -52,10 +52,53 @@ ACID特性：
 
 ### 隔离级别
 
-- 未提交读
+- 未提交读 READ-UNCOMMITTED
 
-- 提交读
+    事务可以读取未提交的数据，会产生脏读
 
-- 可重复读
+- 提交读 READ-COMMITTED
 
-- 可串行化
+    不可重复读
+
+- 可重复读 REPEATABLE-READ
+
+    mysql默认隔离级别，会产生幻读，意思是当事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录
+
+- 可串行化 SERIALIZABLE
+
+    最高隔离级别
+
+### 死锁
+
+指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用资源，从而导致恶性循环的现象
+
+自动提交：`show variables like "autocommit";`
+设置隔离级别：`show variables like "transaction_isolation";`,`set transaction isolation level;`
+MVCC：多版本并发控制
+
+## 4、存储引擎
+
+```sql
+
+show table status like 'users'\G
+*************************** 1. row ***************************
+           Name: users
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: 2
+    Create_time: 2018-09-26 10:40:42
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8mb4_unicode_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+1 row in set (0.05 sec)
+```
