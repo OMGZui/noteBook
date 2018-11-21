@@ -52,15 +52,15 @@ ACID特性：
 
 ### 隔离级别
 
-- 未提交读 READ-UNCOMMITTED
+- 未提交读 READ-UNCOMMITTED `RU`
 
     事务可以读取未提交的数据，会产生脏读
 
-- 提交读 READ-COMMITTED
+- 提交读 READ-COMMITTED `RC`
 
     不可重复读
 
-- 可重复读 REPEATABLE-READ
+- 可重复读 REPEATABLE-READ `RR`
 
     mysql默认隔离级别，会产生幻读，意思是当事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录
 
@@ -71,6 +71,8 @@ ACID特性：
 ### 死锁
 
 指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用资源，从而导致恶性循环的现象
+
+简单解决办法：将持有最少行级排他锁的事务进行回滚
 
 自动提交：`show variables like "autocommit";`
 设置隔离级别：`show variables like "transaction_isolation";`,`set transaction isolation level;`
