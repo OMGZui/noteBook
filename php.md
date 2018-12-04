@@ -1,45 +1,6 @@
 # PHP -- The best language
 
-<!-- TOC -->
-
-- [PHP -- The best language](#php----the-best-language)
-    - [一、PHP是什么](#一php是什么)
-    - [二、PHP安装](#二php安装)
-        - [1、yum安装](#1yum安装)
-        - [2、apt安装](#2apt安装)
-        - [3、源码安装](#3源码安装)
-    - [三、PHP 基础](#三php-基础)
-        - [1、类型](#1类型)
-            - [整形](#整形)
-            - [字符串](#字符串)
-            - [数组](#数组)
-            - [PHP类型比较](#php类型比较)
-        - [2、变量](#2变量)
-        - [3、常量](#3常量)
-            - [魔术常量](#魔术常量)
-        - [4、表达式](#4表达式)
-        - [5、运算符](#5运算符)
-        - [6、流程控制](#6流程控制)
-        - [7、函数](#7函数)
-            - [可变参数](#可变参数)
-            - [匿名函数](#匿名函数)
-    - [四、PHP 进阶](#四php-进阶)
-        - [1、类与对象](#1类与对象)
-        - [2、命名空间](#2命名空间)
-        - [3、异常处理](#3异常处理)
-        - [4、生成器和引用](#4生成器和引用)
-        - [5、预定义变量/接口](#5预定义变量接口)
-        - [6、上下文（Context）选项和参数](#6上下文context选项和参数)
-    - [五、PHP 实践](#五php-实践)
-        - [1、多维数组变一维数组](#1多维数组变一维数组)
-    - [六、PHP面试](#六php面试)
-    - [七、PHP扩展](#七php扩展)
-    - [八、PHP优化](#八php优化)
-    - [九、现代PHP](#九现代php)
-    - [十、参考资料](#十参考资料)
-    - [十一、php大厂](#十一php大厂)
-
-<!-- /TOC -->
+<!-- TOC -->autoauto- [PHP -- The best language](#php----the-best-language)auto    - [一、PHP是什么](#一php是什么)auto    - [二、PHP安装](#二php安装)auto        - [1、yum安装](#1yum安装)auto        - [2、apt安装](#2apt安装)auto        - [3、源码安装](#3源码安装)auto    - [三、PHP 基础](#三php-基础)auto        - [1、类型](#1类型)auto            - [整形](#整形)auto            - [字符串](#字符串)auto            - [数组](#数组)auto            - [PHP类型比较](#php类型比较)auto        - [2、变量](#2变量)auto        - [3、常量](#3常量)auto            - [魔术常量](#魔术常量)auto        - [4、表达式](#4表达式)auto        - [5、运算符](#5运算符)auto        - [6、流程控制](#6流程控制)auto        - [7、函数](#7函数)auto            - [可变参数](#可变参数)auto            - [匿名函数](#匿名函数)auto    - [四、PHP 进阶](#四php-进阶)auto        - [1、类与对象](#1类与对象)auto        - [2、命名空间](#2命名空间)auto        - [3、异常处理](#3异常处理)auto        - [4、生成器和引用](#4生成器和引用)auto        - [5、预定义变量/接口](#5预定义变量接口)auto        - [6、上下文（Context）选项和参数](#6上下文context选项和参数)auto    - [五、PHP 实践](#五php-实践)auto        - [1、多维数组变一维数组](#1多维数组变一维数组)auto    - [六、PHP面试](#六php面试)auto    - [七、PHP扩展](#七php扩展)auto    - [八、PHP优化](#八php优化)auto        - [1、composer自动加载](#1composer自动加载)auto    - [九、现代PHP](#九现代php)auto    - [十、参考资料](#十参考资料)auto    - [十一、php大厂](#十一php大厂)autoauto<!-- /TOC -->
 
 ## 一、PHP是什么
 
@@ -643,6 +604,123 @@ array_walk_recursive($arr, function($value) use (&$result) {
 |zlib |压缩库|
 
 ## 八、PHP优化
+
+### 1、composer自动加载
+
+核心函数：`spl_autoload_register()`
+
+1. 使用类之前无需 `include / require`
+2. 使用类的时候才会 `include / require`文件，实现了 `lazy loading(延迟加载)` ，避免了 `include / require` 多余文件。
+3. 无需考虑引入 类的实际磁盘地址 ，实现了逻辑和实体文件的分离。
+
+### 2、composer原理
+
+以Laravel框架为例
+
+目录结构：
+
+    vendor
+    ├── autoload.php    入口文件
+    vendor/composer
+    ├── ClassLoader.php     composer加载类
+    ├── autoload_classmap.php   自动加载的最简单形式
+    ├── autoload_files.php  用于加载全局函数的文件
+    ├── autoload_namespaces.php     符合PSR0标准的自动加载文件
+    ├── autoload_psr4.php   符合PSR4标准的自动加载文件
+    ├── autoload_real.php    composer加载类的初始化
+    ├── autoload_static.php     顶级命名空间初始化类
+    ├── installed.json   所有的依赖库信息
+
+第一步：`public/index.php`入口文件直接引入
+
+```php
+require __DIR__.'/../vendor/autoload.php';
+```
+
+第二步：`vendor/autoload.php`引入
+
+```php
+require_once __DIR__ . '/composer/autoload_real.php';
+return ComposerAutoloaderIniteaa4bfcc04fea23ae4b766b783b56134::getLoader();
+```
+
+第三步：`vendor/composer/autoload_real.php`
+
+```php
+    public static function getLoader()
+    {
+        /*********************** 单例模式 ********************/
+        if (null !== self::$loader) {
+            return self::$loader;
+        }
+
+        /*********************** 获得自动加载核心类对象 ********************/
+        spl_autoload_register(array('ComposerAutoloaderIniteaa4bfcc04fea23ae4b766b783b56134', 'loadClassLoader'), true, true);
+        self::$loader = $loader = new \Composer\Autoload\ClassLoader();
+        spl_autoload_unregister(array('ComposerAutoloaderIniteaa4bfcc04fea23ae4b766b783b56134', 'loadClassLoader'));
+
+        /*********************** 初始化自动加载核心类对象 ********************/
+        $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
+        // 静态初始化
+        if ($useStaticLoader) {
+            require_once __DIR__ . '/autoload_static.php';
+
+            call_user_func(\Composer\Autoload\ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::getInitializer($loader));
+        } else {
+            // 调用核心类接口初始化
+            // PSRO使用命名空间第一个字母作为前缀索引
+            $map = require __DIR__ . '/autoload_namespaces.php';
+            foreach ($map as $namespace => $path) {
+                $loader->set($namespace, $path);
+            }
+
+            // PSR4标准顶级命名空间映射用了两个数组，第一个和 PSR0 一样用命名空间第一个字母作为前缀索引，然后是 顶级命名空间，
+            // 但是最终并不是文件路径，而是 顶级命名空间 的长度。
+            // 可以将命名空间 Symfony\\Polyfill\\Mbstring\\example 前26个字符替换成目录 __DIR__ . '/..' .
+            // '/symfony/polyfill-mbstring ，我们就得到了__DIR__ . '/..' . '/symfony/polyfill-mbstring/example.php，
+            // 先验证磁盘上这个文件是否存在，如果不存在接着遍历。如果遍历后没有找到，则加载失败。
+            $map = require __DIR__ . '/autoload_psr4.php';
+            foreach ($map as $namespace => $path) {
+                $loader->setPsr4($namespace, $path);
+            }
+
+            $classMap = require __DIR__ . '/autoload_classmap.php';
+            if ($classMap) {
+                $loader->addClassMap($classMap);
+            }
+        }
+
+        /*********************** 注册自动加载核心类对象 ********************/
+        $loader->register(true);
+
+        /*********************** 自动加载全局函数 ********************/
+        if ($useStaticLoader) {
+            $includeFiles = Composer\Autoload\ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::$files;
+        } else {
+            $includeFiles = require __DIR__ . '/autoload_files.php';
+        }
+        foreach ($includeFiles as $fileIdentifier => $file) {
+            composerRequireeaa4bfcc04fea23ae4b766b783b56134($fileIdentifier, $file);
+        }
+
+        // 返回自动加载核心类对象
+        return $loader;
+    }
+
+    public static function getInitializer(ClassLoader $loader)
+    {
+        // 匿名函数绑定
+        return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::$prefixesPsr0;
+            $loader->classMap = ComposerStaticIniteaa4bfcc04fea23ae4b766b783b56134::$classMap;
+
+        }, null, ClassLoader::class);
+    }
+
+```
 
 ## 九、现代PHP
 
