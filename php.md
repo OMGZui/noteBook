@@ -604,7 +604,7 @@ array_walk_recursive($arr, function($value) use (&$result) {
 
 ## 六、PHP面试
 
-[PHP面试](php/level)
+[PHP面试](https://github.com/OMGZui/noteBook/blob/master/level.md)
 
 ## 七、PHP扩展
 
