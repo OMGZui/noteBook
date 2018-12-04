@@ -11,23 +11,28 @@
         - [1、数据库](#1数据库)
         - [2、数据表](#2数据表)
         - [3、数据库CURD操作](#3数据库curd操作)
-    - [四、mysql索引](#四mysql索引)
-    - [五、mysql事务](#五mysql事务)
+    - [四、mysql视图](#四mysql视图)
+    - [五、mysql索引](#五mysql索引)
+    - [六、mysql事务](#六mysql事务)
         - [1、原子性](#1原子性)
         - [2、一致性](#2一致性)
         - [3、隔离性](#3隔离性)
         - [4、持久性](#4持久性)
-        - [总结](#总结)
-    - [六、mysql优化](#六mysql优化)
+        - [5、锁](#5锁)
+        - [6、总结](#6总结)
+    - [七、存储过程](#七存储过程)
+        - [栗子1：参数的种类分3种，分别是IN、OUT、INOUT，其中IN为输入参数类型，OUT为输出参数类型，而INOUT既是输入类型又是输出类型，下面我们创建一个存储过程，以达到对user表的用户名称进行模糊查询的目的，存储过程名称为sp_search_user](#栗子1参数的种类分3种分别是inoutinout其中in为输入参数类型out为输出参数类型而inout既是输入类型又是输出类型下面我们创建一个存储过程以达到对user表的用户名称进行模糊查询的目的存储过程名称为sp_search_user)
+        - [栗子2：关键字OUT则是指明相应参数用来从存储过程传出的一个值,也可以理解为存储过程的返回值，而对于INOUT则是两者结合体。现在我们创建一个存储过程，用于返回商品的最大值、最小值和平均值，命名为sp_item_price](#栗子2关键字out则是指明相应参数用来从存储过程传出的一个值也可以理解为存储过程的返回值而对于inout则是两者结合体现在我们创建一个存储过程用于返回商品的最大值最小值和平均值命名为sp_item_price)
+    - [八、触发器](#八触发器)
+    - [九、游标](#九游标)
+    - [九、mysql优化](#九mysql优化)
         - [1、编码](#1编码)
         - [2、多列索引规则](#2多列索引规则)
         - [3、myisam和innodb索引区别](#3myisam和innodb索引区别)
         - [4、索引选择](#4索引选择)
         - [5、分页优化](#5分页优化)
         - [6、索引与排序](#6索引与排序)
-        - [7、语句优化 explain](#7语句优化-explain)
-    - [七、主从集群](#七主从集群)
-    - [八、参考资料](#八参考资料)
+    - [十、参考资料](#十参考资料)
 
 <!-- /TOC -->
 
@@ -94,6 +99,10 @@ mysql -h 104.223.3.138  -u root  -p Root666,.
 
 字段：id int(11) | account varchar(255) | password varchar(255)
 
+数据表：user_info
+
+字段：id int(11) | uid int(11) | name varchar(255) | wx varchar(255)
+
 ### 1、数据库
 
 ```sql
@@ -158,7 +167,7 @@ drop table `user`;
 
 ### 3、数据库CURD操作
 
-```sh
+```bash
 
 # 添加数据
 【单条数据】insert into `user` (account,password) values ('shengj','123456');
@@ -224,18 +233,54 @@ select * from `user` limit 2;
 select u.id from `user` as u; // 表别名
 select account as name from `user`; // 字段别名
 
+联表 join
+select i.name, i.wx, u.account
+from `user` as u
+inner join `user_info` as i on u.id = i.uid
+where u.name = 'omgzui';
+```
+
+## 四、mysql视图
+
+视图是虚拟的表，可以替代复杂sql查询
+
+```sql
+比如上面的
+select i.name, i.wx, u.account
+from `user` as u
+inner join `user_info` as i on u.id = i.uid
+where name = 'omgzui';
+可以使用
+select * from user_info_data where name = 'omgzui';
+
+user_info_data就是视图
+
+创建
+create view user_info_data as
+select i.name, i.wx, u.account
+from `user` as u
+inner join `user_info` as i on u.id = i.uid
+where name = 'omgzui';
 
 ```
 
-## 四、mysql索引
+注意：
+
+- 与创建表一样，创建视图的名称必须唯一
+- 创建视图的个数并没限制，但是如果一张视图嵌套或者关联的表过多，同样会引发性能问题，在实际生产环节中部署时务必进行必要的性能检测。
+- 在过滤条件数据时如果在创建视图的sql语句中存在where的条件语句，而在使用该视图的语句中也存在where条件语句时，这两个where条件语句会自动组合
+- order by 可以在视图中使用，但如果从该视图检索数据的select语句中也含有order by ，那么该视图中的order by 将被覆盖。
+- 视图中不能使用索引，也不能使用触发器
+- 使用可以和普通的表一起使用，编辑一条联结视图和普通表的sql语句是允许的。
+
+## 五、mysql索引
 
 作用：提高表中数据的查询速度
 
-    1.普通索引
-    2.唯一性索引
+    1.普通索引(单列索引)
+    2.唯一索引
     3.全文索引
-    4.单列索引
-    5.多列索引
+    4.多列索引(符合索引)
 
 ```sql
 
@@ -252,12 +297,31 @@ CREATE TABLE `love` (
   INDEX multi(id,space(20)) # 多列索引
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 ```
 
-## 五、mysql事务
+索引设计：
+
+- where子句中的列可能最适合做为索引
+- 不要尝试为性别或者有无这类字段等建立索引(因为类似性别的列，一般只含有`0`和`1`，无论搜索结果如何都会大约得出一半的数据)
+- 如果创建复合索引，要遵守`最左前缀`法则。即查询从索引的最左前列开始，并且不跳过索引中的列
+- 不要过度使用索引。每一次的更新，删除，插入都会维护该表的索引，更多的索引意味着占用更多的空间
+- 使用InnoDB存储引擎时，记录(行)默认会按照一定的顺序存储，如果已定义主键，则按照主键顺序存储，由于普通索引都会保存主键的键值，因此主键应尽可能的选择较短的数据类型，以便节省存储空间
+- 不要尝试在索引列上使用函数。
+
+## 六、mysql事务
 
 mysql事务可以理解为一系列操作，要么成功执行，要么失败。
+
+```sql
+-- 声明事务的开始
+BEGIN(或START TRANSACTION);
+
+-- 提交整个事务
+COMMIT;
+
+-- 回滚到事务初始状态
+ROLLBACK;
+```
 
 四个特性ACID
 
@@ -270,7 +334,7 @@ mysql事务可以理解为一系列操作，要么成功执行，要么失败。
 
 下图可以很好的描述事务的原子性：事务要不就在执行中，要不然就是成功或者失败的状态
 
-![](/public/img/mysql_transaction.jpg)
+![事务](https://raw.githubusercontent.com/OMGZui/noteBook/master/public/img/mysql_transaction.jpg)
 
 ### 2、一致性
 
@@ -284,11 +348,105 @@ mysql事务可以理解为一系列操作，要么成功执行，要么失败。
 
 事务的持久性就体现在，一旦事务被提交，那么数据一定会被写入到数据库中并持久存储起来。
 
-### 总结
+### 5、锁
+
+关于锁的锁定，对于UPDATE、DELETE和INSERT语句，InnoDB会自动给涉及数据集加排他锁（X)；对于普通SELECT语句，InnoDB不会加任何锁
+
+### 6、总结
 
 事务的 ACID 四大基本特性是保证数据库能够运行的基石，但是完全保证数据库的 ACID，尤其是隔离性会对性能有比较大影响，在实际的使用中我们也会根据业务的需求对隔离性进行调整，除了隔离性，数据库的原子性和持久性相信都是比较好理解的特性，前者保证数据库的事务要么全部执行、要么全部不执行，后者保证了对数据库的写入都是持久存储的、非易失的，而一致性不仅是数据库对本身数据的完整性的要求，同时也对开发者提出了要求 - 写出逻辑正确并且合理的事务。
 
-## 六、mysql优化
+## 七、存储过程
+
+存储过程就是数据库中保存的一系列SQL命令的集合
+
+### 栗子1：参数的种类分3种，分别是IN、OUT、INOUT，其中IN为输入参数类型，OUT为输出参数类型，而INOUT既是输入类型又是输出类型，下面我们创建一个存储过程，以达到对user表的用户名称进行模糊查询的目的，存储过程名称为sp_search_user
+
+```sql
+-- 改变分隔符
+DELIMITER //
+-- 创建存储过程
+create procedure sp_search_user (in name varchar(20));
+    begin
+    if name is null or name='' then
+        select * from user;
+    else
+        select * from user where username like name;
+    end if;
+    end
+    //
+DELIMITER ; -- 恢复分隔符
+
+-- name传入null值，查询所有用户。
+call sp_search_user(null);
+call sp_search_user('%omg%');
+```
+
+### 栗子2：关键字OUT则是指明相应参数用来从存储过程传出的一个值,也可以理解为存储过程的返回值，而对于INOUT则是两者结合体。现在我们创建一个存储过程，用于返回商品的最大值、最小值和平均值，命名为sp_item_price
+
+```sql
+DELIMITER //
+-- 创建存储过程
+create procedure sp_item_price(out plow decimal(8,2),
+                                out phigh decimal(8,2),
+                                out pavg decimal(8,2))
+    begin
+       select min(price) into plow from items;
+       select max(price) into phigh from items;
+       select avg(price) into pavg from items;
+    end;
+    //
+DELIMITER ; -- 恢复分隔符
+-- 调用存储过程
+call sp_item_price(@pricelow,@pricehigh,@priceavg);
+-- 查询执行结果
+select @pricelow;
+select @pricehigh;
+select @priceavg;
+```
+
+## 八、触发器
+
+触发器可以简单理解一种特殊的存储过程
+
+```sql
+DELIMITER //
+-- 创建触发器
+create trigger trg_user_history after delete
+    on user
+    for each row
+    begin
+      insert into user_history(uid,name,pinyin,birth,sex,address,updated)
+      values(OLD.id,OLD.name,OLD.pinyin,OLD.birth,OLD.sex,OLD.address,NOW());
+    end
+    //
+DELIMITER ;
+
+trg_user_history 触发器名字
+after 触发时间
+delete 触发事件
+user 需要触发的表
+for each row 固定写法
+
+上述sql中创建语句的形式与前面的存储过程或者存储函数都很类似，这里有点要注意的是，使用OLD/NEW关键字可以获取数据变更前后的记录，其中OLD用于AFTER时刻，而NEW用于BEFORE时刻的变更。如OLD.name表示从user表删除的记录的名称。INSERT操作一般使用NEW关键字，UPDATE操作一般使用NEW和OLD，而DELETE操作一般使用OLD。
+```
+
+## 九、游标
+
+游标就就是可以将检索出来的数据集合保存在内存中然后依次取出每条数据进行处理
+
+```sql
+-- 声明游标
+DECLARE cursor_name CURSOR FOR SELECT 语句;
+-- 打开游标
+OPEN cursor_name;
+-- 从游标指针中获取数据
+FETCH cursor_name INTO 变量名 [,变量名2,...];
+-- 关闭游标
+CLOSE cursor_name
+```
+
+## 九、mysql优化
 
 ### 1、编码
 
@@ -369,11 +527,9 @@ myisam则分裂较快
 
 我们的争取目标-----取出来的数据本身就是有序的! 利用索引来排序.
 
-### 7、语句优化 explain
-
-## 七、主从集群
-
-## 八、参考资料
+## 十、参考资料
 
 - [mysql基本操作命令汇总](http://www.jianshu.com/p/118e1c41e9f0)
 - [『浅入深出』MySQL 中事务的实现](http://draveness.me/mysql-transaction.html)
+- [MySQL的初次见面礼基础实战篇](https://blog.csdn.net/javazejian/article/details/61614366)
+- [MySQL的进阶实战篇](https://blog.csdn.net/javazejian/article/details/69857949)
