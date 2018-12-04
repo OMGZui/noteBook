@@ -1,8 +1,8 @@
-# PHP -- The best language
+# PHP
 
 <!-- TOC -->
 
-- [PHP -- The best language](#php----the-best-language)
+- [PHP](#php)
     - [一、PHP是什么](#一php是什么)
     - [二、PHP安装](#二php安装)
         - [1、yum安装](#1yum安装)
