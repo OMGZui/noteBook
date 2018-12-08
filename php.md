@@ -32,6 +32,7 @@
         - [6、上下文（Context）选项和参数](#6上下文context选项和参数)
     - [五、PHP 实践](#五php-实践)
         - [1、多维数组变一维数组](#1多维数组变一维数组)
+        - [2、Laravel中Model的`$visible`,`$hidden`原理](#2laravel中model的visiblehidden原理)
     - [六、PHP面试](#六php面试)
     - [七、PHP扩展](#七php扩展)
     - [八、PHP优化](#八php优化)
@@ -599,6 +600,29 @@ array_walk_recursive($arr, function($value) use (&$result) {
 array_walk_recursive($arr, function($value) use (&$result) {
     array_push($result, array_values($value));
 });
+
+```
+
+### 2、Laravel中Model的`$visible`,`$hidden`原理
+
+```php
+array_intersect_key():使用键名比较计算数组的交集
+array_flip():交换数组中的键和值
+array_diff_key():使用键名比较计算数组的差集
+
+protected function getArrayableItems(array $values)
+{
+    if (count($this->getVisible()) > 0) {
+        $values = array_intersect_key($values, array_flip($this->getVisible()));
+    }
+
+    if (count($this->getHidden()) > 0) {
+        $values = array_diff_key($values, array_flip($this->getHidden()));
+    }
+
+    return $values;
+}
+
 
 ```
 
