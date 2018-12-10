@@ -271,6 +271,7 @@ $arr = [
     1.5  => "c",
     true => "d",
 ];
+
 var_dump($arr);
 
 输出：array(1) {
