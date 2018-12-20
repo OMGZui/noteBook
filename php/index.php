@@ -6,6 +6,4 @@
  * Time: 14:54
  */
 
-namespace PHP;
-
 require 'bootstrap.php';

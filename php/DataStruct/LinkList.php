@@ -5,18 +5,7 @@
  * Date: 2018/8/29
  * Time: 10:55
  */
-
-// 结点
-class Node
-{
-    public $link;
-    public $value;
-
-    public function __construct($value = null)
-    {
-        $this->value = $value;
-    }
-}
+namespace PHP\DataStruct;
 
 class LinkList
 {
@@ -50,7 +39,6 @@ class LinkList
             echo $next->value . ' ';
             $next = $next->link;
         }
-        echo "\n";
     }
 
     public function insert(Node $head, $pos, $val)
@@ -79,9 +67,3 @@ class LinkList
     }
 }
 
-$link = new LinkList([1, 2, 3, 4, 5, 10, 9, 8, 7, 6]);
-$head = $link->head;
-$link->show($head);
-if ($link->insert($head, 1, 100)) {
-    $link->show($head);
-}

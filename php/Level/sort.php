@@ -6,14 +6,14 @@
  * Time: 09:54
  */
 
-namespace PHP\Level;
-
-require __DIR__.'/../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 set_time_limit(0);
 
+const N = 10000;
+
 $arr = [];
-for ($k = 0; $k < 10000; $k++) {
+for ($k = 0; $k < N; $k++) {
     $arr[] = $k;
 }
 
@@ -39,12 +39,10 @@ $t1 = microtime(true);
 function bubble_sort($arr)
 {
     $len = count($arr); //长度
-    for ($i = 0; $i < $len; $i++) { //外层循环控制轮次
-        for ($j = $i + 1; $j < $len; $j++) { //内层循环进行比较
-            if ($arr[$i] > $arr[$j]) { //比较，大的一直是$arr[$j]，也就是后者
-                $temp = $arr[$j];
-                $arr[$j] = $arr[$i];
-                $arr[$i] = $temp;
+    for ($i = $len - 1; $i > 0; $i--) { //外层循环控制轮次
+        for ($j = 0; $j < $i; $j++) { //内层循环进行比较
+            if ($arr[$i] < $arr[$j]) { //比较，大的一直是$arr[$j]，也就是后者
+                [$arr[$i], $arr[$j]] = [$arr[$j], $arr[$i]];
             }
         } //一轮下来最大值在末尾
     }//n轮下来排序完成，时间复杂度O(n^2)
@@ -53,6 +51,7 @@ function bubble_sort($arr)
 
 bubble_sort($arr);
 $t2 = microtime(true);
+//dump(bubble_sort($arr));
 dump(($t2 - $t1) * 1000 . 'ms');
 
 // 快速排序
@@ -96,6 +95,7 @@ function quick_sort($arr)
 
 quick_sort($arr);
 $t2 = microtime(true);
+//dump(quick_sort($arr));
 dump(($t2 - $t1) * 1000 . 'ms');
 
 // 插入排序
@@ -127,6 +127,7 @@ function insert_sort($arr)
 
 insert_sort($arr);
 $t2 = microtime(true);
+//dump(insert_sort($arr));
 dump(($t2 - $t1) * 1000 . 'ms');
 
 // 选择排序
@@ -163,6 +164,7 @@ function select_sort($arr)
 
 select_sort($arr);
 $t2 = microtime(true);
+//dump(select_sort($arr));
 dump(($t2 - $t1) * 1000 . 'ms');
 
 

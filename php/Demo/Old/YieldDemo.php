@@ -6,9 +6,7 @@
  * Time: 10:45
  */
 
-namespace PHP\Demo;
-
-require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 function xRange($start, $limit, $step = 1)
 {

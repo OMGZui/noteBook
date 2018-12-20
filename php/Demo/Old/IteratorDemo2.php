@@ -6,13 +6,14 @@
  * Time: 17:27
  */
 
-namespace PHP\Demo;
+namespace PHP\Demo\Old;
 
-require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
-class IteratorDemo implements \Iterator
+class IteratorDemo2 implements \Iterator
 {
     private $var = [];
+    private $n;
 
     public function __construct($arr)
     {
@@ -23,27 +24,27 @@ class IteratorDemo implements \Iterator
 
     public function rewind()
     {
-        reset($this->var);
+        $this->n = 0;
     }
 
     public function current()
     {
-        return current($this->var);
+        return $this->var[$this->n];
     }
 
     public function key()
     {
-        return key($this->var);
+        return $this->n;
     }
 
     public function next()
     {
-        return next($this->var);
+        return $this->n++;
     }
 
     public function valid()
     {
-        return $this->current() !== false;
+        return isset($this->var[$this->n]);
     }
 }
 

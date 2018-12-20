@@ -6,7 +6,5 @@
  * Time: 10:05
  */
 
-namespace PHP;
-
 require __DIR__.'/../vendor/autoload.php';
 

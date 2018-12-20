@@ -1,25 +1,32 @@
 {
-  "name": "omgzui/note-book",
-  "description": "linux nginx mysql php http redis",
-  "keywords": [
-    "php",
-    "skill"
-  ],
-  "license": "MIT",
-  "type": "project",
-  "require": {
-    "symfony/var-dumper": "v3.3.10"
-  },
-  "autoload": {
-    "psr-4": {
-      "PHP\\": "php/"
-    },
-    "classmap": [
-      "php/"
+    "name": "omgzui/note-book",
+    "description": "linux nginx mysql php http redis",
+    "keywords": [
+        "php",
+        "skill"
     ],
-    "files": [
-    ]
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "license": "MIT",
+    "type": "project",
+    "authors": [{
+        "name": "小粽子",
+        "email": "862275679@qq.com"
+    }],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/var-dumper": "v3.3.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHP\\": "php/"
+        },
+        "files": []
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
 }

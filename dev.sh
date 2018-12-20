@@ -1,7 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/zsh
+echo -n "输入你改动的内容："
+read msg
 
-date=$(date "+%Y-%m-%d %H:%M:%S")
-
+echo "---开始构建---\n"
 git add .
-git commit -m "$date"
+git commit -m "$msg"
 git push origin master
+echo "\n---构建完成---"
