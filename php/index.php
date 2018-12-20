@@ -7,3 +7,5 @@
  */
 
 require 'bootstrap.php';
+
+dump('🍎');

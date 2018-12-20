@@ -52,6 +52,8 @@ http://localhost:8000/php/index.php
 # 命令行
 php index.php
 
+# 测试
+vendor/bin/phpunit tests
 ```
 
 ## 一、前端
