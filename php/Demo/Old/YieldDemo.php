@@ -8,6 +8,8 @@
 
 require __DIR__ . '/../../bootstrap.php';
 
+const N = 1000000;
+
 function xRange($start, $limit, $step = 1)
 {
     if ($start < $limit) {
@@ -30,9 +32,9 @@ function xRange($start, $limit, $step = 1)
 }
 
 dump($a = memory_get_usage()); //533824
-$n1 = range(0, 1000000);
+$n1 = range(0, N);
 dump($b = memory_get_usage(), $b - $a); //34440680 33906552 32mb
-$n2 = xRange(0, 1000000);
+$n2 = xRange(0, N);
 dump(memory_get_usage() - $b); // 768 bytes
 
 function count_num()

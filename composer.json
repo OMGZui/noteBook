@@ -18,7 +18,9 @@
         "psr-4": {
             "PHP\\": "php/"
         },
-        "files": []
+        "files": [
+            "helper.php"
+        ]
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
