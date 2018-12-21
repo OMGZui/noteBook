@@ -15,7 +15,7 @@ const M = 1000000;
 
 // 生成一个大文件
 $t1 = microtime(true);
-$fp = fopen("./text2.txt", "w");
+$fp = fopen("./text.txt", "w");
 
 for ($i = 1; $i <= M; $i++) {
     if ($i % 10 == 0) {
