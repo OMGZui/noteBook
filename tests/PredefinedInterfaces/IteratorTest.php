@@ -15,6 +15,8 @@ class IteratorTest extends TestCase
 {
     public function testIterator()
     {
+        // 迭代器接口其实实现的原理就是类似指针的移动
+        // 迭代顺序 rewind()->valid()->key()->current()->next()->valid()->key()->current()->next()
         $iterator = new MyIterator();
         $this->assertInstanceOf(\Traversable::class, $iterator);
 
