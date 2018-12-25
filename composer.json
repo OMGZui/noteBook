@@ -13,6 +13,7 @@
     }],
     "minimum-stability": "stable",
     "require": {
+        "php-amqplib/php-amqplib": "^2.8"
     },
     "autoload": {
         "psr-4": {
