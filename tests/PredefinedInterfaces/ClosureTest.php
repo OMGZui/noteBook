@@ -20,6 +20,12 @@ class ClosureTest extends TestCase
         $this->assertEquals(2, $obj->add(function (array $params) {
             return ++$params[0];
         }, [1]));
+
+        // 测试同一个实例
+        $newObj = $obj->test(function (array $params){
+            return $this;
+        }, [1]);
+        $this->assertTrue($newObj instanceof $obj);
     }
 
     public function testClosureBind()
@@ -29,6 +35,12 @@ class ClosureTest extends TestCase
             return ++$params[0];
         });
         $this->assertEquals(2, $obj->add([1]));
+
+        // 测试同一个实例
+        $obj->addMethod('test', function (array $params) {
+            return $this;
+        });
+        $this->assertTrue($obj->test([1]) instanceof $obj);
     }
 
 }

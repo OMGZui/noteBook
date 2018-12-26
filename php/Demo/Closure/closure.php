@@ -9,11 +9,11 @@
 require __DIR__ . '/../../bootstrap.php';
 
 // 栗子1 用作于回调
-$rs1 = preg_replace_callback('/-([a-z])/', function ($match) {
+$rs = preg_replace_callback('/-([a-z])/', function ($match) {
     return strtoupper($match[1]);
 }, 'hello-world');
 
-dump($rs1); // "helloWorld"
+dump($rs); // "helloWorld"
 
 // 栗子2 用作于变量赋值
 $greet = function ($name) {
@@ -31,12 +31,12 @@ $example = function () use ($message) {
 $example(); // "hello"
 
 // 栗子4 绑定闭包在指定对象
-$param = call_user_func_array(function ($params) {
-    return $params;
-}, [1]);
-dump($param);
+$rs = call_user_func_array(function ($params) {
+    return func_get_args();
+}, [1, 2, 3]);
+dump($rs); // [1,2,3]
 
-$param = call_user_func(function ($params) {
-    return $params;
-}, 1);
-dump($param);
+$rs = call_user_func(function (...$params) {
+    return func_get_args();
+}, 1, 2, 3);
+dump($rs); // [1,2,3]
