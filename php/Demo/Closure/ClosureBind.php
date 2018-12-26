@@ -8,8 +8,6 @@
 
 namespace PHP\Demo\Closure;
 
-use http\Exception\InvalidArgumentException;
-
 class ClosureBind
 {
     private $methods = [];
@@ -17,7 +15,7 @@ class ClosureBind
     public function addMethod(string $name, \Closure $callback)
     {
         if (!is_callable($callback)) {
-            throw new InvalidArgumentException("第二个参数有误");
+            throw new \InvalidArgumentException("第二个参数有误");
         }
         $this->methods[$name] = \Closure::bind($callback, $this, get_class());
     }
