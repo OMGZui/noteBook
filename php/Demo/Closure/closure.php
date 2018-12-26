@@ -9,7 +9,7 @@
 require __DIR__ . '/../../bootstrap.php';
 
 // 栗子1 用作于回调
-$rs1 = preg_replace_callback('/-([a-z])/', function ($match){
+$rs1 = preg_replace_callback('/-([a-z])/', function ($match) {
     return strtoupper($match[1]);
 }, 'hello-world');
 
@@ -30,3 +30,13 @@ $example = function () use ($message) {
 };
 $example(); // "hello"
 
+// 栗子4 绑定闭包在指定对象
+$param = call_user_func_array(function ($params) {
+    return $params;
+}, [1]);
+dump($param);
+
+$param = call_user_func(function ($params) {
+    return $params;
+}, 1);
+dump($param);
