@@ -74,7 +74,7 @@ vendor/bin/phpunit tests
 ## 三、工具
 
 - [1、git](git.md)
-- [2、设计模式](https://github.com/OMGZui/Design)
+- [2、设计模式](https://github.com/OMGZui/DesignPattern)
 - [3、bash](https://github.com/OMGZui/bash-step-to-step)
 - [4、docker](docker.md)
 - [5、数据结构与算法](https://github.com/OMGZui/basic_c)
