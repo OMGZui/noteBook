@@ -76,7 +76,7 @@ vendor/bin/phpunit tests
 - [1、git](git.md)
 - [2、设计模式](https://github.com/OMGZui/DesignPattern)
 - [3、bash](https://github.com/OMGZui/bash-step-to-step)
-- [4、docker](docker.md)
+- [4、docker](https://github.com/OMGZui/lnmp)
 - [5、数据结构与算法](https://github.com/OMGZui/basic_c)
 - [6、leetcode](https://github.com/OMGZui/go_leetcode)
 
