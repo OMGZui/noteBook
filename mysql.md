@@ -32,6 +32,7 @@
         - [4、索引选择](#4索引选择)
         - [5、分页优化](#5分页优化)
         - [6、索引与排序](#6索引与排序)
+    - [十、docker实现mysql主从复制](#十docker实现mysql主从复制)
     - [十一、参考资料](#十一参考资料)
 
 <!-- /TOC -->
@@ -527,9 +528,49 @@ myisam则分裂较快
 
 我们的争取目标-----取出来的数据本身就是有序的! 利用索引来排序.
 
+## 十、docker实现mysql主从复制
+
+```bash
+# 准备容器
+docker pull mysql:5.5
+
+# 目录
+├── docker-compose.yml
+├── .env
+├── master
+│   ├── Dockerfile
+│   └── my.cnf
+├── slave1
+│   ├── Dockerfile
+│   └── my.cnf
+└── slave2
+    ├── Dockerfile
+    └── my.cnf
+
+# 主容器
+GRANT REPLICATION SLAVE ON *.* to 'backup'@'%' identified by 'backup';
+
+# 从容器
+# 关于主容器ip地址可以使用 docker inspect master_slave_master_1
+STOP SLAVE;
+CHANGE MASTER TO
+MASTER_HOST='172.22.0.2', # HOST由自己主机决定
+MASTER_PORT=3306,
+MASTER_USER='backup',
+MASTER_PASSWORD='backup';
+START SLAVE;
+show slave status;
+
+# 错误
+stop slave ;
+set GLOBAL SQL_SLAVE_SKIP_COUNTER=1;
+start slave ;
+```
+
 ## 十一、参考资料
 
 - [mysql基本操作命令汇总](http://www.jianshu.com/p/118e1c41e9f0)
 - [『浅入深出』MySQL 中事务的实现](http://draveness.me/mysql-transaction.html)
 - [MySQL的初次见面礼基础实战篇](https://blog.csdn.net/javazejian/article/details/61614366)
 - [MySQL的进阶实战篇](https://blog.csdn.net/javazejian/article/details/69857949)
+- [基于Docker搭建MySQL主从复制](https://my.oschina.net/u/3773384/blog/1810111?p=1)
