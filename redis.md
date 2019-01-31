@@ -27,6 +27,9 @@
         - [1、缓存雪崩](#1缓存雪崩)
         - [2、缓存穿透](#2缓存穿透)
         - [3、缓存与数据库读写一致](#3缓存与数据库读写一致)
+    - [docker实现redis主从](#docker实现redis主从)
+        - [1、命令行模式](#1命令行模式)
+        - [2、docker-compose模式 推荐](#2docker-compose模式-推荐)
     - [十二、参考资料](#十二参考资料)
 
 <!-- /TOC -->
@@ -520,6 +523,69 @@ redis发送表
 
 在高并发下表现优异，在原子性被破坏时表现不如意
 
+## docker实现redis主从
+
+[docker实现redis主从](https://github.com/OMGZui/redis_m_s)
+
+### 1、命令行模式
+
+```bash
+# 拉取redis
+docker pull redis
+
+# 主
+docker run -v $(pwd)/master/redis.conf:/usr/local/etc/redis/redis.conf --name redis-master redis redis-server /usr/local/etc/redis/redis.conf
+
+# 从1 --link redis-master:master master是别名
+docker run -v $(pwd)/slave1/redis.conf:/usr/local/etc/redis/redis.conf --name redis-slave1 --link redis-master:master redis redis-server /usr/local/etc/redis/redis.conf
+
+# 从2
+docker run -v $(pwd)/slave2/redis.conf:/usr/local/etc/redis/redis.conf --name redis-slave2 --link redis-master:master redis redis-server /usr/local/etc/redis/redis.conf
+
+```
+
+### 2、docker-compose模式 推荐
+
+```bash
+# 拉取redis
+docker pull redis
+
+# 目录
+├── docker-compose.yml
+├── master
+│   ├── Dockerfile
+│   └── redis.conf
+├── redis.conf
+├── slave1
+│   ├── Dockerfile
+│   └── redis.conf
+└── slave2
+    ├── Dockerfile
+    └── redis.conf
+
+# 启动
+docker-compose up -d master slave1 slave2
+
+# 查看主容器
+docker-compose exec master bash
+root@cab5db8d544b:/data# redis-cli
+127.0.0.1:6379> info Replication
+# Replication
+role:master
+connected_slaves:2
+slave0:ip=172.23.0.3,port=6379,state=online,offset=1043,lag=0
+slave1:ip=172.23.0.4,port=6379,state=online,offset=1043,lag=0
+master_replid:995257c6b5ac62f7908cc2c7bb770f2f17b60401
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:1043
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:1043
+```
+
 ## 十二、参考资料
 
 - [redis](https://redis.io/)
+- [Docker：创建Redis集群](https://lw900925.github.io/docker/docker-redis-cluster.html)
