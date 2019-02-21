@@ -241,8 +241,11 @@ Web表单上传文件使用
 |401| Unauthorized |认证失败|
 |403| Forbidden |服务器拒绝|
 |404| Not Found |服务器没有请求的资源|
-|500|Internal Server Error| 服务器端执行请求错误|
-|503|Server Unavailable| 服务器超负载|
+|499| Nginx错误 |客户端关闭了连接|
+|500|Internal Server Error|服务器端执行请求错误|
+|502|Bad Gateway|连接超时，请求太多，导致无法正常的响应|
+|503|Server Unavailable|服务器超负载|
+|504|Gateway Time-out|服务器超时|
 
 ## 五、HTTP协作的Web服务器
 
