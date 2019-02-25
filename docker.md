@@ -363,9 +363,6 @@ services:
       networks:
         - backend
 
-
-# 参考之https://github.com/laradock/laradock
-
 ```
 
 .env
