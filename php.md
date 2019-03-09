@@ -38,8 +38,7 @@
     - [八、PHP优化](#八php优化)
         - [1、composer自动加载](#1composer自动加载)
         - [2、composer原理](#2composer原理)
-    - [九、现代PHP](#九现代php)
-    - [十、参考资料](#十参考资料)
+    - [九、参考资料](#九参考资料)
 
 <!-- /TOC -->
 
@@ -787,10 +786,6 @@ return ComposerAutoloaderIniteaa4bfcc04fea23ae4b766b783b56134::getLoader();
 
 ```
 
-## 九、现代PHP
-
-[Modern PHP](php/modern)
-
-## 十、参考资料
+## 九、参考资料
 
 [php手册](http://php.net/)
