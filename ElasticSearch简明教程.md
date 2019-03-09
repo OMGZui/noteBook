@@ -14,6 +14,7 @@
       - [搜索](#%E6%90%9C%E7%B4%A2)
       - [执行过滤](#%E6%89%A7%E8%A1%8C%E8%BF%87%E6%BB%A4)
       - [执行聚合](#%E6%89%A7%E8%A1%8C%E8%81%9A%E5%90%88)
+  - [三、Mapping](#%E4%B8%89mapping)
 
 <!-- /TOC -->
 
@@ -460,5 +461,57 @@ curl -X GET "localhost:9200/bank/_search" -H 'Content-Type: application/json' -d
   }
 }
 '
+
+```
+
+## 三、Mapping
+
+文档映射，类似于设计数据库的表和字段
+
+线路产品实例：
+
+```php
+'product' => [
+    'index' => 'product',
+    'type' => 'lines',
+    'settings' => [
+        "number_of_shards" => 5,
+        "number_of_replicas" => 1,
+        ],
+    'mappings' => [
+        'lines' => [
+            "properties" => [
+                'title' => [
+                    'type' => 'text',
+                    "analyzer" => "ik_max_word",
+                    "search_analyzer" => "ik_max_word"
+                ],
+                'sub_title' => [
+                    'type' => 'text',
+                    "analyzer" => "ik_max_word",
+                    "search_analyzer" => "ik_max_word"
+                ],
+                'mdd' => [
+                    'type' => 'text',
+                    "analyzer" => "ik_max_word",
+                    "search_analyzer" => "ik_max_word"
+                ],
+                'href' => [
+                    'type' => 'long',
+                ],
+                'price' => [
+                    'type' => 'text',
+                ],
+                'time' => [
+                    'type' => 'text',
+                ],
+                'jihe' => [
+                    'type' => 'text',
+                ],
+            ]
+        ]
+    ]
+],
+
 
 ```
