@@ -14,8 +14,8 @@
     - [9、@错误控制符，==和===，++$a和$a++](#9错误控制符和a和a)
     - [10、栗子 2](#10栗子-2)
     - [11、foreach 会 reset 重置指针，switch...case 有一个跳转表的概念](#11foreach-会-reset-重置指针switchcase-有一个跳转表的概念)
-    - [12、栗子3](#12栗子3)
-    - [13、include加载警告、require加载致命错误](#13include加载警告require加载致命错误)
+    - [12、栗子 3](#12栗子-3)
+    - [13、include 加载警告、require 加载致命错误](#13include-加载警告require-加载致命错误)
     - [14、正则表达式](#14正则表达式)
     - [15、文件](#15文件)
 
@@ -92,7 +92,7 @@ if ($a = 3 > 0 || $b = 3 > 0)
 
 ## 11、foreach 会 reset 重置指针，switch...case 有一个跳转表的概念
 
-## 12、栗子3
+## 12、栗子 3
 
 ```php
 # static只会初始化一次，是局部的，会记录值
@@ -111,7 +111,7 @@ echo get_count(); // 1
 
 ```
 
-## 13、include加载警告、require加载致命错误
+## 13、include 加载警告、require 加载致命错误
 
 ## 14、正则表达式
 
@@ -135,6 +135,33 @@ $pattern = '/<img.*?src="(.*?)".*?\/?>/i'
 ## 15、文件
 
 ```php
+# 对文本开头进行写内容
+function writeContent($file)
+{
+    $handle = fopen(file, 'r');
+    $content = fread(handle, filesize(file));
+    $content = 'xxx'.$content;
+    fclose($handle);
 
+    $handle = fopen(file, 'w');
+    fwrite($handle, $content);
+    fclose($handle);
+}
+
+# 对目录进行遍历
+function loopDir($dir)
+{
+    $handle = opendir($dir);
+    while(false !== ($file = readdir($handle)))
+    {
+        if($file != '.' && $file != '..')
+        {
+            if(filetype($dir.'/'.file) == 'dir')
+            {
+                loopDir($dir.'/'.file);
+            }
+        }
+    }
+}
 
 ```
