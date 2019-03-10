@@ -154,9 +154,7 @@ function select_sort($arr)
             }
         }
         if ($min != $i) { //选出最小值
-            $temp = $arr[$min];
-            $arr[$min] = $arr[$i];
-            $arr[$i] = $temp;
+            [$arr[$min], $arr[$i]] = [$arr[$i], $arr[$min]];
         }
     }
     return $arr; //相当于每次把最小值放入$arr[$i]的位置
