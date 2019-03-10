@@ -76,6 +76,10 @@ https://www.zhihu.com/question/23242151
 
 ## 13、RPC了解多少，如果你经历过，结合你的经历说下你们RPC是通过什么协议实现的？消息格式是怎样的？采用哪种序列化方式
 
+RPC：远程过程调用协议，且不依赖于具体的网络传输协议，比如restful需要依赖http协议
+
+https://www.zybuluo.com/phper/note/76641
+
 ## 14、TCP协议握手的过程
 
 三次握手，四次挥手
@@ -127,6 +131,10 @@ Client主动Connect的时候
 
 https://www.158code.com/article/165
 
+LNMP：主要是nginx与php-fpm的通信
+
+nginx作为一个代理服务器，通过fastcgi协议与php-fpm进行通信
+
 ## 17、同步、异步、阻塞、非阻塞和IO多路复用是怎么回事，常见的服务器进程（线程）模型有哪些
 
 对于一个network IO (这里我们以read举例)，它会涉及到两个系统对象，一个是调用这个IO的process (or thread)，另一个就是系统内核(kernel)。当一个read操作发生时，它会经历两个阶段：
@@ -134,14 +142,30 @@ https://www.158code.com/article/165
 1. 等待数据准备 (Waiting for the data to be ready)
 2. 将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)
 
-同步（synchronous）：
-异步（asynchronous）：
+同步（synchronous）：一次只能做一件事
+异步（asynchronous）：可以同时做多件事
 阻塞（blocking）：两个阶段都被block
-非阻塞（non-blocking）：
+非阻塞（non-blocking）：两个阶段都没被block
 IO多路复用（IO multiplexing）：select，epoll
 
 https://blog.csdn.net/historyasamirror/article/details/5778378
 
 ## 18、计算机基础中常见的基础数据结构和基础算法
 
+- 链表
+- 栈
+- 队列
+- 树
+- 图
+- 哈希表
+
+- 排序
+- 查找
+
 ## 19、哈希一致性算法是怎么回事？同时说下redis集群有什么认识吗
+
+一致性Hash算法是对2^32取模，形成一个哈希环
+
+一致性Hash算法对于节点的增减都只需重定位环空间中的一小部分数据，具有较好的容错性和可扩展性。
+
+https://zhuanlan.zhihu.com/p/34985026
