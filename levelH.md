@@ -80,9 +80,14 @@ https://www.zhihu.com/question/23242151
 
 三次握手，四次挥手
 
-- 发送端发送syn标志的数据包给接收端
-- 接收端返回syn/ack标志的数据包给发送端
-- 发送端返回ack标志的数据包给接收端
+- Client发送SYN给Server
+- Server返回SYN/ACK给Client
+- Client返回ACK给Server
+
+- Client发送FIN给Server
+- Server收到FIN后返回ACK给Client
+- Server发送FIN给Client
+- Client收到FIN后发送ACK给Server
 
 ## 15、PHP异常你是如何使用的，简单说说
 
@@ -94,7 +99,48 @@ https://www.zhihu.com/question/23242151
 
 ## 16、SWOOLE的进程模型是什么样的？和LNMP有什么不同
 
+![swoole](./public/img/process.jpg)
+
+如图所知swoole的进程模型是一个Master进程和Manager进程组成
+
+Master进程是一个多线程进程，其中有一组非常重要的线程，叫做Reactor线程（组）
+
+Manager进程，某种意义上可以看做一个代理层，它本身并不直接处理业务，其主要工作是将Master进程中收到的数据转交给Worker进程，或者将Worker进程中希望发给客户端的数据转交给Master进程进行发送。
+
+Manager进程还负责监控Worker进程，如果Worker进程因为某些意外挂了，Manager进程会重新拉起新的Worker进程，有点像Supervisor的工作。而这个特性，也是最终实现热重载的核心机制。
+
+Worker进程其实就是处理各种业务工作的进程，Manager将数据包转交给Worker进程，然后Worker进程进行具体的处理，并根据实际情况将结果反馈给客户端。
+
+当客户端连接的时候这个过程中，三种进程之间是怎么协作的：
+
+Client主动Connect的时候
+
+1. Client实际上是与Master进程中的某个Reactor线程发生了连接。
+2. 当TCP的三次握手成功了以后，由这个Reactor线程将连接成功的消息告诉Manager进程，再由Manager进程转交给Worker进程。
+3. 在这个Worker进程中触发了OnConnect的方法。
+  
+当Client向Server发送了一个数据包的时候
+
+1. 首先收到数据包的是Reactor线程，同时Reactor线程会完成组包，再将组好的包交给Manager进程，由Manager进程转交给Worker。
+2. 此时Worker进程触发OnReceive事件。
+3. 如果在Worker进程中做了什么处理，然后再用Send方法将数据发回给客户端时，数据则会沿着这个路径逆流而上。
+
+https://www.158code.com/article/165
+
 ## 17、同步、异步、阻塞、非阻塞和IO多路复用是怎么回事，常见的服务器进程（线程）模型有哪些
+
+对于一个network IO (这里我们以read举例)，它会涉及到两个系统对象，一个是调用这个IO的process (or thread)，另一个就是系统内核(kernel)。当一个read操作发生时，它会经历两个阶段：
+
+1. 等待数据准备 (Waiting for the data to be ready)
+2. 将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)
+
+同步（synchronous）：
+异步（asynchronous）：
+阻塞（blocking）：两个阶段都被block
+非阻塞（non-blocking）：
+IO多路复用（IO multiplexing）：select，epoll
+
+https://blog.csdn.net/historyasamirror/article/details/5778378
 
 ## 18、计算机基础中常见的基础数据结构和基础算法
 
