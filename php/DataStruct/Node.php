@@ -10,8 +10,8 @@ namespace PHP\DataStruct;
 // 结点
 class Node
 {
-    public $link;
-    public $value;
+    public $link; // 指针域
+    public $value; // 数据域
 
     public function __construct($value = null)
     {
