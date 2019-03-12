@@ -26,7 +26,6 @@ PHP的底层有个联合体`_zend_value`表示变量的类型，程序运行期�
 
 - innodb支持行锁、事务、外键，而myisam只支持表锁
 - innodb是聚簇索引，myisam是非聚簇索引
-- 在查询效率上myisam更快
 
 ## 6、MYSQL的innodb引擎中，聚簇索引和二级索引有什么不同，如何可以，请详细画出两种索引实现的数据结构以及不同
 
@@ -37,8 +36,8 @@ PHP的底层有个联合体`_zend_value`表示变量的类型，程序运行期�
 4中隔离级别：
 
 - 未提交读
-- 提交读，不可重复读 RC
-- 可重复读 RR
+- 提交读，不可重复读 RC 其它数据库默认
+- 可重复读 RR mysql默认
 - 可串行化
 
 主要是RC和RR，RC解决了脏读，是一个事务只能看到自己的修改，其它事务是看不到的，RR解决了不可重复读，同一个事务中多次读取同样的记录的结果是一样的。
@@ -65,6 +64,10 @@ https://www.zhihu.com/question/23242151
 ## 10、简述一下REDIS中，字符串、set、zset、list以及hash底层是如何实现的
 
 ## 11、REDIS中key的过期有几种策略，然后redis中key的过期是如何实现的
+
+expire key time(以秒为单位)–这是最常用的方式
+
+setex(String key, int seconds, String value)–字符串独有的方式
 
 三种过期策略：
 

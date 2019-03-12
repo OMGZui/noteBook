@@ -24,7 +24,6 @@
   - [18、nginx、fastcgi、php-fpm](#18nginxfastcgiphp-fpm)
   - [19、linux命令](#19linux%E5%91%BD%E4%BB%A4)
   - [20、mysql慢查询](#20mysql%E6%85%A2%E6%9F%A5%E8%AF%A2)
-  - [21、](#21)
 
 <!-- /TOC -->
 
@@ -197,6 +196,7 @@ function loopDir($dir)
 - get用于数据读取，幂等的
 - post用于修改数据，是非幂等的
 - post更安全
+- get只允许ASCII字符，post无限制
 
 ## 18、nginx、fastcgi、php-fpm
 
@@ -218,5 +218,3 @@ show profile for query 1;
 
 explain
 ```
-
-## 21、
