@@ -2,26 +2,29 @@
 
 <!-- TOC -->
 
-- [3 年经验 PHP 准备面试](#3-年经验-php-准备面试)
-    - [1、引用变量](#1引用变量)
-    - [2、unset](#2unset)
-    - [3、对象赋值采用引用方式，不会写时复制，需要使用 clone 进行复制](#3对象赋值采用引用方式不会写时复制需要使用-clone-进行复制)
-    - [4、栗子1](#4栗子1)
-    - [5、单引号和双引号](#5单引号和双引号)
-    - [6、数据类型](#6数据类型)
-    - [7、超全局数组](#7超全局数组)
-    - [8、预定义变量](#8预定义变量)
-    - [9、@错误控制符，==和===，++$a和$a++](#9错误控制符和a和a)
-    - [10、栗子2](#10栗子2)
-    - [11、foreach 会 reset 重置指针，switch...case 有一个跳转表的概念](#11foreach-会-reset-重置指针switchcase-有一个跳转表的概念)
-    - [12、栗子3](#12栗子3)
-    - [13、include 加载警告、require 加载致命错误](#13include-加载警告require-加载致命错误)
-    - [14、正则表达式](#14正则表达式)
-    - [15、文件](#15文件)
-    - [16、http状态码](#16http状态码)
-    - [17、get与post区别](#17get与post区别)
-    - [18、nginx、fastcgi、php-fpm](#18nginxfastcgiphp-fpm)
-    - [19、](#19)
+- [3 年经验 PHP 准备面试](#3-%E5%B9%B4%E7%BB%8F%E9%AA%8C-php-%E5%87%86%E5%A4%87%E9%9D%A2%E8%AF%95)
+  - [1、引用变量](#1%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F)
+  - [2、unset](#2unset)
+  - [3、对象赋值采用引用方式，不会写时复制，需要使用 clone 进行复制](#3%E5%AF%B9%E8%B1%A1%E8%B5%8B%E5%80%BC%E9%87%87%E7%94%A8%E5%BC%95%E7%94%A8%E6%96%B9%E5%BC%8F%E4%B8%8D%E4%BC%9A%E5%86%99%E6%97%B6%E5%A4%8D%E5%88%B6%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-clone-%E8%BF%9B%E8%A1%8C%E5%A4%8D%E5%88%B6)
+  - [4、栗子1](#4%E6%A0%97%E5%AD%901)
+  - [5、单引号和双引号](#5%E5%8D%95%E5%BC%95%E5%8F%B7%E5%92%8C%E5%8F%8C%E5%BC%95%E5%8F%B7)
+  - [6、数据类型](#6%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
+  - [7、超全局数组](#7%E8%B6%85%E5%85%A8%E5%B1%80%E6%95%B0%E7%BB%84)
+  - [8、预定义变量](#8%E9%A2%84%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F)
+  - [9、@错误控制符，==和===，++$a和$a++](#9%E9%94%99%E8%AF%AF%E6%8E%A7%E5%88%B6%E7%AC%A6%E5%92%8Ca%E5%92%8Ca)
+  - [10、栗子2](#10%E6%A0%97%E5%AD%902)
+  - [11、foreach 会 reset 重置指针，switch...case 有一个跳转表的概念](#11foreach-%E4%BC%9A-reset-%E9%87%8D%E7%BD%AE%E6%8C%87%E9%92%88switchcase-%E6%9C%89%E4%B8%80%E4%B8%AA%E8%B7%B3%E8%BD%AC%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5)
+  - [12、栗子3](#12%E6%A0%97%E5%AD%903)
+  - [13、include 加载警告、require 加载致命错误](#13include-%E5%8A%A0%E8%BD%BD%E8%AD%A6%E5%91%8Arequire-%E5%8A%A0%E8%BD%BD%E8%87%B4%E5%91%BD%E9%94%99%E8%AF%AF)
+  - [14、正则表达式](#14%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+  - [15、文件](#15%E6%96%87%E4%BB%B6)
+  - [16、http状态码](#16http%E7%8A%B6%E6%80%81%E7%A0%81)
+  - [17、OSI 7层](#17osi-7%E5%B1%82)
+  - [17、get与post区别](#17get%E4%B8%8Epost%E5%8C%BA%E5%88%AB)
+  - [18、nginx、fastcgi、php-fpm](#18nginxfastcgiphp-fpm)
+  - [19、linux命令](#19linux%E5%91%BD%E4%BB%A4)
+  - [20、mysql慢查询](#20mysql%E6%85%A2%E6%9F%A5%E8%AF%A2)
+  - [21、](#21)
 
 <!-- /TOC -->
 
@@ -172,8 +175,48 @@ function loopDir($dir)
 
 ## 16、http状态码
 
+- 499 客户端关闭了连接，nginx错误
+- 502 bad Gateway 请求过多，比如php-fpm处理不过来，导致无法正常响应
+- 504 Gateway time-out nginx超时
+
+## 17、OSI 7层
+
+1. 物理层
+2. 数据链路层
+3. 网络层
+4. 传输层 tcp、udp
+5. 会话层
+6. 表示层
+7. 应用层 http、ftp、dns
+
 ## 17、get与post区别
+
+- get可以存浏览器书签
+- get可以被缓存
+- get有数据长度限制，2048字符
+- get用于数据读取，幂等的
+- post用于修改数据，是非幂等的
+- post更安全
 
 ## 18、nginx、fastcgi、php-fpm
 
-## 19、
+nginx通过fastcgi协议与php-fpm通信
+
+## 19、linux命令
+
+ps/top/kill/pstree
+
+分 时 日 月 周
+*  *  *  *  *
+
+## 20、mysql慢查询
+
+```sql
+set profile=1;
+show profiles;
+show profile for query 1;
+
+explain
+```
+
+## 21、
