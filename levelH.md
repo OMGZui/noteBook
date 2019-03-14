@@ -91,6 +91,8 @@ https://www.zybuluo.com/phper/note/76641
 - Server返回SYN/ACK给Client
 - Client返回ACK给Server
 
+涉及到FIN_WAIT，CLOSE_WAIT
+
 - Client发送FIN给Server
 - Server收到FIN后返回ACK给Client
 - Server发送FIN给Client
