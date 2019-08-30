@@ -206,6 +206,7 @@ git reset --hard origin/master
 > 2、备份master，查看log，回退到成熟提交点。
 
 - 简单部署脚本
+  
     ```sh
     #!/usr/bin/env bash
 
