@@ -2,19 +2,19 @@
 
 <!-- TOC -->
 
-- [ElasticSearch简明教程](#elasticsearch%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B)
-  - [一、ElasticSearch是什么](#%E4%B8%80elasticsearch%E6%98%AF%E4%BB%80%E4%B9%88)
-  - [二、基本概念](#%E4%BA%8C%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2、安装](#2%E5%AE%89%E8%A3%85)
-    - [3、探索集群](#3%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BE%A4)
-      - [集群健康](#%E9%9B%86%E7%BE%A4%E5%81%A5%E5%BA%B7)
-      - [索引](#%E7%B4%A2%E5%BC%95)
-    - [4、修改数据](#4%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE)
-    - [5、探索数据](#5%E6%8E%A2%E7%B4%A2%E6%95%B0%E6%8D%AE)
-      - [搜索](#%E6%90%9C%E7%B4%A2)
-      - [执行过滤](#%E6%89%A7%E8%A1%8C%E8%BF%87%E6%BB%A4)
-      - [执行聚合](#%E6%89%A7%E8%A1%8C%E8%81%9A%E5%90%88)
-  - [三、Mapping](#%E4%B8%89mapping)
+- [ElasticSearch简明教程](#elasticsearch%e7%ae%80%e6%98%8e%e6%95%99%e7%a8%8b)
+  - [一、ElasticSearch是什么](#%e4%b8%80elasticsearch%e6%98%af%e4%bb%80%e4%b9%88)
+  - [二、基本概念](#%e4%ba%8c%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5)
+    - [2、安装](#2%e5%ae%89%e8%a3%85)
+    - [3、探索集群](#3%e6%8e%a2%e7%b4%a2%e9%9b%86%e7%be%a4)
+      - [集群健康](#%e9%9b%86%e7%be%a4%e5%81%a5%e5%ba%b7)
+      - [索引](#%e7%b4%a2%e5%bc%95)
+    - [4、修改数据](#4%e4%bf%ae%e6%94%b9%e6%95%b0%e6%8d%ae)
+    - [5、探索数据](#5%e6%8e%a2%e7%b4%a2%e6%95%b0%e6%8d%ae)
+      - [搜索](#%e6%90%9c%e7%b4%a2)
+      - [执行过滤](#%e6%89%a7%e8%a1%8c%e8%bf%87%e6%bb%a4)
+      - [执行聚合](#%e6%89%a7%e8%a1%8c%e8%81%9a%e5%90%88)
+  - [三、Mapping](#%e4%b8%89mapping)
 
 <!-- /TOC -->
 
@@ -512,6 +512,5 @@ curl -X GET "localhost:9200/bank/_search" -H 'Content-Type: application/json' -d
         ]
     ]
 ],
-
 
 ```
