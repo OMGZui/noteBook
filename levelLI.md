@@ -16,11 +16,7 @@ PHP的底层有个联合体`_zend_value`表示变量的类型，程序运行期�
 
 ## 4、一个APP或者网页从发起并完成一个完整的HTTP流程大概是怎样的
 
-- 通过DNS服务器解析域名得到IP地址
-- 通过IP地址确定服务器
-- 客户端使用http协议与服务器进行三次握手连接
-- 服务器通常使用nginx代理到相应的服务（比如php-fpm）
-- 服务进行解析返回数据到客户端
+url->DNS域名解析->IP地址映射->TCP3次握手->HTTP请求->服务器处理http请求并返回http报文->浏览器渲染->结束
 
 ## 5、MYSQL的innodb引擎和MYISAM引擎有何不同，说出主要不同点
 
@@ -32,6 +28,8 @@ PHP的底层有个联合体`_zend_value`表示变量的类型，程序运行期�
 二级索引的叶子节点存的是主键值，而不是行指针
 
 ## 7、MYSQL的事务有几种隔离级别，分别是为了解决什么问题而出现
+
+<https://tech.meituan.com/2014/08/20/innodb-lock.html>
 
 4中隔离级别：
 
@@ -46,7 +44,11 @@ PHP的底层有个联合体`_zend_value`表示变量的类型，程序运行期�
 
 数据库事务有不同的隔离级别，不同的隔离级别对锁的使用是不同的，锁的应用最终导致不同事务的隔离级别。
 
-https://www.zhihu.com/question/23242151
+悲观锁：正如其名，它指的是对数据被外界（包括本系统当前的其他事务，以及来自外部系统的事务处理）修改持保守态度，因此，在整个数据处理过程中，将数据处于锁定状态。
+
+乐观锁：大多是基于数据版本（ Version ）记录机制实现【MVCC】
+
+<https://tech.meituan.com/2014/08/20/innodb-lock.html>
 
 ## 9、REDIS中常见的数据结构有几种？REIDS数据持久化有几种方案
 
@@ -81,7 +83,7 @@ setex(String key, int seconds, String value)–字符串独有的方式
 
 RPC：远程过程调用协议，且不依赖于具体的网络传输协议，比如restful需要依赖http协议
 
-https://www.zybuluo.com/phper/note/76641
+<https://www.zybuluo.com/phper/note/76641>
 
 ## 14、TCP协议握手的过程
 
