@@ -136,7 +136,7 @@ Client主动Connect的时候
 2. 此时Worker进程触发OnReceive事件。
 3. 如果在Worker进程中做了什么处理，然后再用Send方法将数据发回给客户端时，数据则会沿着这个路径逆流而上。
 
-https://www.158code.com/article/165
+<https://www.158code.com/article/165>
 
 LNMP：主要是nginx与php-fpm的通信
 
@@ -155,7 +155,7 @@ nginx作为一个代理服务器，通过fastcgi协议与php-fpm进行通信
 非阻塞（non-blocking）：两个阶段都没被block
 IO多路复用（IO multiplexing）：select，epoll
 
-https://blog.csdn.net/historyasamirror/article/details/5778378
+<https://blog.csdn.net/historyasamirror/article/details/5778378>
 
 ## 18、计算机基础中常见的基础数据结构和基础算法
 
@@ -175,4 +175,4 @@ https://blog.csdn.net/historyasamirror/article/details/5778378
 
 一致性Hash算法对于节点的增减都只需重定位环空间中的一小部分数据，具有较好的容错性和可扩展性。
 
-https://zhuanlan.zhihu.com/p/34985026
+<https://zhuanlan.zhihu.com/p/34985026>
