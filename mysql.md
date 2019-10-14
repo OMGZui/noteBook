@@ -243,6 +243,7 @@ where name = 'omgzui';
 2. 唯一索引
 3. 全文索引
 4. 多列索引(复合索引)
+5. 主键索引
 
 ```sql
 
@@ -252,7 +253,7 @@ CREATE TABLE `love` (
   `name` varchar(200) NOT NULL,
   `quote` varchar(50) NOT NULL,
   `space` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`), # 主键索引
   INDEX (`uid`), # 普通索引
   UNIQUE INDEX unique_name(`name`), # 唯一索引
   FULLTEXT INDEX fulltext_quote(`quote`), # 全文索引
