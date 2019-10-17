@@ -91,6 +91,34 @@ es同步：
 
 ## 12、网络层面 直接能熟悉swoole更好 因为我有swoole的项目经验
 
+```sh
+# pid=22402为master进程
+# pid=22403为manager进程，子进程有8个worker进程和12个task进程
+UID        PID  PPID  C STIME TTY          TIME CMD
+root     22402     1  0 10:49 ?        00:00:00 swoft-http master process (/data1/work/houduan_test/zy_familyapi_test/www/bin/swoft)
+root     22403 22402  0 10:49 ?        00:00:00 swoft-http manager process
+root     22420 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22421 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22422 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22423 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22424 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22425 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22438 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22440 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22450 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22462 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22469 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22471 22403  0 10:49 ?        00:00:00 swoft-http task process
+root     22480 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22489 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22507 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22521 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22529 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22537 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22550 22403  0 10:49 ?        00:00:00 swoft-http worker process
+root     22560 22403  0 10:49 ?        00:00:00 swoft-http worker process
+```
+
 ## 13、微服务 docker k8s swarm 的一些经验更好 这个我只有微服务经验
 
 ## 14、服务器层面 nginx一些基本知识点 fpm知识点 一些服务器常用写法 比如sort 或者 xargs 一些基础
