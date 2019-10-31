@@ -24,6 +24,11 @@
 - Xcode
 - SourceTree
 - Docker
+- Spectacle
+- V2rayX
+- SublimeText
+- IstatMenus
+- XMindZen
 
 ## 娱乐工具
 
