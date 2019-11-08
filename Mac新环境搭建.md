@@ -29,10 +29,17 @@
 - SublimeText
 - IstatMenus
 - XMindZen
+- Termius
 
 ## 娱乐工具
 
 - 网易云音乐
+
+## 命令行
+
+```bash
+mysql配置文件位置：mysql --verbose --help | grep my.cnf
+```
 
 ## 参考
 
