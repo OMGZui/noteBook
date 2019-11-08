@@ -30,6 +30,7 @@
 - IstatMenus
 - XMindZen
 - Termius
+- Vscode
 
 ## 娱乐工具
 
