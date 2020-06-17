@@ -20,6 +20,291 @@
 
 ## October 插件原理
 
+Backend文章插件举例
+
+```php
+    // 后端控制器入口
+    public function run($action = null, $params = [])
+    {
+        $this->action = $action;
+        $this->params = $params;
+
+        /*
+         * Check security token.
+         */
+        if (!$this->verifyCsrfToken()) {
+            return Response::make(Lang::get('backend::lang.page.invalid_token.label'), 403);
+        }
+
+        /*
+         * Check forced HTTPS protocol.
+         */
+        if (!$this->verifyForceSecure()) {
+            return Redirect::secure(Request::path());
+        }
+
+        /*
+         * Determine if this request is a public action.
+         */
+        $isPublicAction = in_array($action, $this->publicActions);
+
+        /*
+         * Check that user is logged in and has permission to view this page
+         */
+        if (!$isPublicAction) {
+
+            /*
+             * Not logged in, redirect to login screen or show ajax error.
+             */
+            if (!BackendAuth::check()) {
+                return Request::ajax()
+                    ? Response::make(Lang::get('backend::lang.page.access_denied.label'), 403)
+                    : Backend::redirectGuest('backend/auth');
+            }
+
+            /*
+             * Check access groups against the page definition
+             */
+            if ($this->requiredPermissions && !$this->user->hasAnyAccess($this->requiredPermissions)) {
+                return Response::make(View::make('backend::access_denied'), 403);
+            }
+        }
+
+        /*
+         * Extensibility
+         */
+        if ($event = $this->fireSystemEvent('backend.page.beforeDisplay', [$action, $params])) {
+            return $event;
+        }
+
+        /*
+         * Set the admin preference locale
+         */
+        BackendPreference::setAppLocale();
+        BackendPreference::setAppFallbackLocale();
+
+        // 执行ajax事件
+        if ($ajaxResponse = $this->execAjaxHandlers()) {
+            return $ajaxResponse;
+        }
+
+        // 执行post返回程序
+        if (
+            ($handler = post('_handler')) &&
+            ($handlerResponse = $this->runAjaxHandler($handler)) &&
+            $handlerResponse !== true
+        ) {
+            return $handlerResponse;
+        }
+
+        // 执行页面操作
+        $result = $this->execPageAction($action, $params);
+
+        if ($this->responseOverride !== null) {
+            $result = $this->responseOverride;
+        }
+
+        if (!is_string($result)) {
+            return $result;
+        }
+
+        // 输出返回内容
+        return Response::make($result, $this->statusCode);
+    }
+
+    // 执行页面操作
+    protected function execPageAction($actionName, $parameters)
+    {
+        $result = null;
+
+        if (!$this->actionExists($actionName)) {
+            if (Config::get('app.debug', false)) {
+                throw new SystemException(sprintf(
+                    "Action %s is not found in the controller %s",
+                    $actionName,
+                    get_class($this)
+                ));
+            } else {
+                Response::make(View::make('backend::404'), 404);
+            }
+        }
+
+        // 执行操作
+        $result = call_user_func_array([$this, $actionName], $parameters);
+
+        // Expecting \Response and \RedirectResponse
+        if ($result instanceof \Symfony\Component\HttpFoundation\Response) {
+            return $result;
+        }
+
+        // No page title
+        if (!$this->pageTitle) {
+            $this->pageTitle = 'backend::lang.page.untitled';
+        }
+
+        // 加载视图
+        if (!$this->suppressView && $result === null) {
+            return $this->makeView($actionName);
+        }
+
+        return $this->makeViewContent($result);
+    }
+    // 首页入口
+    public function index()
+    {
+        $this->vars['postsTotal'] = Post::count();
+        $this->vars['postsPublished'] = Post::isPublished()->count();
+        $this->vars['postsDrafts'] = $this->vars['postsTotal'] - $this->vars['postsPublished'];
+
+        // 指定行为控制器 => october-core/modules/backend/behaviors/ListController.php
+        $this->asExtension('ListController')->index();
+    }
+
+    // 制造列表
+    public function makeList($definition = null)
+    {
+        if (!$definition || !isset($this->listDefinitions[$definition])) {
+            $definition = $this->primaryDefinition;
+        }
+
+        // 拿到列表配置 => config_list.yaml
+        $listConfig = $this->controller->listGetConfig($definition);
+
+        // 创建模型
+        $class = $listConfig->modelClass;
+        $model = new $class;
+        $model = $this->controller->listExtendModel($model, $definition);
+
+        // 准备小部件
+        $columnConfig = $this->makeConfig($listConfig->list);
+        $columnConfig->model = $model;
+        $columnConfig->alias = $definition;
+
+        // 准备字段配置
+        $configFieldsToTransfer = [
+            'recordUrl',
+            'recordOnClick',
+            'recordsPerPage',
+            'showPageNumbers',
+            'noRecordsMessage',
+            'defaultSort',
+            'showSorting',
+            'showSetup',
+            'showCheckboxes',
+            'showTree',
+            'treeExpanded',
+            'customViewPath',
+        ];
+
+        // 填充字段配置
+        foreach ($configFieldsToTransfer as $field) {
+            if (isset($listConfig->{$field})) {
+                $columnConfig->{$field} = $listConfig->{$field};
+            }
+        }
+
+        // 可扩展的小部件
+        $widget = $this->makeWidget('Backend\Widgets\Lists', $columnConfig);
+
+        // 绑定事件
+        $widget->bindEvent('list.extendColumns', function () use ($widget) {
+            $this->controller->listExtendColumns($widget);
+        });
+
+        $widget->bindEvent('list.extendQueryBefore', function ($query) use ($definition) {
+            $this->controller->listExtendQueryBefore($query, $definition);
+        });
+
+        $widget->bindEvent('list.extendQuery', function ($query) use ($definition) {
+            $this->controller->listExtendQuery($query, $definition);
+        });
+
+        $widget->bindEvent('list.extendRecords', function ($records) use ($definition) {
+            return $this->controller->listExtendRecords($records, $definition);
+        });
+
+        $widget->bindEvent('list.injectRowClass', function ($record) use ($definition) {
+            return $this->controller->listInjectRowClass($record, $definition);
+        });
+
+        $widget->bindEvent('list.overrideColumnValue', function ($record, $column, $value) use ($definition) {
+            return $this->controller->listOverrideColumnValue($record, $column->columnName, $definition);
+        });
+
+        $widget->bindEvent('list.overrideHeaderValue', function ($column, $value) use ($definition) {
+            return $this->controller->listOverrideHeaderValue($column->columnName, $definition);
+        });
+
+        // 把小部件绑定到控制器上
+        $widget->bindToController();
+
+        // 准备工具栏小部件（可选）
+        if (isset($listConfig->toolbar)) {
+            $toolbarConfig = $this->makeConfig($listConfig->toolbar);
+            $toolbarConfig->alias = $widget->alias . 'Toolbar';
+            $toolbarWidget = $this->makeWidget('Backend\Widgets\Toolbar', $toolbarConfig);
+            $toolbarWidget->bindToController();
+            $toolbarWidget->cssClasses[] = 'list-header';
+
+            // 将搜索小部件链接到列表小部件
+            if ($searchWidget = $toolbarWidget->getSearchWidget()) {
+                $searchWidget->bindEvent('search.submit', function () use ($widget, $searchWidget) {
+                    $widget->setSearchTerm($searchWidget->getActiveTerm());
+                    return $widget->onRefresh();
+                });
+
+                $widget->setSearchOptions([
+                    'mode' => $searchWidget->mode,
+                    'scope' => $searchWidget->scope,
+                ]);
+
+                // Find predefined search term
+                $widget->setSearchTerm($searchWidget->getActiveTerm());
+            }
+
+            $this->toolbarWidgets[$definition] = $toolbarWidget;
+        }
+
+        // 准备过滤小部件（可选）
+        if (isset($listConfig->filter)) {
+            $widget->cssClasses[] = 'list-flush';
+
+            $filterConfig = $this->makeConfig($listConfig->filter);
+            $filterConfig->alias = $widget->alias . 'Filter';
+            $filterWidget = $this->makeWidget('Backend\Widgets\Filter', $filterConfig);
+            $filterWidget->bindToController();
+
+            /*
+             * Filter the list when the scopes are changed
+             */
+            $filterWidget->bindEvent('filter.update', function () use ($widget, $filterWidget) {
+                return $widget->onFilter();
+            });
+
+            /*
+             * Filter Widget with extensibility
+             */
+            $filterWidget->bindEvent('filter.extendScopes', function () use ($filterWidget) {
+                $this->controller->listFilterExtendScopes($filterWidget);
+            });
+
+            /*
+             * Extend the query of the list of options
+             */
+            $filterWidget->bindEvent('filter.extendQuery', function ($query, $scope) {
+                $this->controller->listFilterExtendQuery($query, $scope);
+            });
+
+            // Apply predefined filter values
+            $widget->addFilter([$filterWidget, 'applyAllScopesToQuery']);
+
+            $this->filterWidgets[$definition] = $filterWidget;
+        }
+
+        return $widget;
+    }
+```
+
 ```php
     public function runPage($page, $useAjax = true)
     {
