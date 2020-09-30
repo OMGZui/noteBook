@@ -36,12 +36,6 @@
 
 - 网易云音乐
 
-## 命令行
-
-```bash
-mysql配置文件位置：mysql --verbose --help | grep my.cnf
-```
-
 ## 参考
 
 - [Awesome Mac](https://github.com/jaywcjlove/awesome-mac/blob/master/README-zh.md)
