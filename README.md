@@ -79,6 +79,7 @@ vendor/bin/phpunit tests
 - [4、docker](https://github.com/OMGZui/lnmp)
 - [5、数据结构与算法](https://github.com/OMGZui/basic_c)
 - [6、leetcode](https://github.com/OMGZui/go_leetcode)
+- [7、supervisor](supervisor.md)
 
 ## 四、面试
 
