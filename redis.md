@@ -70,21 +70,122 @@ make && make install
 
 ## 三、配置
 
+- redis-benchmark     redis性能测试工具
+- redis-check-aof     检查aof日志的工具
+- redis-check-rdb     检查rdb日志的工具
+- redis-cli           连接用的客户端
+- redis-server        服务进程
+
 ```sh
-redis-benchmark     redis性能测试工具
-redis-check-aof     检查aof日志的工具
-redis-check-rdb     检查rdb日志的工具
-redis-cli           连接用的客户端
-redis-server        服务进程
+# 地址
+bind 0.0.0.0
 
-# 配置文件启动 这样会霸占终端
-/usr/local/bin/redis-server /etc/redis/redis.conf
-# 修改为不霸占终端
-vim /etc/redis/redis.conf
-daemonize no  => yes
+# 保护模式
+protected-mode no
 
-# redis 默认有16个数据库，默认使用0号数据库，可使用select、move等命令操作
+# 端口
+port 6380
+
+tcp-backlog 511
+timeout 0
+tcp-keepalive 300
+
+# 守护进程模式
+daemonize yes
+
+supervised no
+
+# 进程id文件
+pidfile /usr/local/redis/run/redis.pid
+
+# 日志等级
+loglevel notice
+
+# 日志位置
+logfile /usr/local/redis/logs/redis.log
+
+# 数据个数
 databases 16
+
+always-show-logo yes
+
+#   after 900 sec (15 min) if at least 1 key changed
+#   after 300 sec (5 min) if at least 10 keys changed
+#   after 60 sec if at least 10000 keys changed
+save 900 1
+save 300 10
+save 60 10000
+
+stop-writes-on-bgsave-error yes
+
+# rdb开启
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+rdb-del-sync-files no
+dir ./
+
+#   主从
+#   +------------------+      +---------------+
+#   |      Master      | ---> |    Replica    |
+#   | (receive writes) |      |  (exact copy) |
+#   +------------------+      +---------------+
+
+acllog-max-len 128
+# 密码
+requirepass omgzui
+lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+replica-lazy-flush no
+lazyfree-lazy-user-del no
+oom-score-adj no
+oom-score-adj-values 0 200 800
+
+# aof
+appendonly yes
+appendfilename "appendonly.aof"
+# appendfsync always
+appendfsync everysec
+# appendfsync no
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+aof-use-rdb-preamble yes
+
+lua-time-limit 5000
+
+# 从服务器
+# cluster-announce-ip 10.1.1.5
+# cluster-announce-port 6379
+# cluster-announce-bus-port 6380
+
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+latency-monitor-threshold 0
+notify-keyspace-events ""
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-size -2
+list-compress-depth 0
+set-max-intset-entries 512
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+hll-sparse-max-bytes 3000
+stream-node-max-bytes 4096
+stream-node-max-entries 100
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+dynamic-hz yes
+aof-rewrite-incremental-fsync yes
+rdb-save-incremental-fsync yes
+jemalloc-bg-thread yes
+
+
 ```
 
 ## 四、通用key操作
