@@ -252,7 +252,7 @@ try_files $uri $uri/ /index.php$is_args$args;
 $is_args表示请求中的URL是否带参数，如果带参数，$is_args值为"?"，否则为空
 $args只接收参数
 
-# 访问php.omgzui.cn/index
+# 访问xxxxxx/index
 1、查找$uri，即index文件 无
 2、查找$uri/，即index目录 无
 3、查找/index.php$is_args$args，把index当成参数，即index.php?index
