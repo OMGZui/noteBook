@@ -66,7 +66,6 @@ cd redis-4.0.1
 # 编译
 make && make install
 /usr/local/bin/redis-server -v
-Redis server v=6.0.8 sha=00000000:0 malloc=jemalloc-5.1.0 bits=64 build=dbefe3544839a79d
 ```
 
 ## 三、配置
