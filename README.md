@@ -80,6 +80,7 @@ vendor/bin/phpunit tests
 - [5、数据结构与算法](https://github.com/OMGZui/basic_c)
 - [6、leetcode](https://github.com/OMGZui/go_leetcode)
 - [7、supervisor](supervisor.md)
+- [8、PHPStorm+Xdebug](PHPStorm+Xdebug.md)
 
 ## 四、面试
 
