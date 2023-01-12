@@ -19,7 +19,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
-    "csv-loader": "^2.1.1",
+    "csv-loader": "^3.0.5",
     "express": "^4.16.2",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.30.1",
